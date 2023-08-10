@@ -2,10 +2,8 @@
 import {createContext, useEffect, useState, useReducer} from 'react'
 // import axios from 'axios'
 // import {backendUrl} from './serverURLContext' 
-import {axiosSetting} from './serverURLContext'
 // import { useNavigate } from "react-router-dom";
 // import { Navigate, resolvePath } from 'react-router-dom';
-import Cookies from 'universal-cookie';
 
 export const AuthContext = createContext();
 
@@ -127,7 +125,9 @@ const AuthContextProvider = ({children}) => {
     //     }
     // }
 
-    // const authContextData = { LoginContext, authState, Logout, lecturer, loadUser, loadLecturer, ignored, forceUpdate };
+    const authContextData = { 
+        // LoginContext, authState, Logout, lecturer, loadUser, loadLecturer, ignored, forceUpdate 
+    };
     
     return (
         <AuthContext.Provider value={authContextData}>
