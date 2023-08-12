@@ -2,7 +2,7 @@ import { CUSTOMER, SELLER, ADMIN } from "../constants"
 
 
 export const handleAuth = (isAuthenticated, userType) => {
-    const userTypeUpper = userType.toUpperCase()
+    const userTypeUpper = userType?.toUpperCase()
     const notRequiredAuthenticatedPath = ["/", "/login", "/signup"]
     console.log(userTypeUpper)
     // authenticated -> navigate to user page
@@ -10,7 +10,7 @@ export const handleAuth = (isAuthenticated, userType) => {
         if(userTypeUpper === CUSTOMER) return "/customer"
         else if(userTypeUpper === SELLER) return "/seller"
         else if(userTypeUpper === ADMIN) return "/admin"
-        else return "/"
+        else return null
 
     // not authenticated -> navigate to login
     } else if (!isAuthenticated && !notRequiredAuthenticatedPath.includes(window.location.pathname)) {
