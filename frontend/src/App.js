@@ -6,6 +6,7 @@ import Navbar from './Component/Shared/navbar';
 import {AuthContext} from './Context/loginSessionContext'
 import ProductList from './Component/Shared/productList';
 import Signup from './Component/Shared/signup';
+import AdminCategory from './Component/Admin/AdminCategory';
 
 function App() {
 
@@ -22,10 +23,10 @@ function App() {
       path: "/signup",
       element: <><Navbar/><Signup/></>,
     },
-    // {
-    //   path: "/admin",
-    //   element: <Products />
-    // },
+    {   
+      path: "/admin",
+      element: <><AdminCategory /></>
+    },
     // {
     //   path: "/seller",
     //   element: <MyAccount />,
