@@ -1,4 +1,3 @@
-import './App.css';
 import React, {useContext, useEffect} from 'react'
 import AuthContextProvider from './Context/loginSessionContext'
 import { BrowserRouter, createBrowserRouter, Outlet, RouterProvider, useNavigate } from "react-router-dom";
