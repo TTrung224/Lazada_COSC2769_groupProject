@@ -13,3 +13,30 @@
 .header-div nav{
     padding: 0;
 }
+
+.navbar-div a.active {
+    font-weight: bolder;
+}
+
+.navbar-nav .header-item{
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.navbar-nav .header-item:hover{
+    background-color: rgb(206, 206, 206);
+    font-weight: 700;
+}
+
+.navbar-nav .nav-custom-item{
+    border-radius: 8px;
+}
+
+.navbar-nav .nav-custom-item i{
+    margin-left: 3px;
+}
+
+.navbar-nav .nav-custom-item:hover{
+    background-color: rgb(206, 206, 206);
+    font-weight: bolder;
+}

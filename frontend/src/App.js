@@ -5,7 +5,7 @@ import { BrowserRouter, createBrowserRouter, Outlet, RouterProvider, useNavigate
 import Login from './Component/Shared/login';
 import Navbar from './Component/Shared/navbar';
 import {AuthContext} from './Context/loginSessionContext'
-import ProductList from './Component/Shared/productList';
+import ProductList from './Component/Customer/productList';
 import Signup from './Component/Shared/signup';
 
 function App() {
