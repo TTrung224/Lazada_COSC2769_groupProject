@@ -1,25 +1,23 @@
-import { Navigate, useNavigate} from "react-router-dom";
+import { CUSTOMER, SELLER, ADMIN } from "../constants"
 
 
-export const handleAuth = (isAuthenticated) => {
-    console.log(isAuthenticated)
-    console.log(window.location.pathname)
-    
+export const handleAuth = (isAuthenticated, userType) => {
+    const userTypeUpper = userType.toUpperCase()
+    const notRequiredAuthenticatedPath = ["/", "/login", "/signup"]
+    console.log(userTypeUpper)
     // authenticated -> navigate to user page
-    if (isAuthenticated && window.location.pathname === '/login') {
-        console.log(1)
-        return "/"
+    if (isAuthenticated && notRequiredAuthenticatedPath.includes(window.location.pathname)) {
+        if(userTypeUpper === CUSTOMER) return "/customer"
+        else if(userTypeUpper === SELLER) return "/seller"
+        else if(userTypeUpper === ADMIN) return "/admin"
+        else return "/"
 
     // not authenticated -> navigate to login
-    } else if (!isAuthenticated && window.location.pathname !== '/login' && 
-            window.location.pathname !== '/' &&
-            window.location.pathname !== '/signup') {
-        console.log(2)
+    } else if (!isAuthenticated && !notRequiredAuthenticatedPath.includes(window.location.pathname)) {
         return "/login"
 
     // not navigate
     } else {
-        console.log(3)
         return null
     }
 }
