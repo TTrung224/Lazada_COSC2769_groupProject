@@ -19,9 +19,9 @@ function NavItem({nav}){
 function HeaderItem({nav}){
     console.log(nav)
     return(
-        <NavLink className="nav-item header-item" to={nav.link}>
+        <Link className="nav-item header-item" to={nav.link}>
             {nav.name}
-        </NavLink>
+        </Link>
     )
 } 
 

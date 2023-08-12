@@ -1,3 +1,4 @@
+/* Nav - header */
 .header-div .header{
     padding-right: 3rem;
     padding-top: 4px;
@@ -39,4 +40,23 @@
 .navbar-nav .nav-custom-item:hover{
     background-color: rgb(206, 206, 206);
     font-weight: bolder;
+}
+
+/* Product */
+.product-list{
+    margin: auto;
+}
+.product-list .card-holder{
+    width: fit-content;
+    display:inline-flex;
+}
+
+.product-list a{
+    text-decoration: none;
+    width: 18rem;
+    padding: 0px;
+    margin: 1rem 1rem 0rem 1rem;
+}
+.product-list a .card{
+    color: black;
 }
