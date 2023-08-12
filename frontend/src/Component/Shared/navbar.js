@@ -1,14 +1,24 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import logo from "../../Asset/webLogo.png";
-import { Link } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
+import {AuthContext} from '../../Context/loginSessionContext'
 import '../componentStyle.css';
+import { handleAuth } from '../../Service/commonService';
 
 export default function Navbar(){
+    const { authState: {isAuthenticated}} = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        const path = handleAuth(isAuthenticated);
+        if(path!=null) navigate(path)
+    });
+
     return(
-        <>
+        <div className='header-div'>
             <nav className="navbar header navbar-expand-lg navbar-light bg-light">
                 <div className="navbar-nav ms-auto me-3">
-                    <a className="nav-item" href="#">Login</a>
+                    <NavLink className="nav-item" to="/login">Login</NavLink>
                     <a className="nav-item" href="#">Signup</a>
                 </div>
             </nav>
@@ -26,6 +36,6 @@ export default function Navbar(){
                     </div>
                 </div>
             </nav>
-        </>
+        </div>
     )
 }

@@ -1,7 +1,15 @@
-.header a{
+.header-div .header{
+    padding-right: 3rem;
+    padding-top: 4px;
+}
+.header-div .header a{
     font-size: smaller;
     text-decoration: none;
     color: black;
     margin-left: 1rem;
     margin-right: 1rem;
+}
+
+.header-div nav{
+    padding: 0;
 }

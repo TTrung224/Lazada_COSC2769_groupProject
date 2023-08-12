@@ -1,8 +1,10 @@
 import './App.css';
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
 import AuthContextProvider from './Context/loginSessionContext'
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Navbar from './Component/Shared/navbar.js';
+import { BrowserRouter, createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
+import Login from './Component/Shared/login';
+import Navbar from './Component/Shared/navbar';
+import {AuthContext} from './Context/loginSessionContext'
 
 function App() {
 
@@ -11,6 +13,14 @@ function App() {
       path: "/",
       element: <><Navbar/></>,
     },
+    {
+      path: "/login",
+      element: <Login/>,
+    },
+    // {
+    //   path: "/signup",
+    //   element: <Signup/>
+    // },
     // {
     //   path: "/admin",
     //   element: <Products />
@@ -32,7 +42,9 @@ function App() {
   return (
     <div className="App">
       <AuthContextProvider>
-        <RouterProvider router={router} />
+        <RouterProvider router={router}>
+
+        </RouterProvider>
       </AuthContextProvider>
     </div>
   );
