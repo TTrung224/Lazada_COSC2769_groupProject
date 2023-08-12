@@ -6,7 +6,7 @@ const AuthContextProvider = ({children}) => {
 
     // auth state
     const [authState, setAuth] = useState({
-        isAuthenticated: true,
+        isAuthenticated: false,
         user: null
     })
     
