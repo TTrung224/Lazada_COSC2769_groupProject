@@ -6,6 +6,7 @@ import Navbar from './Component/Shared/navbar';
 import {AuthContext} from './Context/loginSessionContext'
 import ProductList from './Component/Customer/productList';
 import Signup from './Component/Shared/signup';
+import SellerPage from './Component/Seller/SellerPage';
 
 function App() {
 
@@ -22,6 +23,10 @@ function App() {
       path: "/signup",
       element: <><Navbar/><Signup/></>,
     },
+    {
+      path:"/seller",
+      element:<SellerPage/>
+    }
     // {
     //   path: "/admin",
     //   element: <Products />
@@ -37,6 +42,7 @@ function App() {
     //   loader: loadMyAccount,
     //   action: saveMyAccount,
     // },
+
   ]);
 
 
