@@ -1,42 +1,40 @@
 import React, {useContext, useEffect} from 'react'
 import AuthContextProvider from './Context/loginSessionContext'
 import { BrowserRouter, createBrowserRouter, Outlet, RouterProvider, useNavigate } from "react-router-dom";
-import Login from './Component/Shared/login';
-import Navbar from './Component/Shared/navbar';
-import {AuthContext} from './Context/loginSessionContext'
-import ProductList from './Component/Customer/productList';
-import Signup from './Component/Shared/signup';
+import Login from './Page/login';
+import Signup from './Page/signup';
+import GuestProduct from './Page/guestProduct';
+import AdminSellerRequest from './Page/adminSellerRequest';
+import SellerOrder from './Page/sellerOrder';
+import CustomerProduct from './Page/customerProduct';
 
 function App() {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <><Navbar/><ProductList/></>,
+      element: <><GuestProduct/></>,
     },
     {
       path: "/login",
-      element: <><Navbar/><Login/></>,
+      element: <><Login/></>,
     },
     {
       path: "/signup",
-      element: <><Navbar/><Signup/></>,
+      element: <><Signup/></>,
     },
-    // {
-    //   path: "/admin",
-    //   element: <Products />
-    // },
-    // {
-    //   path: "/seller",
-    //   element: <MyAccount />,
-    //   loader: loadMyAccount,
-    // },
-    // {
-    //   path: "/customer",
-    //   element: <MyAccountEdit />,
-    //   loader: loadMyAccount,
-    //   action: saveMyAccount,
-    // },
+    {
+      path: "/customer",
+      element: <><CustomerProduct/></>,
+    },
+    {
+      path: "/admin",
+      element: <AdminSellerRequest/>,
+    },
+    {
+      path: "/seller",
+      element: <SellerOrder/>,
+    },
   ]);
 
 

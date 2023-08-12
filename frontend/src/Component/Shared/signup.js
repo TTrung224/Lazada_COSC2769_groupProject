@@ -6,11 +6,11 @@ import '../componentStyle.css';
 import { handleAuth } from '../../Service/commonService';
 
 export default function Signup(){
-    const { authState: {isAuthenticated}} = useContext(AuthContext)
+    const { authState: {isAuthenticated, user}} = useContext(AuthContext)
     const navigate = useNavigate()
 
     useEffect(() => {
-        const path = handleAuth(isAuthenticated);
+        const path = handleAuth(isAuthenticated, user?.type);
         if(path!=null) navigate(path)
     });
 

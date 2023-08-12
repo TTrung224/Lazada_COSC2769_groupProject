@@ -6,8 +6,8 @@ const AuthContextProvider = ({children}) => {
 
     // auth state
     const [authState, setAuth] = useState({
-        isAuthenticated: false,
-        user: {type: "SELLER"}
+        isAuthenticated: true,
+        user: {type: "Admin"}
     })
     
     const Login = async userForm => {

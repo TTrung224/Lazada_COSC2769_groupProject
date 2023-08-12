@@ -59,19 +59,20 @@ export default function Navbar(){
     const navigate = useNavigate()
 
     useEffect(() => {
-        const path = handleAuth(isAuthenticated);
+        const path = handleAuth(isAuthenticated, user?.type);
         if(path!=null) navigate(path)
     });
 
     let navList = [];
     let headList = [];
-    if(user?.type === CUSTOMER){
+    const userTypeUpper = (user?.type)? user.type.toUpperCase() : null;
+    if(userTypeUpper === CUSTOMER){
         navList = listNav.customer.map((item => <NavItem nav={item}/>))
         headList = listHeader.account.map((item => <HeaderItem nav={item}/>))
-    } else if(user?.type === ADMIN){
+    } else if(userTypeUpper === ADMIN){
         navList = listNav.admin.map((item => <NavItem nav={item}/>))
         headList = listHeader.account.map((item => <HeaderItem nav={item}/>))
-    } else if(user?.type === SELLER){
+    } else if(userTypeUpper === SELLER){
         navList = listNav.seller.map((item => <NavItem nav={item}/>))
         headList = listHeader.account.map((item => <HeaderItem nav={item}/>))
     } else{
