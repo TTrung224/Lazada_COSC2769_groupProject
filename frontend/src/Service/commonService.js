@@ -11,7 +11,9 @@ export const handleAuth = (isAuthenticated) => {
         return "/"
 
     // not authenticated -> navigate to login
-    } else if (!isAuthenticated && window.location.pathname !== '/login' && window.location.pathname !== '/') {
+    } else if (!isAuthenticated && window.location.pathname !== '/login' && 
+            window.location.pathname !== '/' &&
+            window.location.pathname !== '/signup') {
         console.log(2)
         return "/login"
 

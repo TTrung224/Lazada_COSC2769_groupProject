@@ -1,26 +1,28 @@
 import './App.css';
 import React, {useContext, useEffect} from 'react'
 import AuthContextProvider from './Context/loginSessionContext'
-import { BrowserRouter, createBrowserRouter, RouterProvider, useNavigate } from "react-router-dom";
+import { BrowserRouter, createBrowserRouter, Outlet, RouterProvider, useNavigate } from "react-router-dom";
 import Login from './Component/Shared/login';
 import Navbar from './Component/Shared/navbar';
 import {AuthContext} from './Context/loginSessionContext'
+import ProductList from './Component/Shared/productList';
+import Signup from './Component/Shared/signup';
 
 function App() {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <><Navbar/></>,
+      element: <><Navbar/><ProductList/></>,
     },
     {
       path: "/login",
-      element: <Login/>,
+      element: <><Navbar/><Login/></>,
     },
-    // {
-    //   path: "/signup",
-    //   element: <Signup/>
-    // },
+    {
+      path: "/signup",
+      element: <><Navbar/><Signup/></>,
+    },
     // {
     //   path: "/admin",
     //   element: <Products />

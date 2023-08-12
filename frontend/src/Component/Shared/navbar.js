@@ -19,7 +19,7 @@ export default function Navbar(){
             <nav className="navbar header navbar-expand-lg navbar-light bg-light">
                 <div className="navbar-nav ms-auto me-3">
                     <NavLink className="nav-item" to="/login">Login</NavLink>
-                    <a className="nav-item" href="#">Signup</a>
+                    <NavLink className="nav-item" to="/signup">Signup</NavLink>
                 </div>
             </nav>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">

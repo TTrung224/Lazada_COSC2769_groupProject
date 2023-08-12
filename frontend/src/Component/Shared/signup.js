@@ -5,7 +5,7 @@ import {AuthContext} from '../../Context/loginSessionContext'
 import '../componentStyle.css';
 import { handleAuth } from '../../Service/commonService';
 
-export default function Login(){
+export default function Signup(){
     const { authState: {isAuthenticated}} = useContext(AuthContext)
     const navigate = useNavigate()
 
@@ -15,8 +15,8 @@ export default function Login(){
     });
 
     return(
-        <div className='login-form'>
-            login form here
+        <div className='signup-form'>
+            signup form here
         </div>
     )
 }
