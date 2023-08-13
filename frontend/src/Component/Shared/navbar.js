@@ -7,7 +7,6 @@ import { handleAuth } from '../../Service/commonService';
 import {CUSTOMER, ADMIN, SELLER} from '../../constants';
 
 function NavItem({nav}){
-    console.log(nav)
     return(
         <NavLink className="nav-item nav-link text-xl nav-custom-item" to={nav.link}>
             {nav.name}
@@ -17,7 +16,6 @@ function NavItem({nav}){
 } 
 
 function HeaderItem({nav}){
-    console.log(nav)
     return(
         <Link className="nav-item header-item" to={nav.link}>
             {nav.name}
@@ -31,6 +29,7 @@ export default function Navbar(){
             {name: "Cart", icon: "bi bi-cart-fill", link: "guest/cart"},
         ],
         customer: [
+            {name: "Products", icon: "bi bi-archive-fill", link: "/customer/product"},
             {name: "Orders", icon: "bi bi-clipboard2-check-fill", link: "/customer/order"},
             {name: "Cart", icon: "bi bi-cart-fill", link: "/customer/cart"},
         ],
@@ -67,17 +66,17 @@ export default function Navbar(){
     let headList = [];
     const userTypeUpper = (user?.type)? user.type.toUpperCase() : null;
     if(userTypeUpper === CUSTOMER){
-        navList = listNav.customer.map((item => <NavItem nav={item}/>))
-        headList = listHeader.account.map((item => <HeaderItem nav={item}/>))
+        navList = listNav.customer.map((item => <NavItem nav={item} key={item.name}/>))
+        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
     } else if(userTypeUpper === ADMIN){
-        navList = listNav.admin.map((item => <NavItem nav={item}/>))
-        headList = listHeader.account.map((item => <HeaderItem nav={item}/>))
+        navList = listNav.admin.map((item => <NavItem nav={item} key={item.name}/>))
+        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
     } else if(userTypeUpper === SELLER){
-        navList = listNav.seller.map((item => <NavItem nav={item}/>))
-        headList = listHeader.account.map((item => <HeaderItem nav={item}/>))
+        navList = listNav.seller.map((item => <NavItem nav={item} key={item.name}/>))
+        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
     } else{
-        navList = listNav.guest.map((item => <NavItem nav={item}/>))
-        headList = listHeader.guest.map((item => <HeaderItem nav={item}/>))
+        navList = listNav.guest.map((item => <NavItem nav={item} key={item.name}/>))
+        headList = listHeader.guest.map((item => <HeaderItem nav={item} key={item.name}/>))
     }
 
     return(
