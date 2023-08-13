@@ -7,6 +7,7 @@ import ProductList from '../Component/Customer/productList';
 import ProductFilter from '../Component/Customer/productFilter';
 import './pageStyle.css';
 import ProductSearchBar from '../Component/Customer/productSearch';
+import ProductCategories from '../Component/Customer/productCategories';
 
 export default function CustomerProduct(){
     return(
@@ -14,6 +15,7 @@ export default function CustomerProduct(){
             <Navbar/>
             <div className='product-all-container'>
                 <ProductSearchBar/>
+                <ProductCategories/>
                 <div className='product-mega'>
                     <ProductFilter/>
                     <ProductList/>
