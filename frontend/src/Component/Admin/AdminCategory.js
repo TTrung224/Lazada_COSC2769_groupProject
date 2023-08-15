@@ -1,37 +1,32 @@
 import { useState } from 'react';
 import AdminCategoryList from './AdminCategoryList';
+import { Link, useLoaderData } from 'react-router-dom';
+import { getCategories } from './AdminAPI';
 
 
-const test = [
-    { id: 0, name: 'Electronic Devices', parent: -1 },
-    { id: 1, name: 'Home Appliances', parent: -1 },
-    { id: 2, name: 'Groceries and Snack', parent: -1 },
-    { id: 3, name: 'Computer', parent: 0 },
-    { id: 4, name: 'Laptop', parent: 0 },
-    { id: 5, name: 'Kitchen', parent: 1 },
-    { id: 6, name: 'Living Room', parent: 1 },
-    { id: 7, name: 'Sweet', parent: 2 },
-    { id: 8, name: 'Gaming', parent: 3 },
-    { id: 9, name: '3D Modelling', parent: 3 }
-]
+export async function loadCategories(){
+    const categories = await getCategories()
+    return categories
+}
 
 const AdminCategory = () => {
+    const test = useLoaderData()
     const [category, setCategory] = useState(test)
 
     function handleDeleteCategory(item) {
+        // TODO: CAN ONLY DELETE IF NO ITEM IS UNDER THE CATEGORY
         const newCategory = category.filter(c => c !== item)
-
         setCategory(newCategory)
     }
 
-    function handleAddTopCategory(category) {
-
-    }
+    // TODO: EDIT + ADD ATTRIBUTES AND STUFF, CAN ONLY EDIT IF NO ITEM UNDER CATEGORY
+    // TODO: ADD CATEGORY
+    // TODO: ADD SUBCATEGORY, SUBCATEGORY MUST INHERIT ALL ATTRIBUTES OF PARENT
 
     return (
         <div className="container">
             <h2>Category</h2>
-            <button className="btn btn-primary mt-4" onClick={() => handleAddTopCategory()}>Add Category</button>
+            <Link to={"add"}><button className="btn btn-primary mt-4">Add Category</button></Link>
             <AdminCategoryList categories={category} parent={-1} handleDeleteCategory={handleDeleteCategory} />
         </div>
     );

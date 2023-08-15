@@ -1,12 +1,14 @@
 import React, {useContext, useEffect} from 'react'
 import AuthContextProvider from './Context/loginSessionContext'
-import { BrowserRouter, createBrowserRouter, Outlet, RouterProvider, useNavigate } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from './Component/Shared/login';
 import Navbar from './Component/Shared/navbar';
 import {AuthContext} from './Context/loginSessionContext'
 import ProductList from './Component/Shared/productList';
 import Signup from './Component/Shared/signup';
-import AdminCategory from './Component/Admin/AdminCategory';
+import AdminCategory, { loadCategories } from './Component/Admin/AdminCategory';
+import Admin from './Component/Admin/Admin';
+import AdminAddCategory, { addNewCategory } from './Component/Admin/AdminAddCategory';
 
 function App() {
 
@@ -25,7 +27,19 @@ function App() {
     },
     {   
       path: "/admin",
-      element: <><AdminCategory /></>
+      element: <><Admin/></>,
+      children: [
+        {
+          path: "category",
+          element: <AdminCategory />,
+          loader: loadCategories
+        },
+        {
+          path: "category/add",
+          element: <AdminAddCategory/>,
+          action: addNewCategory
+        }
+      ]
     },
     // {
     //   path: "/seller",
