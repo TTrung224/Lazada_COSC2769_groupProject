@@ -1,10 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import img1 from "../../Asset/test_product_images/1.jpg";
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import {AuthContext} from '../../Context/loginSessionContext'
-import '../componentStyle.css';
-import { handleAuth } from '../../Service/commonService';
 import Loader from '../Shared/loader';
+import '../componentStyle.css';
 
 function ProductCard({product}){
     return(

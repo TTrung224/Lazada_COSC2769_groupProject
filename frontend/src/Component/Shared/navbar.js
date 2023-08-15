@@ -1,10 +1,10 @@
-import React, {useContext, useEffect} from 'react';
-import logo from "../../Asset/webLogo.png";
+import React, { useContext, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
-import {AuthContext} from '../../Context/loginSessionContext'
-import '../componentStyle.css';
+import logo from "../../Asset/webLogo.png";
+import { AuthContext } from '../../Context/loginSessionContext';
 import { handleAuth } from '../../Service/commonService';
-import {CUSTOMER, ADMIN, SELLER} from '../../constants';
+import { ADMIN, CUSTOMER, SELLER } from '../../constants';
+import '../componentStyle.css';
 
 function NavItem({nav}){
     return(
@@ -49,8 +49,8 @@ export default function Navbar(){
             {name: "Signup", link:"/signup"},
         ],
         account: [
-            {name: "Account", icon: "bi bi-person-circle", link:"#"},
-            {name: "Logout", icon: "bi bi-person-circle", link:"#"},
+            {name: "Account", link:"#"},
+            {name: "Logout", link:"/logout"},
         ]
     }
 
@@ -65,13 +65,13 @@ export default function Navbar(){
     let navList = [];
     let headList = [];
     const userTypeUpper = (user?.type)? user.type.toUpperCase() : null;
-    if(userTypeUpper === CUSTOMER){
+    if(isAuthenticated && userTypeUpper === CUSTOMER){
         navList = listNav.customer.map((item => <NavItem nav={item} key={item.name}/>))
         headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
-    } else if(userTypeUpper === ADMIN){
+    } else if(isAuthenticated && userTypeUpper === ADMIN){
         navList = listNav.admin.map((item => <NavItem nav={item} key={item.name}/>))
         headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
-    } else if(userTypeUpper === SELLER){
+    } else if(isAuthenticated && userTypeUpper === SELLER){
         navList = listNav.seller.map((item => <NavItem nav={item} key={item.name}/>))
         headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
     } else{

@@ -1,9 +1,5 @@
-import React, {useContext, useEffect} from 'react';
-import img1 from "../../Asset/test_product_images/1.jpg";
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import {AuthContext} from '../../Context/loginSessionContext'
+import React from 'react';
 import '../componentStyle.css';
-import { handleAuth } from '../../Service/commonService';
 
 export default function ProductSearchBar(){
     return(

@@ -1,8 +1,8 @@
 import React, {useContext, useEffect} from 'react'
 import AuthContextProvider from './Context/loginSessionContext'
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import Login from './Page/login';
-import Signup from './Page/signup';
+import LoginPage from './Page/loginPage';
+import SignupPage from './Page/signupPage';
 import GuestProduct from './Page/guestProduct';
 import GuestCart from './Page/guestCart';
 import AdminSellerRequest from './Page/adminSellerRequest';
@@ -12,6 +12,7 @@ import SellerProduct from './Page/sellerProduct';
 import CustomerProduct from './Page/customerProduct';
 import CustomerOrder from './Page/customerOrder';
 import CustomerCart from './Page/customerCart';
+import Logout from './Component/Shared/logout';
 
 function App() {
 
@@ -19,6 +20,10 @@ function App() {
     {
       path: "/",
       element: <GuestProduct/>,
+    },        
+    {
+      path: "/logout",
+      element: <Logout/>,
     },    
     {
       path: "/guest/cart",
@@ -26,11 +31,11 @@ function App() {
     },
     {
       path: "/login",
-      element: <Login/>,
+      element: <LoginPage/>,
     },
     {
       path: "/signup",
-      element: <Signup/>,
+      element: <SignupPage/>,
     },
     {
       path: "/customer",

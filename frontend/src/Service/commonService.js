@@ -1,9 +1,9 @@
-import { CUSTOMER, SELLER, ADMIN } from "../constants"
+import { ADMIN, CUSTOMER, SELLER } from "../constants"
 
 
 export const handleAuth = (isAuthenticated, userType) => {
     const userTypeUpper = userType?.toUpperCase()
-    const notRequiredAuthenticatedPath = ["/", "/login", "/signup"]
+    const notRequiredAuthenticatedPath = ["/", "/login", "/signup", "/guest/cart"]
     // authenticated -> navigate to user page
     if (isAuthenticated && notRequiredAuthenticatedPath.includes(window.location.pathname)) {
         if(userTypeUpper === CUSTOMER) return "/customer"

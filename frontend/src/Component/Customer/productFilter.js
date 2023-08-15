@@ -1,9 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import img1 from "../../Asset/test_product_images/1.jpg";
-import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
-import {AuthContext} from '../../Context/loginSessionContext'
+import React, { useEffect, useState } from 'react';
 import '../componentStyle.css';
-import { handleAuth } from '../../Service/commonService';
 
 function AtributeFilter({atribute, onCheck}){
     return(

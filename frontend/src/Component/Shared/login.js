@@ -1,21 +1,17 @@
-import React, {useContext, useEffect} from 'react';
-import logo from "../../Asset/webLogo.png";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
-import {AuthContext} from '../../Context/loginSessionContext'
+import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../Context/loginSessionContext';
 import '../componentStyle.css';
-import { handleAuth } from '../../Service/commonService';
 
 export default function Login(){
     const { authState: {isAuthenticated, user}} = useContext(AuthContext)
-    const navigate = useNavigate()
+    const { loginFunc } = useContext(AuthContext)
 
-    useEffect(() => {
-        const path = handleAuth(isAuthenticated, user?.type);
-        if(path!=null) navigate(path)
-    });
+    const navigate = useNavigate()
 
     return(
         <div className='login-form'>
+            <button onClick={()=>loginFunc()}>login</button>
             login form here
         </div>
     )
