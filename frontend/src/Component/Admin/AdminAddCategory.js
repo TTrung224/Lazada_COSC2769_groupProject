@@ -1,5 +1,5 @@
-import { Form, redirect, useNavigate } from "react-router-dom";
-import { addCategory } from "./AdminAPI";
+import { Form, redirect, useLoaderData, useNavigate } from "react-router-dom";
+import { addCategory, getCategory, updateCategory } from "./AdminAPI";
 import { useState } from "react";
 import AdminAttributeList from "./AdminAttributeList";
 import AdminAddAttribute from "./AdminAddAttribute";
@@ -14,11 +14,36 @@ export async function addNewCategory({ request }) {
     return redirect("/admin/category")
 }
 
+export async function loadCategory( {params} ) {
+    const category = await getCategory(parseInt(params.categoryID))
+    return category
+}
+
+export async function saveCategory( {request, params} ) {
+    document.querySelector("#cancelBtn").disabled = true
+    document.querySelector("#submitBtn").disabled = true
+    const formData = await request.formData()
+    const data = Object.fromEntries(formData)
+    const updatedCategory = {name: data.name, attributes: JSON.parse(data.attributes), parent: parseInt(data.parent)}
+    await updateCategory(parseInt(params.categoryID), updatedCategory)
+    return redirect("/admin/category")
+}
 
 const AdminAddCategory = () => {
     const navigate = useNavigate()
-
-    const [attributes, setAttributes] = useState([])
+    const category = useLoaderData()
+    
+    let name = ""
+    let attr = []
+    let parentField = <></>
+    if(category){
+        name = category.name
+        attr = category.attributes
+        parentField = <input name="parent" id="parent" type="hidden" value={category.parent} />
+                
+    }
+    
+    const [attributes, setAttributes] = useState(attr)
     function addAttribute(name, type, required){
         const newAttributes = [...attributes, {name: name, type: type, required: required}]
         setAttributes(newAttributes)
@@ -38,7 +63,7 @@ const AdminAddCategory = () => {
             }}>
                 <div className="form-group my-2">
                     <label className="h5" htmlFor="name">Category Name: </label>
-                    <input className="form-control" type="text" name="name" id="name" required />
+                    <input className="form-control" type="text" name="name" id="name" defaultValue={name} required />
                 </div>
 
                 <div className="form-group my-2">
@@ -47,6 +72,7 @@ const AdminAddCategory = () => {
                     <AdminAddAttribute addAttribute={addAttribute} />
                 </div>
                 <input name="attributes" id="attributes" type="hidden" value={JSON.stringify(attributes)} />
+                {parentField}
                 {/* Submit, Cancel buttons */}
                 <hr />
                 <div className="mt-3">

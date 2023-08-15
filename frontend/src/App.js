@@ -8,7 +8,7 @@ import ProductList from './Component/Shared/productList';
 import Signup from './Component/Shared/signup';
 import AdminCategory, { loadCategories } from './Component/Admin/AdminCategory';
 import Admin from './Component/Admin/Admin';
-import AdminAddCategory, { addNewCategory } from './Component/Admin/AdminAddCategory';
+import AdminAddCategory, { addNewCategory, loadCategory, saveCategory } from './Component/Admin/AdminAddCategory';
 
 function App() {
 
@@ -38,6 +38,12 @@ function App() {
           path: "category/add",
           element: <AdminAddCategory/>,
           action: addNewCategory
+        },
+        {
+          path: "category/:categoryID",
+          element: <AdminAddCategory/>,
+          loader: loadCategory,
+          action: saveCategory
         }
       ]
     },
