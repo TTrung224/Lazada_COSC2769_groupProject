@@ -4,6 +4,7 @@ import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import {AuthContext} from '../../Context/loginSessionContext'
 import '../componentStyle.css';
 import { handleAuth } from '../../Service/commonService';
+import Loader from '../Shared/loader';
 
 function ProductCard({product}){
     return(
@@ -21,54 +22,65 @@ function ProductCard({product}){
 }
 
 export default function ProductList(){
-    let productList = []
-    let pagingList = []
-
-    for (let i = 0; i < 13; i++) { 
-        productList.push({id: i+1})
-    }
-
-
-    function filter(){
-        // Search and filter logic go here
-        return productList;
-    }
+    const productList = loadData()
 
     const filteredList = filter()
-    const totalPage = Math.ceil(filteredList.length/12)
 
     const [pagination, setPagination] = useState({current: 1, productList: filteredList.slice(0, 12)})
+    const [isLoading, setIsLoading] = useState(false)
 
-    if(totalPage < 7){
-        for(let i = 0; i < totalPage; i++){
-            if((i+1) === pagination.current){
-                pagingList.push(<li className="page-item active"><button className="page-link" onClick={()=>onChangePage(i+1)}>{i+1}</button></li>)
-            }else{
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(i+1)}>{i+1}</button></li>)
+    const totalPage = Math.ceil(filteredList.length/12)
+    const pagingList = generatePagination(totalPage, pagination)
+
+    function generatePagination(totalPage, pagination){
+        let pagingList = []
+        if(totalPage < 7){
+            for(let i = 0; i < totalPage; i++){
+                if((i+1) === pagination.current){
+                    pagingList.push(<li className="page-item active"><button className="page-link" onClick={()=>onChangePage(i+1)}>{i+1}</button></li>)
+                }else{
+                    pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(i+1)}>{i+1}</button></li>)
+                }
+            }
+        } else {
+            if(pagination.current > 1){
+                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(1)}>1</button></li>)
+            }
+            if(pagination.current >= 4){
+                pagingList.push(<li className="page-item"><button className="page-link" disabled>...</button></li>)
+            }
+            if(pagination.current > 2){
+                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(pagination.current-1)}>{pagination.current-1}</button></li>)
+            }
+    
+            pagingList.push(<li className="page-item active"><button className="page-link" onClick={()=>onChangePage(pagination.current)}>{pagination.current}</button></li>)
+            
+            if(pagination.current <= totalPage-2){
+                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(pagination.current+1)}>{pagination.current+1}</button></li>)
+            }
+            if(pagination.current <= totalPage-3){
+                pagingList.push(<li className="page-item"><button className="page-link" disabled>...</button></li>)
+            }
+            if(pagination.current < totalPage){
+                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(totalPage)}>{totalPage}</button></li>)
             }
         }
-    } else {
-        if(pagination.current > 1){
-            pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(1)}>1</button></li>)
-        }
-        if(pagination.current >= 4){
-            pagingList.push(<li className="page-item"><button className="page-link" disabled>...</button></li>)
-        }
-        if(pagination.current > 2){
-            pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(pagination.current-1)}>{pagination.current-1}</button></li>)
+        return pagingList
+    }
+
+    function loadData(){
+        let productList = []
+
+        for (let i = 0; i < 90; i++) { 
+            productList.push({id: i+1})
         }
 
-        pagingList.push(<li className="page-item active"><button className="page-link" onClick={()=>onChangePage(pagination.current)}>{pagination.current}</button></li>)
-        
-        if(pagination.current <= totalPage-2){
-            pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(pagination.current+1)}>{pagination.current+1}</button></li>)
-        }
-        if(pagination.current <= totalPage-3){
-            pagingList.push(<li className="page-item"><button className="page-link" disabled>...</button></li>)
-        }
-        if(pagination.current < totalPage){
-            pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(totalPage)}>{totalPage}</button></li>)
-        }
+        return productList
+    }
+
+    function filter(product){
+        // Search and filter logic go here
+        return productList;
     }
 
     const onChangePage = (newPage)=>{
@@ -80,6 +92,7 @@ export default function ProductList(){
     return(
         <div className='product-list'>
             <div className='card-holder row justify-content-center'>
+                {(isLoading) ? <Loader/> : <></>}
                 {pagination.productList.map(product => <ProductCard key={product.id} product={product} />)}
             </div>
             <nav className='paginavtion-nav' aria-label="Page navigation example">

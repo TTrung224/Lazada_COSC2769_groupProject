@@ -205,4 +205,26 @@
     background-color: rgb(39, 66, 170);
 }
 
+/* loader */
+#loader-container{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background-color: rgba(128, 128, 128, 0.504);
+}
+
+#loader-container .text-center{
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+#loader-container .spinner-border{
+    width: 3rem;
+    height: 3rem;
+    color: rgb(16, 20, 104);
 }
