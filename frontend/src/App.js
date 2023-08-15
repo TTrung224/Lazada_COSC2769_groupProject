@@ -74,7 +74,7 @@ function App() {
       element: <SellerOrder/>,
     },
     {
-      path: "/seller",
+      path: "/seller/product",
       element: <SellerProduct/>,
     },
   ]);
