@@ -2,20 +2,22 @@ import { useState } from 'react'
 import { ChevronCompactDown, ChevronCompactRight, PencilSquare, Trash } from 'react-bootstrap-icons'
 import AdminCategoryList from "./AdminCategoryList";
 
-const AdminCategoryItem = ({ item, handleDeleteCategory }) => {
-    const [collapsed, setCollapsed] = useState(true)
+const AdminCategoryItem = ({ categories, item, handleDeleteCategory }) => {
+    const [collapsed, setCollapsed] = useState(true)    
     let collapseElement = <></>
     let collapseIndicator = <ChevronCompactRight />
     if (!collapsed) {
         collapseElement =
             <div className='ms-3'>
-                <AdminCategoryList categories={item.subCat} handleDeleteCategory={handleDeleteCategory}/>
+                <AdminCategoryList categories={categories} parent={item.id} handleDeleteCategory={handleDeleteCategory}/>
             </div>
         collapseIndicator = <ChevronCompactDown />
     } else {
         collapseElement = <></>
         collapseIndicator = <ChevronCompactRight />
     }
+
+
     return (
         <>
             <div className="row align-items-center">

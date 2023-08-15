@@ -1,62 +1,38 @@
 import { useState } from 'react';
 import AdminCategoryList from './AdminCategoryList';
-import Category from '../../Model/Category'
 
-const categories = [
-    new Category(0, "Electronic Devices"),
-    new Category(1, "Home Appliances"),
-    new Category(2, "Groceries and Snack")
+
+const test = [
+    { id: 0, name: 'Electronic Devices', parent: -1 },
+    { id: 1, name: 'Home Appliances', parent: -1 },
+    { id: 2, name: 'Groceries and Snack', parent: -1 },
+    { id: 3, name: 'Computer', parent: 0 },
+    { id: 4, name: 'Laptop', parent: 0 },
+    { id: 5, name: 'Kitchen', parent: 1 },
+    { id: 6, name: 'Living Room', parent: 1 },
+    { id: 7, name: 'Sweet', parent: 2 },
+    { id: 8, name: 'Gaming', parent: 3 },
+    { id: 9, name: '3D Modelling', parent: 3 }
 ]
 
-categories[0].addSubCat(new Category(3, "Computer"))
-categories[0].subCat[0].addSubCat(new Category(6, "Gaming"))
-categories[0].subCat[0].addSubCat(new Category(7, "3D Modelling"))
-categories[0].addSubCat(new Category(4, "Laptop"))
-categories[0].addSubCat(new Category(5, "Headphone"))
-categories[1].addSubCat(new Category(8, "Kitchen"))
-categories[1].addSubCat(new Category(9, "Living Room"))
-categories[2].addSubCat(new Category(10, "Sweet"))
-categories[2].addSubCat(new Category(11, "Chips"))
-
-
 const AdminCategory = () => {
-    const [category, setCategory] = useState(categories)
+    const [category, setCategory] = useState(test)
 
     function handleDeleteCategory(item) {
-        // If top category, delete directly
-        if(item.parent === null){
-            const newCategory = category.filter(c => c !== item)
-            setCategory(newCategory)
-            return
-        }
+        const newCategory = category.filter(c => c !== item)
 
-        // If not top category, remove subCat, then copy subCat array to parent iteratively 
-        let parent = item.parent
-        let newCategory = parent.subCat.filter(c => c !== item)
-        while(parent.parent !== null){
-            let prev = parent
-            let prevCat = newCategory
-            parent = parent.parent
-            newCategory = parent.subCat.map(c => {
-                if(prev.id === c.id){
-                    c.subCat = prevCat
-                }
-                return c
-            })
-        }
-        setCategory(category.map(c =>{ 
-            if(c.id === parent.id){
-                c.subCat = newCategory
-            }
-            return c
-        }))
+        setCategory(newCategory)
+    }
+
+    function handleAddTopCategory(category) {
+
     }
 
     return (
         <div className="container">
             <h2>Category</h2>
-            <button className="btn btn-primary mt-4">Add Category</button>
-            <AdminCategoryList categories={category} handleDeleteCategory={handleDeleteCategory} />
+            <button className="btn btn-primary mt-4" onClick={() => handleAddTopCategory()}>Add Category</button>
+            <AdminCategoryList categories={category} parent={-1} handleDeleteCategory={handleDeleteCategory} />
         </div>
     );
 }
