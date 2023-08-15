@@ -15,8 +15,39 @@ export default function Signup(){
     });
 
     return(
-        <div className='signup-form'>
-            signup form here
+        <>
+        <label for="sign-up" >Create your Lazada Account</label>
+        <br/>
+        <input type='checkbox' id='checkbox1' value="customer"/>
+        <label for='checkbox1'>Customer</label>
+        <input type='checkbox' id='checkbox2' value="seller"/>
+        <label for='checkbox2'>Seller</label>
+        <div className='signup-form' id="sign-up">
+            <div className='signup-left'>
+                <label for="email">Email</label>
+                <input type='text' id="email" placeholder='Enter yopur email'/>
+                <label for="password">Password</label>
+                <input type='password' id='password' placeholder='Enter password' />
+                <label for="re-pwd">Confirm password</label>
+                <input type='password' id='re-pwd' placeholder='ReEnter your password' />
+                <button type='button'>Create account</button>
+            </div>
+            <div className='signup-right'> 
+                <label for="full-name">Full name</label>
+                <input type='text' id='full-name' placeholder='Enter your full name'/>
+                <label for='phone-number'>Phone number</label>
+                <input type='number' id="phone-number" placeholder='Enter your phone number'/>
+                <label for='address'>Address</label>
+                <input type='text' id='address' placeholder='Enter your address'/>
+                <p>Already have an account? <Link to='/login'>Sign in</Link> here </p>
+            </div>
+            
+            
+            
+
+           
         </div>
+        </>
+        
     )
 }

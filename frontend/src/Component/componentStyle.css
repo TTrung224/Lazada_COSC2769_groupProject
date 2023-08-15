@@ -228,3 +228,18 @@
     height: 3rem;
     color: rgb(16, 20, 104);
 }
+
+/* sign-up-form */
+.signup-form{
+    background-color: aquamarine;
+    height: 100%;
+    display: flex;
+
+}
+.signup-left{
+    margin-right: 30px;
+}
+.signup-left,.signup-right{
+    display:flex;
+    flex-direction: column;
+}
