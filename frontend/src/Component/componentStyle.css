@@ -278,11 +278,25 @@
 /* seller */
 
 .seller-product-list{
-    background-color: aquamarine;
+    background-color: rgb(236, 236, 236);
 }
 .product-item{
     display: flex;
+    padding: 10px 20px;
     
+}
+.product-item img{
+    height: 100px;
+    width:20%;
+    margin-right: 20px;
+}
+.product-item .product-item-middle{
+    width:20%;
+    margin-right: 20px;
+}
+.product-item .product-item-right{
+    width:20%;
+    margin-right: 20px;
 }
 .product-item div{
     display :flex;
@@ -295,6 +309,10 @@
     border: none;
     border-radius: 8px;
     padding: 5px 20px;
+    margin-bottom: 20px;
+}
+.seller-item-button .item-edit:hover{
+    background-color: rgb(52, 163, 146) ;
 }
 .seller-item-button .item-delete{
     color:white;
@@ -302,5 +320,27 @@
     border: none;
     border-radius: 8px;
     padding: 5px 20px;
+}
+.seller-item-button .item-delete:hover{
+    background-color:rgb(216, 5, 40) ;
+}
 
+.seller-header-bar{
+    background-color: rgb(177, 179, 179);
+}
+.seller-header-bar button{
+    border:none;
+    border-radius: 8px;
+    margin: 10px 20px;
+    background-color: rgb(89, 240, 240);
+}
+.seller-header-bar button:hover{
+    background-color: rgb(97, 173, 173);
+}
+.seller-header-bar input{
+    border: none;
+    border-radius: 8px;
+}
+.seller-product-container{
+    margin: 10px 20px;
 }
