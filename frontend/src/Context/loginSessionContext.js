@@ -6,13 +6,13 @@ const AuthContextProvider = ({children}) => {
 
     // auth state
     const [authState, setAuth] = useState({
-        isAuthenticated: false,
+        isAuthenticated: true,
         user: null
     })
     
-    const Login = async userForm => {
+    const loginFunc = async (userForm) => {
         try {
-            
+            setAuth({isAuthenticated: true, user: {name: "test", type: "customer"}})
         } catch (error) {
             console.log(error)
             if (error.response.data) return error.response.data
@@ -20,9 +20,9 @@ const AuthContextProvider = ({children}) => {
         }
     }
 
-    const Logout = async () => {
+    const logoutFunc = async () => {
         try{
-
+            setAuth({isAuthenticated: false, user: null})
         } catch (error) {
             console.log(error)
             if (error.response.data) return error.response.data
@@ -42,7 +42,7 @@ const AuthContextProvider = ({children}) => {
     }
 
     const authContextData = { 
-        authState, Login, Logout, loadUser
+        authState, loginFunc, logoutFunc, loadUser
     };
     
     return (

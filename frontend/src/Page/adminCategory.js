@@ -19,10 +19,6 @@ const AdminCategory = () => {
         setCategory(newCategory)
     }
 
-    // TODO: EDIT + ADD ATTRIBUTES AND STUFF, CAN ONLY EDIT IF NO ITEM UNDER CATEGORY
-    // TODO: ADD CATEGORY
-    // TODO: ADD SUBCATEGORY, SUBCATEGORY MUST INHERIT ALL ATTRIBUTES OF PARENT
-
     return (
         <div className="container">
             <h2>Category</h2>
