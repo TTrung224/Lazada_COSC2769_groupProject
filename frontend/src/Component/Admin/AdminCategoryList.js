@@ -11,7 +11,7 @@ const AdminCategoryList = ({ categories, parent, handleDeleteCategory }) => {
                         </div>
                     )
                 }
-                return <></>
+                return <div key={c.id}></div>
             })}
         </div>
     );

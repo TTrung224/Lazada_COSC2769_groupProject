@@ -10,8 +10,8 @@ export async function loadCategories(){
 }
 
 const AdminCategory = () => {
-    const test = useLoaderData()
-    const [category, setCategory] = useState(test)
+    const data = useLoaderData()
+    const [category, setCategory] = useState(data)
 
     function handleDeleteCategory(item) {
         // TODO: CAN ONLY DELETE IF NO ITEM IS UNDER THE CATEGORY

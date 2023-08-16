@@ -28,9 +28,11 @@ const AdminCategoryItem = ({ categories, item, handleDeleteCategory }) => {
                     </button>
                 </div>
                 <div className="col-6 text-end">
-                    <button className="btn btn-link btn-sm">
-                        +Subcategory
-                    </button>
+                    <Link to={`add/${item.id}`}>
+                        <button className="btn btn-link btn-sm">
+                            +Subcategory
+                        </button>
+                    </Link>
 
                     <Link to={`${item.id}`}>
                         <button className="btn">

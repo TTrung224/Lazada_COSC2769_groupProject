@@ -9,7 +9,7 @@ const AdminAttributeList = ({ attributes, allowDelete, deleteAttribute }) => {
         <div>
             <ul>
                 {attributes.map((a, i) => {
-                    const required = a.required ? "(required)" : ""
+                    const required = a.required ? "(required)" : "(optional)"
                     return (
                         <li key={i}><b>{a.name}</b> {required} : {a.type}  {deleteBtn(a)}</li>
                     )

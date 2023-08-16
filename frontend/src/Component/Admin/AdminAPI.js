@@ -24,10 +24,10 @@ export async function getCategory(id) {
     })
 }
 
-export async function addCategory(name, attributes) {
+export async function addCategory(name, attributes, parent) {
     return new Promise(resolve => {
         setTimeout(() => {
-            test.push({ id: test.length, name: name, attributes: attributes, parent: -1 })
+            test.push({ id: test.length, name: name, attributes: attributes, parent: parent })
             resolve(true)
         }, 1000)
     })

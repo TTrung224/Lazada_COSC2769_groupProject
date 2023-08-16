@@ -10,7 +10,7 @@ export async function addNewCategory({ request }) {
     document.querySelector("#submitBtn").disabled = true
     const formData = await request.formData()
     const newData = Object.fromEntries(formData)
-    await addCategory(newData.name, JSON.parse(newData.attributes))
+    await addCategory(newData.name, JSON.parse(newData.attributes), parseInt(newData.parent))
     return redirect("/admin/category")
 }
 
@@ -24,7 +24,20 @@ export async function loadCategory({ params }) {
         category.push(parentCat)
         parent = parentCat.parent
     }
+    return category
+}
 
+export async function loadCategoryWithEmptyFirst({ params }){
+    // Load category and all of its parents
+    // Add an empty category at front to display properly when adding subcategory
+    const category = [await getCategory(parseInt(params.categoryID))]
+    let parent = category[0].parent
+    while (parent !== -1) {
+        let parentCat = await getCategory(parseInt(parent))
+        category.push(parentCat)
+        parent = parentCat.parent
+    }
+    category.unshift({id: -2, name: '', attributes: [], parent: category[0].id})
     return category
 }
 
@@ -46,7 +59,7 @@ const AdminAddCategory = () => {
     let name = ""
     let attr = []
     let parentVal = -1
-    let parentAttributes =<></>
+    let parentAttributes = <></>
 
     // If edit, LoaderData will be defined. Assign its values to default values
     if (categories) {
@@ -58,16 +71,16 @@ const AdminAddCategory = () => {
         <div className="form-group my-4">
             <h5>Parent{'(s)'}: </h5>
             <ol>
-                {categories.toReversed().map((c, i) => {
-                if (i < categories.length - 1) {
+                {categories.toReversed().map((c) => {
+                if (c.id !== category.id) {
                     return (
-                        <li>
+                        <li key={c.id}>
                             <h6>{c.name}</h6>
                             <AdminAttributeList attributes={c.attributes} allowDelete={false} />
                         </li>
                     )
                 }
-                return <></>
+                return <div key={c.id}></div>
             })}
             </ol>
         </div>
