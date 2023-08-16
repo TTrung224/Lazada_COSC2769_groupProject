@@ -6,9 +6,8 @@ import Navbar from './Component/Shared/navbar';
 import {AuthContext} from './Context/loginSessionContext'
 import ProductList from './Component/Shared/productList';
 import Signup from './Component/Shared/signup';
-import AdminCategory, { loadCategories } from './Component/Admin/AdminCategory';
-import Admin from './Component/Admin/Admin';
-import AdminAddCategory, { addNewCategory, loadCategory, loadCategoryWithEmptyFirst, saveCategory } from './Component/Admin/AdminAddCategory';
+import AdminCategory, { loadCategories } from './Page/adminCategory';
+import AdminCategoryForm, { addNewCategory, loadCategory, loadCategoryWithEmptyFirst, saveCategory } from './Page/adminCategoryForm';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 function App() {
@@ -27,33 +26,27 @@ function App() {
       element: <><Navbar/><Signup/></>,
     },
     {   
-      path: "/admin",
-      element: <><Admin/></>,
-      children: [
-        {
-          path: "category",
-          element: <AdminCategory />,
-          loader: loadCategories
-        },
-        {
-          path: "category/add",
-          element: <AdminAddCategory/>,
-          action: addNewCategory
-        },
-        {
-          path: "category/add/:categoryID",
-          element: <AdminAddCategory/>,
-          loader: loadCategoryWithEmptyFirst,
-          action: addNewCategory
-        },
-        {
-          path: "category/:categoryID",
-          element: <AdminAddCategory/>,
-          loader: loadCategory,
-          action: saveCategory
-        }
-      ]
+      path: "/admin/product-category",
+      element: <AdminCategory />,
+      loader: loadCategories
     },
+    {
+      path: "/admin/product-category/add",
+      element: <AdminCategoryForm/>,
+      action: addNewCategory
+    },
+    {
+      path: "/admin/product-category/add/:categoryID",
+      element: <AdminCategoryForm/>,
+      loader: loadCategoryWithEmptyFirst,
+      action: addNewCategory
+    },
+    {
+      path: "/admin/product-category/:categoryID",
+      element: <AdminCategoryForm/>,
+      loader: loadCategory,
+      action: saveCategory
+    }
     // {
     //   path: "/seller",
     //   element: <MyAccount />,

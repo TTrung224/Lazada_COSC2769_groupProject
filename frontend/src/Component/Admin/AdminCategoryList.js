@@ -1,3 +1,4 @@
+import React from 'react';
 import AdminCategoryItem from './AdminCategoryItem';
 
 const AdminCategoryList = ({ categories, parent, handleDeleteCategory }) => {
@@ -11,7 +12,7 @@ const AdminCategoryList = ({ categories, parent, handleDeleteCategory }) => {
                         </div>
                     )
                 }
-                return <div key={c.id}></div>
+                return <React.Fragment key={c.id}></React.Fragment>
             })}
         </div>
     );

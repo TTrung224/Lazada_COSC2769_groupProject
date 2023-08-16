@@ -1,8 +1,8 @@
 import { Form, redirect, useLoaderData, useNavigate } from "react-router-dom";
-import { addCategory, getCategory, updateCategory } from "./AdminAPI";
-import { useState } from "react";
-import AdminAttributeList from "./AdminAttributeList";
-import AdminAddAttribute from "./AdminAddAttribute";
+import { addCategory, getCategory, updateCategory } from "../Component/Admin/AdminAPI";
+import  React, { useState } from "react";
+import AdminAttributeList from "../Component/Admin/AdminAttributeList";
+import AdminAddAttribute from "../Component/Admin/AdminAddAttribute";
 
 
 export async function addNewCategory({ request }) {
@@ -11,7 +11,7 @@ export async function addNewCategory({ request }) {
     const formData = await request.formData()
     const newData = Object.fromEntries(formData)
     await addCategory(newData.name, JSON.parse(newData.attributes), parseInt(newData.parent))
-    return redirect("/admin/category")
+    return redirect("/admin/product-category")
 }
 
 export async function loadCategory({ params }) {
@@ -48,11 +48,11 @@ export async function saveCategory({ request, params }) {
     const data = Object.fromEntries(formData)
     const updatedCategory = { name: data.name, attributes: JSON.parse(data.attributes), parent: parseInt(data.parent) }
     await updateCategory(parseInt(params.categoryID), updatedCategory)
-    return redirect("/admin/category")
+    return redirect("/admin/product-category")
 }
 
 
-const AdminAddCategory = () => {
+const AdminCategoryForm = () => {
     const navigate = useNavigate()
     const categories = useLoaderData()
     
@@ -80,7 +80,7 @@ const AdminAddCategory = () => {
                         </li>
                     )
                 }
-                return <div key={c.id}></div>
+                return <React.Fragment key={c.id}></React.Fragment>
             })}
             </ol>
         </div>
@@ -138,4 +138,4 @@ const AdminAddCategory = () => {
     );
 }
 
-export default AdminAddCategory;
+export default AdminCategoryForm;

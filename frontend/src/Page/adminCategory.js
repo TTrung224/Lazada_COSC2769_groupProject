@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import AdminCategoryList from './AdminCategoryList';
+import AdminCategoryList from '../Component/Admin/AdminCategoryList';
 import { Link, useLoaderData } from 'react-router-dom';
-import { getCategories } from './AdminAPI';
+import { getCategories } from '../Component/Admin/AdminAPI';
 
 
 export async function loadCategories(){
