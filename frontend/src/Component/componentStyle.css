@@ -327,14 +327,17 @@
 
 .seller-header-bar{
     background-color: rgb(177, 179, 179);
+    padding: 5px;
 }
-.seller-header-bar button{
-    border:none;
-    border-radius: 8px;
+.seller-header-bar .add-product{
+    color:black;
     margin: 10px 20px;
-    background-color: rgb(89, 240, 240);
+    text-decoration: none;
+    background-color: aqua;
+    padding:2.5px;
+    border-radius: 8px;
 }
-.seller-header-bar button:hover{
+.seller-header-bar .add-product:hover{
     background-color: rgb(97, 173, 173);
 }
 .seller-header-bar input{
@@ -343,4 +346,41 @@
 }
 .seller-product-container{
     margin: 10px 20px;
+}
+
+/* seller add product */
+.add-product-container{
+    background-color: rgb(216, 233, 248);
+    margin: 20px 33%;
+    padding:20px;
+    border-radius: 8px;
+}
+.product-add-input{
+    display: flex;
+
+}
+.product-add-input input{
+    border:none;
+    border-radius: 8px;
+    padding:5px;
+    margin-bottom: 10px;
+}
+.product-add-child{
+    display: flex;
+    flex-direction: column;
+}
+.product-add-child-left{
+    margin-right: 20%;
+}
+.product-add-button button{
+    border: none;
+    border-radius: 8px;
+    padding:5px 60px;
+}
+.product-add-button .product-add{
+    background-color: rgb(26, 246, 41);
+    margin-right: 29%;
+}
+.product-add-button .product-cancel{
+    background-color: rgb(250, 74, 115);
 }

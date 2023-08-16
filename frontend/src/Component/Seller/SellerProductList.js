@@ -1,9 +1,10 @@
+import { Link } from 'react-router-dom';
 export default function ProductList(){
     return(
         <div className='seller-product-container'>
         <div className="seller-product-list">
                 <div className="seller-header-bar">
-                    <button>Add more product</button>
+                    <Link className='add-product' to="/seller/product/addproduct">Add more product</Link>
                     <input type="search" placeholder='search for product'/>
                 </div>
                 <div className="product-item">

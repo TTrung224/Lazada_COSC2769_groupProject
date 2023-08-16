@@ -16,6 +16,7 @@ import CustomerCart from './Page/customerCart';
 import Logout from './Component/Shared/logout';
 import AdminCategory, { loadCategories } from './Page/adminCategory';
 import AdminCategoryForm, { addNewCategory, loadCategory, loadCategoryWithEmptyFirst, saveCategory } from './Page/adminCategoryForm';
+import AddProduct from './Component/Seller/AddProduct';
 
 function App() {
 
@@ -97,6 +98,10 @@ function App() {
     {
       path: "/seller/product",
       element: <SellerProduct/>,
+    },
+    {
+      path: "/seller/product/addproduct",
+      element:<AddProduct/>
     }
   ]);
 
