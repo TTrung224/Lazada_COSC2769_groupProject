@@ -77,7 +77,7 @@ function App() {
     {
       path: "/admin/product-category/add/:categoryID",
       element: <AdminCategoryForm/>,
-      loader: loadCategoryWithEmptyFirst,
+      loader: loadCategory,
       action: addNewCategory
     },
     {
