@@ -1,21 +1,20 @@
 import { useState } from 'react'
-import { ChevronCompactDown, ChevronCompactRight, PencilSquare, Trash } from 'react-bootstrap-icons'
 import AdminCategoryList from "./AdminCategoryList";
 import { Link } from 'react-router-dom';
 
 const AdminCategoryItem = ({ categories, item, handleDeleteCategory }) => {
     const [collapsed, setCollapsed] = useState(true)
     let collapseElement = <></>
-    let collapseIndicator = <ChevronCompactRight />
+    let collapseIndicator = <i className='bi-chevron-compact-right' />
     if (!collapsed) {
         collapseElement =
             <div className='ms-3'>
                 <AdminCategoryList categories={categories} parent={item.id} handleDeleteCategory={handleDeleteCategory} />
             </div>
-        collapseIndicator = <ChevronCompactDown />
+        collapseIndicator = <i className='bi-chevron-compact-down' />
     } else {
         collapseElement = <></>
-        collapseIndicator = <ChevronCompactRight />
+        collapseIndicator = <i className='bi-chevron-compact-right' />
     }
 
 
@@ -36,12 +35,12 @@ const AdminCategoryItem = ({ categories, item, handleDeleteCategory }) => {
 
                     <Link to={`${item.id}`}>
                         <button className="btn">
-                            <PencilSquare />
+                            <i className="bi-pencil-square"></i>
                         </button>
                     </Link>
 
                     <button className="btn" onClick={() => handleDeleteCategory(item)}>
-                        <Trash />
+                        <i className="bi-trash"></i>
                     </button>
                 </div>
             </div>

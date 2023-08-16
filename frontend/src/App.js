@@ -9,6 +9,7 @@ import Signup from './Component/Shared/signup';
 import AdminCategory, { loadCategories } from './Component/Admin/AdminCategory';
 import Admin from './Component/Admin/Admin';
 import AdminAddCategory, { addNewCategory, loadCategory, loadCategoryWithEmptyFirst, saveCategory } from './Component/Admin/AdminAddCategory';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 function App() {
 
