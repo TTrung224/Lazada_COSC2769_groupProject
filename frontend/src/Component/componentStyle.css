@@ -372,10 +372,11 @@
 .product-add-child-left{
     margin-right: 20%;
 }
-.product-add-button button{
+.product-add-button button,.product-cancel {
     border: none;
     border-radius: 8px;
     padding:5px 60px;
+    color:black;
 }
 .product-add-button .product-add{
     background-color: rgb(26, 246, 41);
@@ -383,4 +384,5 @@
 }
 .product-add-button .product-cancel{
     background-color: rgb(250, 74, 115);
+    text-decoration: none;
 }

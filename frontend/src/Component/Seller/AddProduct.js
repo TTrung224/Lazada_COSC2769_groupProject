@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Navbar from '../Shared/navbar'
 export default function AddProduct(){
     return(
@@ -23,7 +24,7 @@ export default function AddProduct(){
                 </div>
                 <div className='product-add-button'>
                     <button className='product-add'>Add</button>
-                    <button className='product-cancel'>Cancel</button>
+                    <Link to='/seller/product' className='product-cancel'>Cancel</Link>
                 </div>
                 
             </div>
