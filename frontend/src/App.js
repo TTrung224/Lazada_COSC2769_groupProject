@@ -13,6 +13,7 @@ import CustomerProduct from './Page/customerProduct';
 import CustomerOrder from './Page/customerOrder';
 import CustomerCart from './Page/customerCart';
 import Logout from './Component/Shared/logout';
+import { loadData, loadItems } from './Component/Customer/cart';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
     {
       path: "/guest/cart",
       element: <GuestCart/>,
+      loader: loadItems
     },
     {
       path: "/login",
