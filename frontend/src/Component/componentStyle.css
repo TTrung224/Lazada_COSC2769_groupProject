@@ -376,7 +376,7 @@
 .product-add-child-left{
     margin-right: 20%;
 }
-.product-add-button button,.product-cancel {
+.product-add-button .product-add,.product-cancel {
     border: none;
     border-radius: 8px;
     padding:5px 60px;
@@ -385,6 +385,7 @@
 .product-add-button .product-add{
     background-color: rgb(26, 246, 41);
     margin-right: 29%;
+    text-decoration: none;
 }
 .product-add-button .product-cancel{
     background-color: rgb(250, 74, 115);

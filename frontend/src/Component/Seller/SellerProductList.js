@@ -15,10 +15,13 @@ export default function ProductList(){
     ]
 
     const [products,setProduct] = useState(productList)
-    const deleteProduct =(id) =>{
+
+    const handleDelete =(id) =>{
         setProduct(products => products.filter(product => product.id !== id))
         alert("Product id: "+id+"d eleted")
     }
+    // function handleUpdate(){}
+
 
     return(
         <div className='seller-product-container'>
@@ -41,7 +44,7 @@ export default function ProductList(){
                                 </div>
                                 <div className="seller-item-button">
                                     <button className="item-edit">Edit</button>
-                                    <button className="item-delete" onClick={()=>deleteProduct(product.id)}>Delete</button>
+                                    <button className="item-delete" onClick={()=>handleDelete(product.id)}>Delete</button>
                                 </div>
                             </div>
                         )
