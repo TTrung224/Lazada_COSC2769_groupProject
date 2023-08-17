@@ -21,20 +21,18 @@ function ProductCard({product}){
 }
 
 export default function ProductList(){
-    let { page } = useParams()
+    let page  = parseInt(useParams().page)
     if(!page){
         page = 1
     }
-    else {
-        page = parseInt(page)
-    }
+    
     const maxItemsPerPage = 12
     const [isLoading, setIsLoading] = useState(false)
 
     const productList = loadData()
     const filteredList = filter()
-
-
+    const [displayProducts, setDisplayProducts] = useState(paginateArray(filteredList, page, maxItemsPerPage))
+    console.log(filteredList.length)
     function loadData(){
         let productList = []
 
@@ -54,10 +52,10 @@ export default function ProductList(){
         <div className='product-list'>
             <div className='card-holder row justify-content-center'>
                 {(isLoading) ? <Loader/> : <></>}
-                {paginateArray(filteredList, page, maxItemsPerPage).map(product => <ProductCard key={product.id} product={product} />)}
+                {displayProducts.map(product => <ProductCard key={product.id} product={product} />)}
             </div>
 
-            <PaginationList itemCount={filteredList.length} maxItemsPerPage={maxItemsPerPage} currentIdx={page} />
+            <PaginationList item={filteredList} setItem={setDisplayProducts} maxItemsPerPage={maxItemsPerPage} currentIdx={page} />
         </div>
     )
 }

@@ -3,6 +3,7 @@ import { addCategory, getCategory, updateCategory } from "../Component/Admin/Adm
 import React, { useState } from "react";
 import AdminAttributeList from "../Component/Admin/AdminAttributeList";
 import AdminAddAttribute from "../Component/Admin/AdminAddAttribute";
+import Navbar from "../Component/Shared/navbar";
 
 
 export async function addNewCategory({ request }) {
@@ -53,9 +54,9 @@ const AdminCategoryForm = () => {
     // If edit, LoaderData will be defined. Assign its values to default values
     // If add subcategory, an empty category with parent id is used to display default values  
     if (categories) {
-        
-        const category = state.for === 'subCategory' ? {id: -1, name: '', attributes: [], parent: categories[0].id } : categories[0]
-        
+
+        const category = state.for === 'subCategory' ? { id: -1, name: '', attributes: [], parent: categories[0].id } : categories[0]
+
         name = category.name
         attr = category.attributes
         parentVal = category.parent
@@ -90,43 +91,46 @@ const AdminCategoryForm = () => {
 
 
     return (
-        <div className="container">
-            <h2>Fill in category information:</h2>
-            <hr />
-            <Form method="POST" onSubmit={() => {
-                const request = { attributes: attributes }
-                return request
-            }}>
-                <div className="form-group my-4">
-                    <label className="h5" htmlFor="name">Category Name: </label>
-                    <input className="form-control" type="text" name="name" id="name" defaultValue={name} required />
-                </div>
-
-
-
-                {parentAttributes}
-                <div className="form-group my-4">
-                    <h5>Attributes:</h5>
-                    <AdminAttributeList attributes={attributes} allowDelete={true} deleteAttribute={deleteAttribute} />
-                    <AdminAddAttribute addAttribute={addAttribute} />
-                </div>
-
-                {/* To add values of attributes and parent into the FormData of POST request */}
-                <input name="attributes" id="attributes" type="hidden" value={JSON.stringify(attributes)} />
-                <input name="parent" id="parent" type="hidden" value={parentVal} />
-
-                {/* Submit, Cancel buttons */}
+        <>
+            <Navbar />
+            <div className="container">
+                <h2>Fill in category information:</h2>
                 <hr />
-                <div className="mt-3">
-                    <input id="submitBtn" className="btn btn-primary" type="submit" value="Save" />
-                    <input id="cancelBtn" className="btn btn-secondary ms-2" type="button" value="Cancel" onClick={() => {
-                        navigate(-1)
-                        document.querySelector("#cancelBtn").disabled = true
-                        document.querySelector("#submitBtn").disabled = true
-                    }} />
-                </div>
-            </Form>
-        </div>
+                <Form method="POST" onSubmit={() => {
+                    const request = { attributes: attributes }
+                    return request
+                }}>
+                    <div className="form-group my-4">
+                        <label className="h5" htmlFor="name">Category Name: </label>
+                        <input className="form-control" type="text" name="name" id="name" defaultValue={name} required />
+                    </div>
+
+
+
+                    {parentAttributes}
+                    <div className="form-group my-4">
+                        <h5>Attributes:</h5>
+                        <AdminAttributeList attributes={attributes} allowDelete={true} deleteAttribute={deleteAttribute} />
+                        <AdminAddAttribute addAttribute={addAttribute} />
+                    </div>
+
+                    {/* To add values of attributes and parent into the FormData of POST request */}
+                    <input name="attributes" id="attributes" type="hidden" value={JSON.stringify(attributes)} />
+                    <input name="parent" id="parent" type="hidden" value={parentVal} />
+
+                    {/* Submit, Cancel buttons */}
+                    <hr />
+                    <div className="mt-3">
+                        <input id="submitBtn" className="btn btn-primary" type="submit" value="Save" />
+                        <input id="cancelBtn" className="btn btn-secondary ms-2" type="button" value="Cancel" onClick={() => {
+                            navigate(-1)
+                            document.querySelector("#cancelBtn").disabled = true
+                            document.querySelector("#submitBtn").disabled = true
+                        }} />
+                    </div>
+                </Form>
+            </div>
+        </>
     );
 }
 

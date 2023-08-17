@@ -2,6 +2,7 @@ import { useState } from 'react';
 import AdminCategoryList from '../Component/Admin/AdminCategoryList';
 import { Link, useLoaderData } from 'react-router-dom';
 import { getCategories } from '../Component/Admin/AdminAPI';
+import Navbar from '../Component/Shared/navbar';
 
 
 export async function loadCategories() {
@@ -21,6 +22,7 @@ const AdminCategory = () => {
 
     return (
         <>
+            <Navbar/>
             <div className="container">
                 <h2>Category</h2>
                 <hr />

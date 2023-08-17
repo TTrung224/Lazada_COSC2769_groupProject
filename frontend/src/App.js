@@ -15,7 +15,7 @@ import CustomerOrder from './Page/customerOrder';
 import CustomerCart from './Page/customerCart';
 import Logout from './Component/Shared/logout';
 import AdminCategory, { loadCategories } from './Page/adminCategory';
-import AdminCategoryForm, { addNewCategory, loadCategory, loadCategoryWithEmptyFirst, saveCategory } from './Page/adminCategoryForm';
+import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from './Page/adminCategoryForm';
 import AddProduct from './Component/Seller/AddProduct';
 import AdminMain from './Page/adminMain';
 
@@ -27,8 +27,7 @@ function App() {
       element: <GuestProduct />,
       children: [
         {
-          path: ":page",
-          element: <AdminSellerRequest/>
+          path: ":page"
         }
       ]
     },
@@ -57,8 +56,7 @@ function App() {
       element: <CustomerProduct />,
       children: [
         {
-          path: ":page",
-          element: <AdminSellerRequest/>
+          path: ":page"
         }
       ]
     },
@@ -72,41 +70,38 @@ function App() {
     },
     {
       path: "/admin",
-      element: <><AdminMain/><Navigate to={"seller-request"} /></> ,
+      element: <><Navigate to={"seller-request"} /></>
+    },
+    {
+      path: "/admin/seller-request",
+      element: <AdminSellerRequest/>,
       children: [
         {
-          path: "seller-request",
-          element: <AdminSellerRequest/>,
-          children: [
-            {
-              path: ":page",
-              element: <AdminSellerRequest/>
-            }
-          ]
-        },
-        {
-          path: "product-category",
-          element: <AdminCategory />,
-          loader: loadCategories
-        },
-        {
-          path: "product-category/add",
-          element: <AdminCategoryForm />,
-          action: addNewCategory
-        },
-        {
-          path: "product-category/add/:categoryID",
-          element: <AdminCategoryForm />,
-          loader: loadCategory,
-          action: addNewCategory
-        },
-        {
-          path: "product-category/:categoryID",
-          element: <AdminCategoryForm />,
-          loader: loadCategory,
-          action: saveCategory
+          path: ":page"
         }
       ]
+    },
+    {
+      path: "/admin/product-category",
+      element: <AdminCategory />,
+      loader: loadCategories
+    },
+    {
+      path: "/admin/product-category/add",
+      element: <AdminCategoryForm />,
+      action: addNewCategory
+    },
+    {
+      path: "/admin/product-category/add/:categoryID",
+      element: <AdminCategoryForm />,
+      loader: loadCategory,
+      action: addNewCategory
+    },
+    {
+      path: "/admin/product-category/:categoryID",
+      element: <AdminCategoryForm />,
+      loader: loadCategory,
+      action: saveCategory
     },
     {
       path: "/seller",

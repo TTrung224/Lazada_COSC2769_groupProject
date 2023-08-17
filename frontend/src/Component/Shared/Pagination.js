@@ -1,16 +1,19 @@
 import { useNavigate } from "react-router-dom"
 
-export function paginateArray(array, currentIdx, maxItemsPerPage){
-    return array.filter((element, index) => index >= (currentIdx - 1) * maxItemsPerPage && index < currentIdx  * maxItemsPerPage)
+export function paginateArray(array, currentIdx, maxItemsPerPage) {
+    return array.filter((element, index) => index >= (currentIdx - 1) * maxItemsPerPage && index < currentIdx * maxItemsPerPage)
 }
 
-const PaginationList = ({ itemCount, maxItemsPerPage, currentIdx }) => {
+
+const PaginationList = ({ item, setItem, maxItemsPerPage, currentIdx }) => {
 
     const navigate = useNavigate()
-    const totalPage = Math.ceil(itemCount / maxItemsPerPage)
+    const totalPage = Math.ceil(item.length / maxItemsPerPage)
     const pagingList = generatePagination(totalPage)
-    
+
     const onChangePage = (newPage) => {
+        const newItems = paginateArray(item, newPage, maxItemsPerPage)
+        setItem(newItems)
         navigate(`${newPage}`)
     }
 
