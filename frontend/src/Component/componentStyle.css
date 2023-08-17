@@ -278,13 +278,13 @@
 /* seller product list*/
 
 .seller-product-list{
-    background-color: rgb(236, 236, 236);
+    background-color: rgb(220, 207, 207);
 }
 .product-item{
     display: flex;
     padding: 10px 20px;
     margin-bottom: 10px;
-    background-color: white;
+    background-color: rgb(229, 237, 239);
     
 }
 .product-item img{

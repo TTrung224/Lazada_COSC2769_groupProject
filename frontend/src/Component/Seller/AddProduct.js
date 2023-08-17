@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Navbar from '../Shared/navbar'
+import Navbar from '../Shared/navbar';
 export default function AddProduct(){
     return(
         <>
