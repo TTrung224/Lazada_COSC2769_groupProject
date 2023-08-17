@@ -90,7 +90,7 @@ const AdminCategoryForm = () => {
 
 
     return (
-        <div className="container my-5">
+        <div className="container">
             <h2>Fill in category information:</h2>
             <hr />
             <Form method="POST" onSubmit={() => {

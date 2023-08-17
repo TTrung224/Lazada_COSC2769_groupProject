@@ -13,7 +13,7 @@ const test = [
 
 export async function getCategories() {
     return new Promise(resolve => {
-        setTimeout(() => resolve(test), 1000)
+        setTimeout(() => resolve(test), 500)
     })
 }
 
@@ -29,7 +29,7 @@ export async function addCategory(name, attributes, parent) {
         setTimeout(() => {
             test.push({ id: test.length, name: name, attributes: attributes, parent: parent })
             resolve(true)
-        }, 1000)
+        }, 500)
     })
 }
 
@@ -44,6 +44,6 @@ export async function updateCategory(id, category) {
                 }
             }
             resolve(null)
-        }, 1000)
+        }, 500)
     })
 }
