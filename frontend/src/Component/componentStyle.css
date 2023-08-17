@@ -275,7 +275,7 @@
 }
 
 
-/* seller */
+/* seller product list*/
 
 .seller-product-list{
     background-color: rgb(236, 236, 236);
@@ -283,6 +283,8 @@
 .product-item{
     display: flex;
     padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: white;
     
 }
 .product-item img{
@@ -328,6 +330,8 @@
 .seller-header-bar{
     background-color: rgb(177, 179, 179);
     padding: 5px;
+    position: sticky;
+    top:0;
 }
 .seller-header-bar .add-product{
     color:black;
