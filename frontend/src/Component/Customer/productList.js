@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import img1 from "../../Asset/test_product_images/1.jpg";
 import Loader from '../Shared/loader';
 import '../componentStyle.css';
+import PaginationList, { paginateArray } from '../Shared/Pagination';
 
 function ProductCard({product}){
     return(
@@ -20,51 +21,19 @@ function ProductCard({product}){
 }
 
 export default function ProductList(){
-    const productList = loadData()
-
-    const filteredList = filter()
-
-    const [pagination, setPagination] = useState({current: 1, productList: filteredList.slice(0, 12)})
+    let { page } = useParams()
+    if(!page){
+        page = 1
+    }
+    else {
+        page = parseInt(page)
+    }
+    const maxItemsPerPage = 12
     const [isLoading, setIsLoading] = useState(false)
 
-    const totalPage = Math.ceil(filteredList.length/12)
-    const pagingList = generatePagination(totalPage, pagination)
+    const productList = loadData()
+    const filteredList = filter()
 
-    function generatePagination(totalPage, pagination){
-        let pagingList = []
-        if(totalPage < 7){
-            for(let i = 0; i < totalPage; i++){
-                if((i+1) === pagination.current){
-                    pagingList.push(<li className="page-item active"><button className="page-link" onClick={()=>onChangePage(i+1)}>{i+1}</button></li>)
-                }else{
-                    pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(i+1)}>{i+1}</button></li>)
-                }
-            }
-        } else {
-            if(pagination.current > 1){
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(1)}>1</button></li>)
-            }
-            if(pagination.current >= 4){
-                pagingList.push(<li className="page-item"><button className="page-link" disabled>...</button></li>)
-            }
-            if(pagination.current > 2){
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(pagination.current-1)}>{pagination.current-1}</button></li>)
-            }
-    
-            pagingList.push(<li className="page-item active"><button className="page-link" onClick={()=>onChangePage(pagination.current)}>{pagination.current}</button></li>)
-            
-            if(pagination.current <= totalPage-2){
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(pagination.current+1)}>{pagination.current+1}</button></li>)
-            }
-            if(pagination.current <= totalPage-3){
-                pagingList.push(<li className="page-item"><button className="page-link" disabled>...</button></li>)
-            }
-            if(pagination.current < totalPage){
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(totalPage)}>{totalPage}</button></li>)
-            }
-        }
-        return pagingList
-    }
 
     function loadData(){
         let productList = []
@@ -75,35 +44,20 @@ export default function ProductList(){
 
         return productList
     }
-
     function filter(product){
         // Search and filter logic go here
         return productList;
     }
 
-    const onChangePage = (newPage)=>{
-        if(newPage >= 1 || newPage <= totalPage){
-            setPagination({current: newPage, productList: filteredList.slice((12*(newPage-1)), 12*newPage)})
-        }
-    }
 
     return(
         <div className='product-list'>
             <div className='card-holder row justify-content-center'>
                 {(isLoading) ? <Loader/> : <></>}
-                {pagination.productList.map(product => <ProductCard key={product.id} product={product} />)}
+                {paginateArray(filteredList, page, maxItemsPerPage).map(product => <ProductCard key={product.id} product={product} />)}
             </div>
-            <nav className='paginavtion-nav' aria-label="Page navigation example">
-                <ul className="pagination justify-content-center">
-                    <li className={(pagination.current===1) ? "page-item disabled":"page-item"}>
-                        <button className="page-link" disabled={pagination.current===1} onClick={()=>onChangePage(pagination.current-1)}>Prev</button>
-                    </li>
-                        {pagingList}
-                    <li className={(pagination.current===totalPage) ? "page-item disabled":"page-item"}>
-                        <button className="page-link" disabled={pagination.current===totalPage} onClick={()=>onChangePage(pagination.current+1)}>Next</button>
-                    </li>
-                </ul>
-            </nav>
+
+            <PaginationList itemCount={filteredList.length} maxItemsPerPage={maxItemsPerPage} currentIdx={page} />
         </div>
     )
 }

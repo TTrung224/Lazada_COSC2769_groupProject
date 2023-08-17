@@ -24,6 +24,12 @@ function App() {
     {
       path: "/",
       element: <GuestProduct />,
+      children: [
+        {
+          path: ":page",
+          element: <AdminSellerRequest/>
+        }
+      ]
     },
     {
       path: "/logout",
@@ -48,6 +54,12 @@ function App() {
     {
       path: "/customer/product",
       element: <CustomerProduct />,
+      children: [
+        {
+          path: ":page",
+          element: <AdminSellerRequest/>
+        }
+      ]
     },
     {
       path: "/customer/order",
@@ -59,11 +71,17 @@ function App() {
     },
     {
       path: "/admin",
-      element: <><AdminMain/><Navigate to="seller-request" replace /></> ,
+      element: <><AdminMain/><Navigate to={"seller-request"} /></> ,
       children: [
         {
           path: "seller-request",
-          element: <AdminSellerRequest />,
+          element: <AdminSellerRequest/>,
+          children: [
+            {
+              path: ":page",
+              element: <AdminSellerRequest/>
+            }
+          ]
         },
         {
           path: "product-category",
