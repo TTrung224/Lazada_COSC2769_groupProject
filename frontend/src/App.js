@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, { useContext, useEffect } from 'react'
 import AuthContextProvider from './Context/loginSessionContext'
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -17,29 +17,36 @@ import Logout from './Component/Shared/logout';
 import AdminCategory, { loadCategories } from './Page/adminCategory';
 import AdminCategoryForm, { addNewCategory, loadCategory, loadCategoryWithEmptyFirst, saveCategory } from './Page/adminCategoryForm';
 import AddProduct from './Component/Seller/AddProduct';
+import AdminMain from './Page/adminMain';
 
 function App() {
 
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <GuestProduct/>,
-    },        
+      element: <GuestProduct />,
+      children: [
+        {
+          path: ":page",
+          element: <AdminSellerRequest/>
+        }
+      ]
+    },
     {
       path: "/logout",
-      element: <Logout/>,
-    },    
+      element: <Logout />,
+    },
     {
       path: "/guest/cart",
-      element: <GuestCart/>,
+      element: <GuestCart />,
     },
     {
       path: "/login",
-      element: <LoginPage/>,
+      element: <LoginPage />,
     },
     {
       path: "/signup",
-      element: <SignupPage/>,
+      element: <SignupPage />,
     },
     {
       path: "/customer",
@@ -47,45 +54,59 @@ function App() {
     },
     {
       path: "/customer/product",
-      element: <CustomerProduct/>,
+      element: <CustomerProduct />,
+      children: [
+        {
+          path: ":page",
+          element: <AdminSellerRequest/>
+        }
+      ]
     },
     {
       path: "/customer/order",
-      element: <CustomerOrder/>,
+      element: <CustomerOrder />,
     },
     {
       path: "/customer/cart",
-      element: <CustomerCart/>,
+      element: <CustomerCart />,
     },
     {
       path: "/admin",
-      element: <Navigate to="/admin/seller-request" replace />,
-    },
-    {
-      path: "/admin/seller-request",
-      element: <AdminSellerRequest/>,
-    },
-    {   
-      path: "/admin/product-category",
-      element: <AdminCategory />,
-      loader: loadCategories
-    },
-    {
-      path: "/admin/product-category/add",
-      element: <AdminCategoryForm/>,
-      action: addNewCategory
-    },
-    {
-      path: "/admin/product-category/add/:categoryID",
-      element: <AdminCategoryForm/>,
-      loader: loadCategoryWithEmptyFirst,
-      action: addNewCategory
-    },
-    {
-      path: "/admin/product-category/:categoryID",
-      element: <AdminCategoryForm/>,
-      loader: loadCategory,
-      action: saveCategory
+      element: <><AdminMain/><Navigate to={"seller-request"} /></> ,
+      children: [
+        {
+          path: "seller-request",
+          element: <AdminSellerRequest/>,
+          children: [
+            {
+              path: ":page",
+              element: <AdminSellerRequest/>
+            }
+          ]
+        },
+        {
+          path: "product-category",
+          element: <AdminCategory />,
+          loader: loadCategories
+        },
+        {
+          path: "product-category/add",
+          element: <AdminCategoryForm />,
+          action: addNewCategory
+        },
+        {
+          path: "product-category/add/:categoryID",
+          element: <AdminCategoryForm />,
+          loader: loadCategory,
+          action: addNewCategory
+        },
+        {
+          path: "product-category/:categoryID",
+          element: <AdminCategoryForm />,
+          loader: loadCategory,
+          action: saveCategory
+        }
+      ]
     },
     {
       path: "/seller",
@@ -93,7 +114,7 @@ function App() {
     },
     {
       path: "/seller/order",
-      element: <SellerOrder/>,
+      element: <SellerOrder />,
     },
     {
       path: "/seller/product",

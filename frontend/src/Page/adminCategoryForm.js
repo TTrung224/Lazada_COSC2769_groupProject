@@ -1,6 +1,6 @@
-import { Form, redirect, useLoaderData, useNavigate } from "react-router-dom";
+import { Form, redirect, useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import { addCategory, getCategory, updateCategory } from "../Component/Admin/AdminAPI";
-import  React, { useState } from "react";
+import React, { useState } from "react";
 import AdminAttributeList from "../Component/Admin/AdminAttributeList";
 import AdminAddAttribute from "../Component/Admin/AdminAddAttribute";
 
@@ -24,22 +24,10 @@ export async function loadCategory({ params }) {
         category.push(parentCat)
         parent = parentCat.parent
     }
+
     return category
 }
 
-export async function loadCategoryWithEmptyFirst({ params }){
-    // Load category and all of its parents
-    // Add an empty category at front to display properly when adding subcategory
-    const category = [await getCategory(parseInt(params.categoryID))]
-    let parent = category[0].parent
-    while (parent !== -1) {
-        let parentCat = await getCategory(parseInt(parent))
-        category.push(parentCat)
-        parent = parentCat.parent
-    }
-    category.unshift({id: -2, name: '', attributes: [], parent: category[0].id})
-    return category
-}
 
 export async function saveCategory({ request, params }) {
     document.querySelector("#cancelBtn").disabled = true
@@ -55,35 +43,39 @@ export async function saveCategory({ request, params }) {
 const AdminCategoryForm = () => {
     const navigate = useNavigate()
     const categories = useLoaderData()
-    
+    const { state } = useLocation()
+
     let name = ""
     let attr = []
     let parentVal = -1
     let parentAttributes = <></>
 
     // If edit, LoaderData will be defined. Assign its values to default values
+    // If add subcategory, an empty category with parent id is used to display default values  
     if (categories) {
-        const category = categories[0]
+        
+        const category = state.for === 'subCategory' ? {id: -1, name: '', attributes: [], parent: categories[0].id } : categories[0]
+        
         name = category.name
         attr = category.attributes
         parentVal = category.parent
         parentAttributes =
-        <div className="form-group my-4">
-            <h5>Parent{'(s)'}: </h5>
-            <ol>
-                {categories.toReversed().map((c) => {
-                if (c.id !== category.id) {
-                    return (
-                        <li key={c.id}>
-                            <h6>{c.name}</h6>
-                            <AdminAttributeList attributes={c.attributes} allowDelete={false} />
-                        </li>
-                    )
-                }
-                return <React.Fragment key={c.id}></React.Fragment>
-            })}
-            </ol>
-        </div>
+            <div className="form-group my-4">
+                <h5>Parent{'(s)'}: </h5>
+                <ol>
+                    {categories.toReversed().map((c) => {
+                        if (c.id !== category.id) {
+                            return (
+                                <li key={c.id}>
+                                    <h6>{c.name}</h6>
+                                    <AdminAttributeList attributes={c.attributes} allowDelete={false} />
+                                </li>
+                            )
+                        }
+                        return <React.Fragment key={c.id}></React.Fragment>
+                    })}
+                </ol>
+            </div>
     }
 
     const [attributes, setAttributes] = useState(attr)
@@ -98,7 +90,7 @@ const AdminCategoryForm = () => {
 
 
     return (
-        <div className="container my-5">
+        <div className="container">
             <h2>Fill in category information:</h2>
             <hr />
             <Form method="POST" onSubmit={() => {
