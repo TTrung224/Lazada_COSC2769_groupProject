@@ -4,7 +4,7 @@ import { Link, useLoaderData } from 'react-router-dom';
 import { getCategories } from '../Component/Admin/AdminAPI';
 
 
-export async function loadCategories(){
+export async function loadCategories() {
     const categories = await getCategories()
     return categories
 }
@@ -20,11 +20,15 @@ const AdminCategory = () => {
     }
 
     return (
-        <div className="container">
-            <h2>Category</h2>
-            <Link to={"add"}><button className="btn btn-primary mt-4">Add Category</button></Link>
-            <AdminCategoryList categories={category} parent={-1} handleDeleteCategory={handleDeleteCategory} />
-        </div>
+        <>
+            <div className="container">
+                <h2>Category</h2>
+                <hr />
+                <Link to={"add"}><button className="btn btn-primary mt-4">Add Category</button></Link>
+                <AdminCategoryList categories={category} parent={-1} handleDeleteCategory={handleDeleteCategory} />
+            </div>
+        </>
+
     );
 }
 

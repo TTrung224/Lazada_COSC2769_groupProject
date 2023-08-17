@@ -27,13 +27,13 @@ const AdminCategoryItem = ({ categories, item, handleDeleteCategory }) => {
                     </button>
                 </div>
                 <div className="col-6 text-end">
-                    <Link to={`add/${item.id}`}>
+                    <Link to={`add/${item.id}`} state={{for: 'subCategory'}}>
                         <button className="btn btn-link btn-sm">
                             +Subcategory
                         </button>
                     </Link>
 
-                    <Link to={`${item.id}`}>
+                    <Link to={`${item.id}`} state={{for: 'edit'}}>
                         <button className="btn">
                             <i className="bi-pencil-square"></i>
                         </button>
