@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import img1 from "../../Asset/test_product_images/1.jpg";
 import Loader from '../Shared/loader';
 import '../componentStyle.css';
@@ -25,14 +25,13 @@ export default function ProductList(){
     if(!page){
         page = 1
     }
-    
+    const navigate = useNavigate()
     const maxItemsPerPage = 12
     const [isLoading, setIsLoading] = useState(false)
 
-    const productList = loadData()
-    const filteredList = filter()
-    const [displayProducts, setDisplayProducts] = useState(paginateArray(filteredList, page, maxItemsPerPage))
-    console.log(filteredList.length)
+    const [productList, setProductList] = useState(loadData())
+    const [displayProducts, setDisplayProducts] = useState(paginateArray(productList, page, maxItemsPerPage))
+    
     function loadData(){
         let productList = []
 
@@ -43,19 +42,27 @@ export default function ProductList(){
         return productList
     }
     function filter(product){
-        // Search and filter logic go here
-        return productList;
+        return productList.slice(0, 20);
     }
 
+    // Bring back to first page if filtered
+    // SUGGESTION: Put filtering nad searching options as routing parameters so refreshing wouldn't remove the filter
+    function handleFilter(){
+        const filteredList = filter()
+        setProductList(filteredList)
+        setDisplayProducts(paginateArray(productList, 1, maxItemsPerPage))
+        navigate(`${1}`)
+    }
 
     return(
         <div className='product-list'>
+            <button onClick={() => handleFilter()}>TEST</button>
             <div className='card-holder row justify-content-center'>
                 {(isLoading) ? <Loader/> : <></>}
                 {displayProducts.map(product => <ProductCard key={product.id} product={product} />)}
             </div>
 
-            <PaginationList item={filteredList} setItem={setDisplayProducts} maxItemsPerPage={maxItemsPerPage} currentIdx={page} />
+            <PaginationList item={productList} setItem={setDisplayProducts} maxItemsPerPage={maxItemsPerPage} currentIdx={page} />
         </div>
     )
 }

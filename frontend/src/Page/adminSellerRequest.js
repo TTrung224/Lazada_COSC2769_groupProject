@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import PaginationList, { paginateArray, paginateArrayState } from '../Component/Shared/Pagination';
+import PaginationList, { paginateArray } from '../Component/Shared/Pagination';
 import AdminSellerTable from '../Component/Admin/AdminSellerTable.js';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Navbar from '../Component/Shared/navbar';
 
 const test = [
