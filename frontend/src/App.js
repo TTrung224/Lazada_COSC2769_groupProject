@@ -53,12 +53,7 @@ function App() {
     },
     {
       path: "/customer/product",
-      element: <CustomerProduct />,
-      children: [
-        {
-          path: ":page"
-        }
-      ]
+      element: <CustomerProduct />
     },
     {
       path: "/customer/order",
@@ -74,12 +69,7 @@ function App() {
     },
     {
       path: "/admin/seller-request",
-      element: <AdminSellerRequest/>,
-      children: [
-        {
-          path: ":page"
-        }
-      ]
+      element: <AdminSellerRequest/>
     },
     {
       path: "/admin/product-category",

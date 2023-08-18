@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import PaginationList, { paginateArray } from '../Component/Shared/Pagination';
 import AdminSellerTable from '../Component/Admin/AdminSellerTable.js';
 import { useState } from 'react';
@@ -17,22 +17,47 @@ const test = [
     { id: 10, name: 'Seller 7', email: 'test123@mail.com', status: 'Rejected' }
 ]
 
+function loadSellers(){
+    return test
+}
+
 export default function AdminSellerRequest() {
-    let page = parseInt(useParams().page)
+    const [searchParams] = useSearchParams()
+    let page = parseInt(searchParams.get("page"))
     if (!page) {
         page = 1
     }
     const maxItemsPerPage = 5
-    const [sellers, setSellers] = useState(paginateArray(test, page, maxItemsPerPage))
+    const [sellers, setSellers] = useState(loadSellers())
+    const [displaySellers, setDisplaySellers] = useState(paginateArray(sellers, page, maxItemsPerPage))
+    const [hasEdit, setHasEdit] = useState(false)
+    console.log(sellers[0].status)
+
+    function handleChangeStatus(seller, status){
+        seller.status = status
+        const newSellers = sellers.map(s => {
+            if(s.id === seller.id){
+                return seller
+            } return s
+        })
+        setHasEdit(true)
+        setSellers(newSellers)
+    } 
+
 
     return (
         <>
             <Navbar />
             <div className='container'>
 
-                <h2>List of Sellers</h2>
-                <AdminSellerTable sellers={sellers} setSellers={setSellers} />
-                <PaginationList item={test} setItem={setSellers} maxItemsPerPage={maxItemsPerPage} currentIdx={page}></PaginationList>
+                <h2 className='mb-4'>List of Sellers</h2>
+
+                {/* ADD Save Seller API here when available */}
+                <button className="btn btn-primary" disabled={!hasEdit}>Save Edit</button>
+
+
+                <AdminSellerTable sellers={displaySellers} handleChangeStatus={handleChangeStatus} />
+                <PaginationList totalItems={sellers} setDisplayItems={setDisplaySellers} maxItemsPerPage={maxItemsPerPage} currentIdx={page}></PaginationList>
             </div>
         </>
     )
