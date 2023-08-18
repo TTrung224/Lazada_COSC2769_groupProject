@@ -4,9 +4,9 @@ import '../componentStyle.css';
 export default function Loader(){
     return(
         <div id='loader-container'>
-            <div class="text-center">
-                <div class="spinner-border" role="status">
-                    <span class="visually-hidden">Loading...</span>
+            <div className="text-center">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
                 </div>
             </div>
         </div>

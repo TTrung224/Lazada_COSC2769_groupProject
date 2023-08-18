@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import AdminAttributeList from "../Component/Admin/AdminAttributeList";
 import AdminAddAttribute from "../Component/Admin/AdminAddAttribute";
 import Navbar from "../Component/Shared/navbar";
+import Loader from "../Component/Shared/loader";
 
 
 export async function addNewCategory({ request }) {
@@ -96,10 +97,7 @@ const AdminCategoryForm = () => {
             <div className="container">
                 <h2>Fill in category information:</h2>
                 <hr />
-                <Form method="POST" onSubmit={() => {
-                    const request = { attributes: attributes }
-                    return request
-                }}>
+                <Form method="POST">
                     <div className="form-group my-4">
                         <label className="h5" htmlFor="name">Category Name: </label>
                         <input className="form-control" type="text" name="name" id="name" defaultValue={name} required />

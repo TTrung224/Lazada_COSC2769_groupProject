@@ -1,33 +1,49 @@
-import { useState } from 'react';
 import AdminCategoryList from '../Component/Admin/AdminCategoryList';
-import { Link, useLoaderData } from 'react-router-dom';
-import { getCategories } from '../Component/Admin/AdminAPI';
+import { Await, Link, defer, useFetcher, useLoaderData } from 'react-router-dom';
+import { deleteCategory, getCategories } from '../Component/Admin/AdminAPI';
 import Navbar from '../Component/Shared/navbar';
+import React, { useEffect } from 'react';
+import Loader from '../Component/Shared/loader';
 
 
 export async function loadCategories() {
-    const categories = await getCategories()
-    return categories
+    const categoriesPromise = getCategories()
+    return defer({ categories: categoriesPromise })
+}
+
+export async function handleDeleteCategory({ request }) {
+    const formData = await request.formData()
+    const id = formData.get("categoryId")
+    await deleteCategory(id)
+    return null 
 }
 
 const AdminCategory = () => {
     const data = useLoaderData()
-    const [category, setCategory] = useState(data)
+    const fetcher = useFetcher()
 
-    function handleDeleteCategory(item) {
-        // TODO: CAN ONLY DELETE IF NO ITEM IS UNDER THE CATEGORY
-        const newCategory = category.filter(c => c !== item)
-        setCategory(newCategory)
-    }
 
     return (
         <>
-            <Navbar/>
+            <Navbar />
             <div className="container">
                 <h2>Category</h2>
                 <hr />
-                <Link to={"add"}><button className="btn btn-primary mt-4">Add Category</button></Link>
-                <AdminCategoryList categories={category} parent={-1} handleDeleteCategory={handleDeleteCategory} />
+
+                {fetcher.state !== 'idle' ? <Loader/> : <></>}
+                <React.Suspense fallback={<Loader />}>
+                    <Await resolve={data.categories}>
+                        {
+                            (categories) => (
+                                <>
+                                    <Link to={"add"}><button className="btn btn-primary mt-4">Add Category</button></Link>
+                                    <AdminCategoryList categories={categories} parent={-1} fetcher={fetcher} />
+                                </>
+                            )
+                        }
+
+                    </Await>
+                </React.Suspense>
             </div>
         </>
 

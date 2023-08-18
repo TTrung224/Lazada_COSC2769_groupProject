@@ -1,4 +1,4 @@
-const AdminSellerTable = ({ sellers, handleChangeStatus }) => {
+const AdminSellerTable = ({ sellers }) => {
 
       
 
@@ -20,14 +20,14 @@ const AdminSellerTable = ({ sellers, handleChangeStatus }) => {
                         if(seller.status === "Accepted") rowColor = "table-success"
                         else if(seller.status === "Rejected") rowColor = "table-danger"
                         return (
-                            <tr className={`${rowColor} align-middle`}>
+                            <tr key={seller.id} className={`${rowColor} align-middle`}>
                                 <th scope="row">{seller.id}</th>
                                 <td>{seller.name}</td>
                                 <td>{seller.email}</td>
                                 <td>{seller.status}</td>
                                 <td>
-                                    <button className="btn btn-success mx-1" disabled={seller.status === 'Accepted'} onClick={() => handleChangeStatus(seller, "Accepted")}><i className="bi-check-lg" /></button>
-                                    <button className="btn btn-danger mx-1" disabled={seller.status === 'Rejected'} onClick={() => handleChangeStatus(seller, "Rejected")}><i className="bi-x-lg" /></button>
+                                    <button className="btn btn-success mx-1" disabled={seller.status === 'Accepted'}><i className="bi-check-lg" /></button>
+                                    <button className="btn btn-danger mx-1" disabled={seller.status === 'Rejected'}><i className="bi-x-lg" /></button>
                                 </td>
                             </tr>
                         )
