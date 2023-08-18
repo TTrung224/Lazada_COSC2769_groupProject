@@ -17,6 +17,7 @@ import Logout from './Component/Shared/logout';
 import AdminCategory, { loadCategories } from './Page/adminCategory';
 import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from './Page/adminCategoryForm';
 import AddProduct from './Component/Seller/AddProduct';
+import EditProduct from './Component/Seller/EditProduct';
 import AdminMain from './Page/adminMain';
 
 function App() {
@@ -118,6 +119,10 @@ function App() {
     {
       path: "/seller/product/addproduct",
       element:<AddProduct/>
+    },
+    {
+      path: "/seller/product/editproduct",
+      element: <EditProduct/>
     }
   ]);
 

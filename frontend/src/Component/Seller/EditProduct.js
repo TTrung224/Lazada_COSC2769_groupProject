@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import Navbar from '../Shared/navbar';
-export default function AddProduct(){
+export default function EditProduct(){
     return(
         <>
             <Navbar/>
             <div className="add-product-container">
-                <h2>Add Product</h2>
+                <h2>Edit Product</h2>
                 <div className='product-add-input'>
                     <div class="product-add-child product-add-child-left">
                         <label for="add-product-img">Product img</label>

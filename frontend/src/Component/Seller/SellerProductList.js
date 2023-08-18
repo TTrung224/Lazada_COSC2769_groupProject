@@ -18,7 +18,7 @@ export default function ProductList(){
 
     const handleDelete =(id) =>{
         setProduct(products => products.filter(product => product.id !== id))
-        alert("Product id: "+id+"d eleted")
+        alert("Product id: "+id+" deleted")
     }
     // function handleUpdate(){}
 
@@ -43,7 +43,7 @@ export default function ProductList(){
                                     <p>{product.category}</p>
                                 </div>
                                 <div className="seller-item-button">
-                                    <button className="item-edit">Edit</button>
+                                    <Link className="item-edit" to="/seller/product/editproduct">Edit</Link>
                                     <button className="item-delete" onClick={()=>handleDelete(product.id)}>Delete</button>
                                 </div>
                             </div>

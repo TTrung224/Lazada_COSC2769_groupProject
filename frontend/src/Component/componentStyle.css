@@ -312,6 +312,7 @@
     border-radius: 8px;
     padding: 5px 20px;
     margin-bottom: 20px;
+    text-decoration: none;
 }
 .seller-item-button .item-edit:hover{
     background-color: rgb(52, 163, 146) ;
