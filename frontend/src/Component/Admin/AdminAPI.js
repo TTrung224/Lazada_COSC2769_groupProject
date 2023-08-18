@@ -11,9 +11,29 @@ const test = [
     { id: 9, name: '3D Modelling', attributes: [], parent: 3 }
 ]
 
+const sellersTest = [
+    { id: 1, name: 'Seller 1', email: 'test123@mail.com', status: 'Pending' },
+    { id: 2, name: 'Seller 2', email: 'test123@mail.com', status: 'Pending' },
+    { id: 3, name: 'Seller 3', email: 'test123@mail.com', status: 'Pending' },
+    { id: 4, name: 'Seller 4', email: 'test123@mail.com', status: 'Accepted' },
+    { id: 5, name: 'Seller 5', email: 'test123@mail.com', status: 'Pending' },
+    { id: 6, name: 'Seller 6', email: 'test123@mail.com', status: 'Pending' },
+    { id: 7, name: 'Seller 7', email: 'test123@mail.com', status: 'Rejected' },
+    { id: 8, name: 'Seller 7', email: 'test123@mail.com', status: 'Accepted' },
+    { id: 9, name: 'Seller 7', email: 'test123@mail.com', status: 'Accepted' },
+    { id: 10, name: 'Seller 7', email: 'test123@mail.com', status: 'Rejected' }
+]
+
+export async function getSellers() {
+    return new Promise(resolve => {
+        setTimeout(() => resolve(sellersTest), 500)
+    })
+}
+
+
 export async function getCategories() {
     return new Promise(resolve => {
-        setTimeout(() => resolve(test), 500)
+        setTimeout(() => resolve([...test]), 500)
     })
 }
 
@@ -44,6 +64,21 @@ export async function updateCategory(id, category) {
                 }
             }
             resolve(null)
+        }, 500)
+    })
+}
+
+export async function deleteCategory(id) {
+    
+    return new Promise(resolve => {
+        setTimeout(() => {
+            for(let i = 0; i < test.length; i++) {
+                if(test[i].id === parseInt(id)){
+                    test.splice(i, 1)
+                    resolve(true)
+                }
+            }
+            resolve(false)
         }, 500)
     })
 }

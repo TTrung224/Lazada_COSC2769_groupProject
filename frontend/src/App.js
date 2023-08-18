@@ -7,14 +7,14 @@ import LoginPage from './Page/loginPage';
 import SignupPage from './Page/signupPage';
 import GuestProduct from './Page/guestProduct';
 import GuestCart from './Page/guestCart';
-import AdminSellerRequest from './Page/adminSellerRequest';
+import AdminSellerRequest, { loadSellers } from './Page/adminSellerRequest';
 import SellerOrder from './Page/sellerOrder';
 import SellerProduct from './Page/sellerProduct';
 import CustomerProduct from './Page/customerProduct';
 import CustomerOrder from './Page/customerOrder';
 import CustomerCart from './Page/customerCart';
 import Logout from './Component/Shared/logout';
-import AdminCategory, { loadCategories } from './Page/adminCategory';
+import AdminCategory, { handleDeleteCategory, loadCategories } from './Page/adminCategory';
 import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from './Page/adminCategoryForm';
 import AddProduct from './Component/Seller/AddProduct';
 import EditProduct from './Component/Seller/EditProduct';
@@ -25,12 +25,7 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <GuestProduct />,
-      children: [
-        {
-          path: ":page"
-        }
-      ]
+      element: <GuestProduct />
     },
     {
       path: "/logout",
@@ -54,12 +49,7 @@ function App() {
     },
     {
       path: "/customer/product",
-      element: <CustomerProduct />,
-      children: [
-        {
-          path: ":page"
-        }
-      ]
+      element: <CustomerProduct />
     },
     {
       path: "/customer/order",
@@ -76,16 +66,13 @@ function App() {
     {
       path: "/admin/seller-request",
       element: <AdminSellerRequest/>,
-      children: [
-        {
-          path: ":page"
-        }
-      ]
+      loader: loadSellers
     },
     {
       path: "/admin/product-category",
       element: <AdminCategory />,
-      loader: loadCategories
+      loader: loadCategories,
+      action: handleDeleteCategory
     },
     {
       path: "/admin/product-category/add",

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import img1 from "../../Asset/test_product_images/1.jpg";
 import Loader from '../Shared/loader';
 import '../componentStyle.css';
@@ -21,7 +21,8 @@ function ProductCard({product}){
 }
 
 export default function ProductList(){
-    let page  = parseInt(useParams().page)
+    const [searchParams] = useSearchParams()
+    let page  = parseInt(searchParams.get("page"))
     if(!page){
         page = 1
     }
@@ -62,7 +63,7 @@ export default function ProductList(){
                 {displayProducts.map(product => <ProductCard key={product.id} product={product} />)}
             </div>
 
-            <PaginationList item={productList} setItem={setDisplayProducts} maxItemsPerPage={maxItemsPerPage} currentIdx={page} />
+            <PaginationList totalItems={productList} setDisplayItems={setDisplayProducts} maxItemsPerPage={maxItemsPerPage} currentIdx={page} />
         </div>
     )
 }
