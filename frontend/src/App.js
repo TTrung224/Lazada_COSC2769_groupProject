@@ -19,6 +19,7 @@ import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from '.
 import AddProduct from './Component/Seller/AddProduct';
 import EditProduct from './Component/Seller/EditProduct';
 import AdminMain from './Page/adminMain';
+import { loadData, loadItems } from './Component/Customer/cart';
 
 function App() {
 
@@ -33,7 +34,8 @@ function App() {
     },
     {
       path: "/guest/cart",
-      element: <GuestCart />,
+      element: <GuestCart/>,
+      loader: loadItems
     },
     {
       path: "/login",
