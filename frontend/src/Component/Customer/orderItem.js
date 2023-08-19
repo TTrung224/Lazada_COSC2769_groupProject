@@ -32,4 +32,4 @@ const orderItem = ({product}) => {
 
 
  
-export default cartItem;
+export default orderItem;

@@ -33,7 +33,7 @@ export default function Order(){
                                     
 
                                     {(isLoading) ? <Loader/> : <></>}
-                                    {cartList.map(product => <OrderItem key={product.id} product={product} />)}
+                                    {orderList.map(product => <OrderItem key={product.id} product={product} />)}
 
                                     
                     
