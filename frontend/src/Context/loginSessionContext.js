@@ -6,13 +6,13 @@ const AuthContextProvider = ({children}) => {
 
     // auth state
     const [authState, setAuth] = useState({
-        isAuthenticated: true,
+        isAuthenticated: false,
         user: null
     })
     
     const loginFunc = async (userForm) => {
         try {
-            setAuth({isAuthenticated: true, user: {name: "test", type: "admin"}})
+            setAuth({isAuthenticated: true, user: {name: "test", type: "customer"}})
         } catch (error) {
             console.log(error)
             if (error.response.data) return error.response.data
