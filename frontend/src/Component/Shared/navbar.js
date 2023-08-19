@@ -26,7 +26,7 @@ function HeaderItem({nav}){
 export default function Navbar(){
     const listNav = {
         guest: [
-            {name: "Cart", icon: "bi bi-cart-fill", link: "guest/cart"},
+            {name: "Cart", icon: "bi bi-cart-fill", link: "/guest/cart"},
         ],
         customer: [
             {name: "Products", icon: "bi bi-archive-fill", link: "/customer/product"},

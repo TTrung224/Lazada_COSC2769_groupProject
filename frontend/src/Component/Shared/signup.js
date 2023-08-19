@@ -30,7 +30,7 @@ export default function Signup(){
             <label for="sign-up" ><h2>Create your Lazada Account</h2></label>
             <br/>
             <div>
-                <input type='radio' id='radio1' name='user-type' value="customer" onClick = {()=> changeTypeCustomer()} />
+                <input type='radio' id='radio1' name='user-type' value="customer" defaultChecked onClick = {()=> changeTypeCustomer()} />
                 <label for='radio1'>Customer</label>
                 <input type='radio' id='radio2' name='user-type' value="seller" onClick = {()=> changeTypeSeller()}/>
                 <label for='radio2'>Seller</label>
