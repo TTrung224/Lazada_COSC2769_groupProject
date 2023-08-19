@@ -7,8 +7,11 @@
     font-size: smaller;
     text-decoration: none;
     color: black;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    min-width: 60px;
+    min-height: 20px;
+    text-align: center;
 }
 
 .header-div nav{
@@ -28,7 +31,7 @@
 .navbar-nav .header-item:hover{
     background-color: rgb(39, 66, 170);
     color: white;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .navbar-nav .nav-custom-item{
