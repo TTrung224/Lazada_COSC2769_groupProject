@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import img1 from "../../Asset/test_product_images/1.jpg";
 import Loader from '../Shared/loader';
 import '../componentStyle.css';
+import PaginationList, { paginateArray } from '../Shared/Pagination';
 
 function ProductCard({product}){
     return(
@@ -20,52 +21,18 @@ function ProductCard({product}){
 }
 
 export default function ProductList(){
-    const productList = loadData()
-
-    const filteredList = filter()
-
-    const [pagination, setPagination] = useState({current: 1, productList: filteredList.slice(0, 12)})
+    const [searchParams] = useSearchParams()
+    let page  = parseInt(searchParams.get("page"))
+    if(!page){
+        page = 1
+    }
+    const navigate = useNavigate()
+    const maxItemsPerPage = 12
     const [isLoading, setIsLoading] = useState(false)
 
-    const totalPage = Math.ceil(filteredList.length/12)
-    const pagingList = generatePagination(totalPage, pagination)
-
-    function generatePagination(totalPage, pagination){
-        let pagingList = []
-        if(totalPage < 7){
-            for(let i = 0; i < totalPage; i++){
-                if((i+1) === pagination.current){
-                    pagingList.push(<li className="page-item active"><button className="page-link" onClick={()=>onChangePage(i+1)}>{i+1}</button></li>)
-                }else{
-                    pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(i+1)}>{i+1}</button></li>)
-                }
-            }
-        } else {
-            if(pagination.current > 1){
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(1)}>1</button></li>)
-            }
-            if(pagination.current >= 4){
-                pagingList.push(<li className="page-item"><button className="page-link" disabled>...</button></li>)
-            }
-            if(pagination.current > 2){
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(pagination.current-1)}>{pagination.current-1}</button></li>)
-            }
+    const [productList, setProductList] = useState(loadData())
+    const [displayProducts, setDisplayProducts] = useState(paginateArray(productList, page, maxItemsPerPage))
     
-            pagingList.push(<li className="page-item active"><button className="page-link" onClick={()=>onChangePage(pagination.current)}>{pagination.current}</button></li>)
-            
-            if(pagination.current <= totalPage-2){
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(pagination.current+1)}>{pagination.current+1}</button></li>)
-            }
-            if(pagination.current <= totalPage-3){
-                pagingList.push(<li className="page-item"><button className="page-link" disabled>...</button></li>)
-            }
-            if(pagination.current < totalPage){
-                pagingList.push(<li className="page-item"><button className="page-link" onClick={()=>onChangePage(totalPage)}>{totalPage}</button></li>)
-            }
-        }
-        return pagingList
-    }
-
     function loadData(){
         let productList = []
 
@@ -75,35 +42,28 @@ export default function ProductList(){
 
         return productList
     }
-
     function filter(product){
-        // Search and filter logic go here
-        return productList;
+        return productList.slice(0, 20);
     }
 
-    const onChangePage = (newPage)=>{
-        if(newPage >= 1 || newPage <= totalPage){
-            setPagination({current: newPage, productList: filteredList.slice((12*(newPage-1)), 12*newPage)})
-        }
+    // Bring back to first page if filtered
+    // SUGGESTION: Put filtering nad searching options as routing parameters so refreshing wouldn't remove the filter
+    function handleFilter(){
+        const filteredList = filter()
+        setProductList(filteredList)
+        setDisplayProducts(paginateArray(productList, 1, maxItemsPerPage))
+        navigate(`${1}`)
     }
 
     return(
         <div className='product-list'>
+            <button onClick={() => handleFilter()}>TEST</button>
             <div className='card-holder row justify-content-center'>
                 {(isLoading) ? <Loader/> : <></>}
-                {pagination.productList.map(product => <ProductCard key={product.id} product={product} />)}
+                {displayProducts.map(product => <ProductCard key={product.id} product={product} />)}
             </div>
-            <nav className='paginavtion-nav' aria-label="Page navigation example">
-                <ul className="pagination justify-content-center">
-                    <li className={(pagination.current===1) ? "page-item disabled":"page-item"}>
-                        <button className="page-link" disabled={pagination.current===1} onClick={()=>onChangePage(pagination.current-1)}>Prev</button>
-                    </li>
-                        {pagingList}
-                    <li className={(pagination.current===totalPage) ? "page-item disabled":"page-item"}>
-                        <button className="page-link" disabled={pagination.current===totalPage} onClick={()=>onChangePage(pagination.current+1)}>Next</button>
-                    </li>
-                </ul>
-            </nav>
+
+            <PaginationList totalItems={productList} setDisplayItems={setDisplayProducts} maxItemsPerPage={maxItemsPerPage} currentIdx={page} />
         </div>
     )
 }

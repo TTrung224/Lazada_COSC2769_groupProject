@@ -231,3 +231,204 @@
     height: 3rem;
     color: rgb(16, 20, 104);
 }
+
+/* sign-up-form */
+.signup-form{
+    background-color: aquamarine;
+    height: 100%;
+    display: flex;
+
+}
+.signup-left{
+    margin-right: 30px;
+}
+.signup-left,.signup-right{
+    display:flex;
+    flex-direction: column;
+}
+
+.signup-form-container{
+    text-align: center;
+    
+}
+#radio2{
+    margin-left: 20px;
+}
+#sign-up{
+    display: flex;
+    justify-content: center;
+    margin-right: 30%;
+    margin-left: 30%;
+    padding: 20px 30px;
+    border-radius: 8px;
+    background-color: rgb(216, 233, 248);
+}
+#sign-up input{
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 8px;
+
+}
+#sign-up button{
+    border: none;
+    border-radius: 8px;
+}
+#sign-up button:hover{
+    background-color: rgb(154, 169, 184);
+}
+
+
+/* seller product list*/
+
+.seller-product-list{
+    background-color: rgb(220, 207, 207);
+}
+.product-item{
+    display: flex;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: rgb(229, 237, 239);
+    
+}
+.product-item img{
+    height: 100px;
+    width:20%;
+    margin-right: 20px;
+}
+.product-item .product-item-middle{
+    width:20%;
+    margin-right: 20px;
+}
+.product-item .product-item-right{
+    width:20%;
+    margin-right: 20px;
+}
+.product-item div{
+    display :flex;
+    flex-direction: column;
+    height:100%;
+}
+.seller-item-button .item-edit{
+    color:white;
+    background-color: rgb(59, 187, 168);
+    border: none;
+    border-radius: 8px;
+    padding: 5px 20px;
+    margin-bottom: 20px;
+    text-decoration: none;
+}
+.seller-item-button .item-edit:hover{
+    background-color: rgb(52, 163, 146) ;
+}
+.seller-item-button .item-delete{
+    color:white;
+    background-color: rgb(249, 4, 45);
+    border: none;
+    border-radius: 8px;
+    padding: 5px 20px;
+}
+.seller-item-button .item-delete:hover{
+    background-color:rgb(216, 5, 40) ;
+}
+
+.seller-header-bar{
+    background-color: rgb(177, 179, 179);
+    padding: 5px;
+    position: sticky;
+    top:0;
+}
+.seller-header-bar .add-product{
+    color:black;
+    margin: 10px 20px;
+    text-decoration: none;
+    background-color: aqua;
+    padding:2.5px;
+    border-radius: 8px;
+}
+.seller-header-bar .add-product:hover{
+    background-color: rgb(97, 173, 173);
+}
+.seller-header-bar input{
+    border: none;
+    border-radius: 8px;
+}
+.seller-product-container{
+    margin: 10px 20px;
+}
+
+/* seller add product */
+.add-product-container{
+    background-color: rgb(216, 233, 248);
+    margin: 20px 33%;
+    padding:20px;
+    border-radius: 8px;
+}
+.product-add-input{
+    display: flex;
+
+}
+.product-add-input input{
+    border:none;
+    border-radius: 8px;
+    padding:5px;
+    margin-bottom: 10px;
+}
+.product-add-child{
+    display: flex;
+    flex-direction: column;
+}
+.product-add-child-left{
+    margin-right: 20%;
+}
+.product-add-button .product-add,.product-cancel {
+    border: none;
+    border-radius: 8px;
+    padding:5px 60px;
+    color:black;
+}
+.product-add-button .product-add{
+    background-color: rgb(26, 246, 41);
+    margin-right: 29%;
+    text-decoration: none;
+}
+.product-add-button .product-cancel{
+    background-color: rgb(250, 74, 115);
+    text-decoration: none;
+}
+
+/* seller order list */
+.seller-order-list{
+    background-color: rgb(220, 207, 207);
+}
+.order-item{
+    display: flex;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    background-color: rgb(229, 237, 239);
+    
+}
+.order-item-left,.order-item-middle,.order-item-right,.order-item-button{
+    width:20%;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: column;
+   height: 150px;
+}
+.order-item-button button{
+    border: none;
+    border-radius: 8px;
+}
+.order-item-shipped{
+    margin-bottom: 20px;
+    background-color: rgb(3, 179, 111);
+    color:whitesmoke
+}
+.order-item-cancel{
+    background-color: rgb(255, 64, 0);
+    color:whitesmoke
+}
+.order-item-left img{
+    height: 70px;
+}
+
+    
