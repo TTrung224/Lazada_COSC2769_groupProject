@@ -35,16 +35,16 @@ export default function ProductList(){
                             <div className="product-item">
                                 <img src={product.img} className="product-img"/>
                                 <div className="product-item-middle">
-                                    <p>{product.name}</p>
-                                    <p>{product.description}</p>
+                                    <p>Name: <b>{product.name}</b></p>
+                                    <p>Description: <b>{product.description}</b></p>
                                 </div>
                                 <div className="product-item-right">
-                                    <p>{product.prize}</p>
-                                    <p>{product.category}</p>
+                                    <p>Price: <b>{product.prize}</b></p>
+                                    <p>Category: <b>{product.category}</b></p>
                                 </div>
                                 <div className="seller-item-button">
-                                    <Link className="item-edit" to="/seller/product/editproduct">Edit</Link>
-                                    <button className="item-delete" onClick={()=>handleDelete(product.id)}>Delete</button>
+                                    <Link className="item-edit" to="/seller/product/editproduct"><b>Edit</b></Link>
+                                    <button className="item-delete" onClick={()=>handleDelete(product.id)}><b>Delete</b></button>
                                 </div>
                             </div>
                         )

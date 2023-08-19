@@ -281,19 +281,21 @@
 /* seller product list*/
 
 .seller-product-list{
-    background-color: rgb(220, 207, 207);
+    background-color: whitesmoke;
+    scroll-behavior: smooth;
 }
 .product-item{
     display: flex;
     padding: 10px 20px;
-    margin-bottom: 10px;
-    background-color: rgb(229, 237, 239);
-    
+    margin-bottom: 15px;
+    background-color:white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .product-item img{
     height: 100px;
     width:20%;
     margin-right: 20px;
+    object-fit: cover;
 }
 .product-item .product-item-middle{
     width:20%;
@@ -309,48 +311,55 @@
     height:100%;
 }
 .seller-item-button .item-edit{
-    color:white;
-    background-color: rgb(59, 187, 168);
+    color:rgb(0, 95, 142);
+    background-color: rgba(0, 117, 180, 0.2);
     border: none;
     border-radius: 8px;
-    padding: 5px 20px;
+    padding: 5px 60px;
     margin-bottom: 20px;
     text-decoration: none;
+    text-align: center;
 }
 .seller-item-button .item-edit:hover{
-    background-color: rgb(52, 163, 146) ;
+    background-color: rgba(0, 99, 157, 0.433) ;
 }
 .seller-item-button .item-delete{
-    color:white;
-    background-color: rgb(249, 4, 45);
+    color:rgb(255, 0, 0);
+    background-color: rgba(249, 4, 45,0.2);
     border: none;
     border-radius: 8px;
     padding: 5px 20px;
+    text-align: center;
 }
 .seller-item-button .item-delete:hover{
-    background-color:rgb(216, 5, 40) ;
+    background-color: rgba(249, 4, 45,0.3);
 }
 
 .seller-header-bar{
-    background-color: rgb(177, 179, 179);
-    padding: 5px;
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
     position: sticky;
     top:0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
 }
 .seller-header-bar .add-product{
-    color:black;
+    color:white;
     margin: 10px 20px;
     text-decoration: none;
-    background-color: aqua;
-    padding:2.5px;
+    background-color: rgb(2, 102, 201);
+    padding:7px 20px;
     border-radius: 8px;
 }
 .seller-header-bar .add-product:hover{
-    background-color: rgb(97, 173, 173);
+    background-color: rgb(49, 113, 185);
+    color:whitesmoke;
 }
 .seller-header-bar input{
     border: none;
     border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding:6px 10px;
 }
 .seller-product-container{
     margin: 10px 20px;
@@ -362,6 +371,7 @@
     margin: 20px 33%;
     padding:20px;
     border-radius: 8px;
+    min-width:550px;
 }
 .product-add-input{
     display: flex;
@@ -370,12 +380,13 @@
 .product-add-input input{
     border:none;
     border-radius: 8px;
-    padding:5px;
-    margin-bottom: 10px;
+    padding:10px;
+    margin-bottom: 20px;
 }
 .product-add-child{
     display: flex;
     flex-direction: column;
+ 
 }
 .product-add-child-left{
     margin-right: 20%;
@@ -387,13 +398,23 @@
     color:black;
 }
 .product-add-button .product-add{
-    background-color: rgb(26, 246, 41);
+    background-color: rgb(0, 183, 12);
+    color:whitesmoke;
     margin-right: 29%;
     text-decoration: none;
 }
+.product-add-button .product-add:hover{
+    background-color: rgb(0, 232, 15);
+    color:white;
+}
 .product-add-button .product-cancel{
-    background-color: rgb(250, 74, 115);
+    background-color: rgb(208, 47, 84);
+    color:whitesmoke;
     text-decoration: none;
+}
+.product-add-button .product-cancel:hover{
+    background-color: rgb(240, 0, 56);
+    color:white;
 }
 
 /* seller order list */
@@ -429,6 +450,7 @@
 }
 .order-item-left img{
     height: 70px;
+    object-fit: cover;
 }
 
     

@@ -4,7 +4,7 @@ export default function EditProduct(){
     return(
         <>
             <Navbar/>
-            <div className="add-product-container">
+            <div className="seller-product-container">
                 <h2>Edit Product</h2>
                 <div className='product-add-input'>
                     <div class="product-add-child product-add-child-left">

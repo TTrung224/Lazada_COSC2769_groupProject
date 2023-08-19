@@ -32,14 +32,14 @@ export default function OrderList(){
                     return(
                         <div className="order-item">
                             <div className="order-item-left">
-                                <p>{order.id}</p>
-                                <p>{order.date}</p>
+                                <p>ID: <b>{order.id}</b></p>
+                                <p>Create date: <b>{order.date}</b></p>
                                 <img src={order.img} className="order-img"/>
                             </div>
                             <div className="order-item-middle">
-                                <p>{order.cusName}</p>
-                                <p>{order.cusAddress}</p>
-                                <p>{order.name}</p>
+                                <p>Customer name: <b>{order.cusName}</b></p>
+                                <p>Customer address: <b>{order.cusAddress}</b></p>
+                                <p>Product name: <b>{order.name}</b></p>
                             </div>
                             <div className="order-item-right">
                                 <p>Product quantity</p>
