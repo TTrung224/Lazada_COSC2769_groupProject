@@ -285,6 +285,10 @@
     transition-duration: 0.3s;
     
 }
+#sign-up .error-message{
+    color:red;
+    display: none;
+}
 
 /* login form */
 .login-form{
@@ -368,6 +372,7 @@
 }
 .seller-item-button .item-edit:hover{
     background-color: rgba(0, 99, 157, 0.433) ;
+    transition-duration: 0.3s;
 }
 .seller-item-button .item-delete{
     color:rgb(255, 0, 0);
@@ -379,6 +384,7 @@
 }
 .seller-item-button .item-delete:hover{
     background-color: rgba(249, 4, 45,0.3);
+    transition-duration: 0.3s;
 }
 
 .seller-header-bar{
