@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import Navbar from '../Shared/navbar';
 export default function EditProduct(){
     return(
-        <>
+        <div className='add-product-grandparent'>
             <Navbar/>
-            <div className="seller-product-container">
+            <div className="add-product-container">
                 <h2>Edit Product</h2>
                 <div className='product-add-input'>
                     <div class="product-add-child product-add-child-left">
@@ -30,7 +30,7 @@ export default function EditProduct(){
                 </div>
                 
             </div>
-        </>
+        </div>
         
     )
 }

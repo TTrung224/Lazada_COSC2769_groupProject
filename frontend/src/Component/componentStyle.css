@@ -366,19 +366,27 @@
 }
 
 /* seller add product */
+.add-product-grandparent{
+    background-color: whitesmoke;
+    min-height: 800px;
+   
+    
+}
 .add-product-container{
-    background-color: rgb(216, 233, 248);
-    margin: 20px 33%;
-    padding:20px;
+    background-color:white;
+    margin: 20px 30%;
+    padding:50px;
     border-radius: 8px;
-    min-width:550px;
+    min-width:600px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .product-add-input{
     display: flex;
 
 }
 .product-add-input input{
-    border:none;
+    border:1px solid rgba(0, 0, 0, 0.24);
+    
     border-radius: 8px;
     padding:10px;
     margin-bottom: 20px;
@@ -419,13 +427,14 @@
 
 /* seller order list */
 .seller-order-list{
-    background-color: rgb(220, 207, 207);
+    background-color: whitesmoke;
 }
 .order-item{
     display: flex;
     padding: 10px 20px;
-    margin-bottom: 10px;
-    background-color: rgb(229, 237, 239);
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     
 }
 .order-item-left,.order-item-middle,.order-item-right,.order-item-button{
