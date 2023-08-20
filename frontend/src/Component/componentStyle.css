@@ -234,10 +234,8 @@
 
 /* sign-up-form */
 .signup-form{
-    background-color: aquamarine;
     height: 100%;
     display: flex;
-
 }
 .signup-left{
     margin-right: 30px;
@@ -247,34 +245,81 @@
     flex-direction: column;
 }
 
-.signup-form-container{
+.signup-form-container {
     text-align: center;
+    height: 100%;
     
 }
 #radio2{
     margin-left: 20px;
 }
 #sign-up{
+    text-align: left;
     display: flex;
     justify-content: center;
     margin-right: 30%;
     margin-left: 30%;
+    min-width: 500px;
     padding: 20px 30px;
     border-radius: 8px;
-    background-color: rgb(216, 233, 248);
+    /* background-color: rgba(216, 233, 248, 0.223); */
+    background-color: rgba(245, 245, 245, 0.419);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #sign-up input{
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: none;
     border-radius: 8px;
-
+    padding:15px;
+    border:1px solid rgba(0, 0, 0, 0.24);
 }
 #sign-up button{
     border: none;
     border-radius: 8px;
+    color:white;
+    background-color: rgb(0, 132, 248);
 }
 #sign-up button:hover{
-    background-color: rgb(154, 169, 184);
+    background-color: rgb(213, 236, 250);
+    color: rgb(0, 132, 248);
+    transition-duration: 0.3s;
+    
+}
+
+/* login form */
+.login-form{
+    text-align: center;
+}
+#login{
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    margin-left: 37%;
+    min-width: 300px;
+    width: 400px;
+    padding: 20px 30px;
+    border-radius: 8px;
+    background-color: rgba(245, 245, 245, 0.419);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#login input{
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    padding:15px;
+    border:1px solid rgba(0, 0, 0, 0.24);
+}
+#login button{
+    border: none;
+    border-radius: 8px;
+    color:white;
+    background-color: rgb(0, 132, 248);
+}
+#login button:hover{
+    background-color: rgb(213, 236, 250);
+    color: rgb(0, 132, 248);
+    transition-duration: 0.3s;
+    
 }
 
 
@@ -296,6 +341,7 @@
     width:20%;
     margin-right: 20px;
     object-fit: cover;
+    overflow-x: hidden;
 }
 .product-item .product-item-middle{
     width:20%;
@@ -460,6 +506,7 @@
 .order-item-left img{
     height: 70px;
     object-fit: cover;
+    overflow-x: hidden;
 }
 
     
