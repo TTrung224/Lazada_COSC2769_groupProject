@@ -21,12 +21,14 @@ export default function ProductList(){
         alert("Product id: "+id+" deleted")
     }
     function handleSort(e){
-        if(e.target.value =="name"){
+        if(e.target.value ==="name"){
             setProduct(products => products.sort((a,b)=> a.name > b.name ? 1 : -1))
-        }else if(e.target.value == "price"){
+        }else if(e.target.value === "price"){
             setProduct(products => products.sort((a,b)=> a.prize > b.prize ? 1 : -1))
-        }else if(e.target.value == "date"){
+        }else if(e.target.value === "date"){
             setProduct(products => products.sort((a,b)=> a.addedDate > b.addedDate ? 1 : -1))
+        }else{
+            setProduct(productList)
         }
         console.log(e.target.value)
         
