@@ -14,9 +14,9 @@ export default function Login(){
             <div className='login-form' id="login">
                 <div className='signup-left'>
                     <label for="email">Email or Phone</label>
-                    <input type='text' id="email" placeholder='Enter email/phone number' />
+                    <input type='text' id="email" placeholder='Enter email/phone number' required/>
                     <label for="password">Password</label>
-                    <input type='password' id='password' placeholder='Enter password' />
+                    <input type='password' id='password' placeholder='Enter password' required/>
                     <button type='button' onClick={()=>loginFunc()}>Login</button>
                     <p>Dont have an account? <Link to='/signup'>Sign up</Link> here  </p>
                 </div>           

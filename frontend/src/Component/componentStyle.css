@@ -407,11 +407,12 @@
     background-color: rgb(49, 113, 185);
     color:whitesmoke;
 }
-.seller-header-bar input{
+.seller-header-bar .seller-select-sort{
     border: none;
     border-radius: 8px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding:6px 10px;
+    margin-left: 10px;
 }
 .seller-product-container{
     margin: 10px 20px;
