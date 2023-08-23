@@ -1,3 +1,7 @@
+import React, {useState} from 'react';
+import CountQuantity from './countQuantity';
+import DeleteProduct from './removeProduct';
+
 const cartItem = ({product}) => {
     return ( 
         <div class="row mb-4 d-flex justify-content-between align-items-center">
@@ -11,30 +15,21 @@ const cartItem = ({product}) => {
         <h6 class="text-black mb-0">{product.name}</h6>
         </div>
         
-        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-        <button class="btn btn-secondary"
-            onclick="">
-            -
-        </button>
-
-        <input id="form1" min="0" name="quantity" defaultValue= {product.quantity} type="number"
-            class="form-control form-control-sm" />
-
-        <button class="btn btn-secondary px-2"
-            onclick="">
-            +
-        </button>
-        </div>
+        <CountQuantity></CountQuantity>
 
         <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
             <h6 class="mb-0">${product.price}</h6>
+            
         </div>
 
-        <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-            <button type ="button" class ="btn">X</button>
-        </div>
+        <DeleteProduct></DeleteProduct>
+        
     </div>
      );
+
 }
+
+
+
  
 export default cartItem;
