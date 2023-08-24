@@ -1,41 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
-const CountQuantity = () => {
-    const [quantity, setQuantity] = useState(1);
-
-    const increase = () => {
-        setQuantity(quantity + 1);
-    }
-
-    const decrease = () => {
-        if(quantity >= 1){
-            setQuantity(quantity - 1);
-        }
-
-        else {
-            setQuantity(0)
-        }
-        
-    }
+const CountQuantity = ({ quantity, increaseQuant, decreaseQuant, changeQuant }) => {
 
     
 
-    return(
-        <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
-            
-            <button class="btn btn-secondary" onClick={() => decrease()}> - </button>
-            
-            
-
-        <input id="form1" min="0" name="quantity" defaultValue= {quantity} type="number"
-            class="form-control form-control-sm" />
-
-           
-            
-
-            <button class="btn btn-secondary px-2  " onClick={() => increase()}> + </button>
+    return (
+        <div className="col-md-3 col-lg-3 col-xl-2 d-flex">
+            <div className="input-group">
+                <button className="btn btn-secondary" type='button' onClick={() => decreaseQuant()}> - </button>
+                <input key={"quantity"} id="quantity" min="0" name="quantity" value={quantity} type="number"
+                    className="form-control input-number form-control-sm" onChange={() => changeQuant()} />
+                <button className="btn btn-secondary" type='button' onClick={() => increaseQuant()}> + </button>
+            </div>
         </div>
     )
- }
+}
 
- export default CountQuantity;
+export default CountQuantity;

@@ -1,4 +1,3 @@
-import React, { useContext, useEffect } from 'react'
 import AuthContextProvider from './Context/loginSessionContext'
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -18,8 +17,7 @@ import AdminCategory, { handleDeleteCategory, loadCategories } from './Page/admi
 import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from './Page/adminCategoryForm';
 import AddProduct from './Component/Seller/AddProduct';
 import EditProduct from './Component/Seller/EditProduct';
-import AdminMain from './Page/adminMain';
-import { loadData, loadItems } from './Component/Customer/cart';
+import { loadItems } from './Component/Customer/cart';
 
 function App() {
 

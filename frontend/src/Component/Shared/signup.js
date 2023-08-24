@@ -1,6 +1,5 @@
 import React, {useContext, useEffect,useState} from 'react';
-import logo from "../../Asset/webLogo.png";
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {AuthContext} from '../../Context/loginSessionContext'
 import '../componentStyle.css';
 import { handleAuth } from '../../Service/commonService';
@@ -65,7 +64,7 @@ export default function Signup(){
                     <button type='submit' onClick={(e)=>handlerSubmit(e)}>Create account</button>
                 </div>
             
-                {type == "customer"?(
+                {type === "customer"?(
                     <div className='signup-right'> 
                         <label for="full-name">Full name</label>
                         <input type='text' id='full-name' placeholder='Enter your full name'/>

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../../Context/loginSessionContext';
 import '../componentStyle.css';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export default function Login(){
     const { authState: {isAuthenticated, user}} = useContext(AuthContext)

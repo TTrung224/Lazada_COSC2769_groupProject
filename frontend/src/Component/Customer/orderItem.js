@@ -4,7 +4,7 @@ const orderItem = ({product}) => {
         <div class="row mb-4 d-flex justify-content-between align-items-center">
             <div class="col-md-2 col-lg-2 col-xl-2">
             <img
-                src={product.img}
+                src={product.img} alt="product img"
                 class="img-fluid rounded-3" style ={{width:"100px"}}/>
             </div>
             
