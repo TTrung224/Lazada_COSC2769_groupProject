@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
 import '../componentStyle.css';
-import img1 from "../../Asset/test_product_images/1.jpg";
 import Loader from '../Shared/loader';
 import { getItems } from './cartItemsApi';
 import { useLoaderData } from 'react-router-dom';
@@ -18,6 +17,10 @@ export default function Cart(){
 
     const [isLoading, setIsLoading] = useState(false)
 
+    const deleteProduct = id => {
+        
+    }
+
     // const { authState: {isAuthenticated}} = useContext(AuthContext)
     // const navigate = useNavigate()
 
@@ -25,6 +28,8 @@ export default function Cart(){
     //     const path = handleAuth(isAuthenticated);
     //     if(path!=null) navigate(path)
     // });
+
+    
 
     
 
