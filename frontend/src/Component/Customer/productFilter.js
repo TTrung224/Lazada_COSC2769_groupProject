@@ -21,7 +21,6 @@ function AtributeFilter({atribute, onCheck}){
 }
 
 export default function ProductFilter(){
-    const list = ["test1", "test2", "test3"]
     const atributeList = [
         {
             name: "test1",

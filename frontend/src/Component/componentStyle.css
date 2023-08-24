@@ -7,8 +7,11 @@
     font-size: smaller;
     text-decoration: none;
     color: black;
-    margin-left: 1rem;
-    margin-right: 1rem;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    min-width: 60px;
+    min-height: 20px;
+    text-align: center;
 }
 
 .header-div nav{
@@ -28,7 +31,7 @@
 .navbar-nav .header-item:hover{
     background-color: rgb(39, 66, 170);
     color: white;
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .navbar-nav .nav-custom-item{
@@ -231,10 +234,8 @@
 
 /* sign-up-form */
 .signup-form{
-    background-color: aquamarine;
     height: 100%;
     display: flex;
-
 }
 .signup-left{
     margin-right: 30px;
@@ -244,15 +245,115 @@
     flex-direction: column;
 }
 
+.signup-form-container {
+    text-align: center;
+    height: 100%;
+    
+}
+#radio2{
+    margin-left: 20px;
+}
+#sign-up{
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    margin-right: 30%;
+    margin-left: 30%;
+    min-width: 500px;
+    padding: 20px 30px;
+    border-radius: 8px;
+    /* background-color: rgba(216, 233, 248, 0.223); */
+    background-color: rgba(245, 245, 245, 0.419);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#sign-up input{
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    padding:15px;
+    border:1px solid rgba(0, 0, 0, 0.24);
+}
+#sign-up button{
+    border: none;
+    border-radius: 8px;
+    color:white;
+    background-color: rgb(0, 132, 248);
+}
+#sign-up button:hover{
+    background-color: rgb(213, 236, 250);
+    color: rgb(0, 132, 248);
+    transition-duration: 0.3s;
+    
+}
+#sign-up .error-message{
+    color:red;
+    display: none;
+}
 
-/* seller */
+/* login form */
+.login-form{
+    text-align: center;
+}
+#login{
+    text-align: left;
+    display: flex;
+    justify-content: center;
+    margin-left: 37%;
+    min-width: 300px;
+    width: 400px;
+    padding: 20px 30px;
+    border-radius: 8px;
+    background-color: rgba(245, 245, 245, 0.419);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+#login input{
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    padding:15px;
+    border:1px solid rgba(0, 0, 0, 0.24);
+}
+#login button{
+    border: none;
+    border-radius: 8px;
+    color:white;
+    background-color: rgb(0, 132, 248);
+}
+#login button:hover{
+    background-color: rgb(213, 236, 250);
+    color: rgb(0, 132, 248);
+    transition-duration: 0.3s;
+    
+}
+
+
+/* seller product list*/
 
 .seller-product-list{
-    background-color: aquamarine;
+    background-color: whitesmoke;
+    scroll-behavior: smooth;
 }
 .product-item{
     display: flex;
-    
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    background-color:white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.product-item img{
+    height: 100px;
+    width:20%;
+    margin-right: 20px;
+    object-fit: cover;
+    overflow-x: hidden;
+}
+.product-item .product-item-middle{
+    width:20%;
+    margin-right: 20px;
+}
+.product-item .product-item-right{
+    width:20%;
+    margin-right: 20px;
 }
 .product-item div{
     display :flex;
@@ -260,17 +361,185 @@
     height:100%;
 }
 .seller-item-button .item-edit{
-    color:white;
-    background-color: rgb(59, 187, 168);
+    color:rgb(0, 95, 142);
+    background-color: rgba(0, 117, 180, 0.2);
     border: none;
     border-radius: 8px;
-    padding: 5px 20px;
+    padding: 5px 60px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    text-align: center;
+}
+.seller-item-button .item-edit:hover{
+    background-color: rgba(0, 99, 157, 0.433) ;
+    transition-duration: 0.3s;
 }
 .seller-item-button .item-delete{
-    color:white;
-    background-color: rgb(249, 4, 45);
+    color:rgb(255, 0, 0);
+    background-color: rgba(249, 4, 45,0.2);
     border: none;
     border-radius: 8px;
     padding: 5px 20px;
+    text-align: center;
+}
+.seller-item-button .item-delete:hover{
+    background-color: rgba(249, 4, 45,0.3);
+    transition-duration: 0.3s;
+}
+
+.seller-header-bar{
+    background-color: rgb(255, 255, 255);
+    padding: 10px;
+    position: sticky;
+    top:0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+}
+.seller-header-bar .add-product{
+    color:white;
+    margin: 10px 20px;
+    text-decoration: none;
+    background-color: rgb(2, 102, 201);
+    padding:7px 20px;
+    border-radius: 8px;
+}
+.seller-header-bar .add-product:hover{
+    background-color: rgb(49, 113, 185);
+    color:whitesmoke;
+}
+.seller-header-bar .seller-select-sort{
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding:6px 10px;
+    margin-left: 10px;
+}
+.seller-product-container{
+    margin: 10px 20px;
+}
+
+/* seller add product */
+.add-product-grandparent{
+    background-color: whitesmoke;
+    min-height: 800px;
+   
+    
+}
+.add-product-container{
+    background-color:white;
+    margin: 20px 30%;
+    padding:50px;
+    border-radius: 8px;
+    min-width:600px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.product-add-input{
+    display: flex;
 
 }
+.product-add-input input,#add-product-category{
+    border:1px solid rgba(0, 0, 0, 0.24);
+    
+    border-radius: 8px;
+    padding:10px;
+    margin-bottom: 20px;
+}
+.category-checkbox1,.category-checkbox2,.category-checkbox3{
+    display:none;
+}
+.category-checkbox1 input,.category-checkbox2 input,.category-checkbox3 input{
+    margin-left: 5px;
+    margin-right: 10px;
+}
+.product-add-child{
+    display: flex;
+    flex-direction: column;
+ 
+}
+.product-add-child-left{
+    margin-right: 20%;
+}
+.product-add-button .product-add,.product-cancel {
+    border: none;
+    border-radius: 8px;
+    padding:5px 60px;
+    color:black;
+}
+.product-add-button .product-add{
+    background-color: rgb(0, 183, 12);
+    color:whitesmoke;
+    margin-right: 29%;
+    text-decoration: none;
+}
+.product-add-button .product-add:hover{
+    background-color: rgb(0, 232, 15);
+    color:white;
+}
+.product-add-button .product-cancel{
+    background-color: rgb(208, 47, 84);
+    color:whitesmoke;
+    text-decoration: none;
+}
+.product-add-button .product-cancel:hover{
+    background-color: rgb(240, 0, 56);
+    color:white;
+}
+
+
+/* seller order list */
+.seller-order-list{
+    background-color: whitesmoke;
+    scroll-behavior: smooth;
+}
+.order-item{
+    display: flex;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    overflow: hidden;
+}
+.order-item-left,.order-item-middle,.order-item-right,.order-item-button{
+    width:20%;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: column;
+   height: 150px;
+}
+.order-item-button button{
+    border: none;
+    border-radius: 8px;
+}
+.order-item-shipped{
+    margin-bottom: 20px;
+    background-color: rgb(3, 179, 111);
+    color:whitesmoke
+}
+.order-item-cancel{
+    background-color: rgb(255, 64, 0);
+    color:whitesmoke
+}
+
+.order-products {
+    display: flex;
+    padding: 10px 20px;
+    margin-top: -10px;
+    margin-bottom: 30px;
+    margin-left: 15px;
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.order-product-left img{
+    height: 70px;
+    object-fit: cover;
+    overflow-x: hidden;
+}
+.order-product-left{
+    width:20%;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: column;
+    height: 150px;
+}
+
+    
