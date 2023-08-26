@@ -18,6 +18,7 @@ import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from '.
 import AddProduct from './Component/Seller/AddProduct';
 import EditProduct from './Component/Seller/EditProduct';
 import { loadItems } from './Component/Customer/cart';
+import ProductPage from './Page/ProductPage';
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
     },
     {
       path: "/guest/cart",
-      element: <GuestCart/>,
+      element: <GuestCart />,
       loader: loadItems
     },
     {
@@ -65,7 +66,7 @@ function App() {
     },
     {
       path: "/admin/seller-request",
-      element: <AdminSellerRequest/>,
+      element: <AdminSellerRequest />,
       loader: loadSellers
     },
     {
@@ -101,15 +102,19 @@ function App() {
     },
     {
       path: "/seller/product",
-      element: <SellerProduct/>,
+      element: <SellerProduct />,
     },
     {
       path: "/seller/product/addproduct",
-      element:<AddProduct/>
+      element: <AddProduct />
     },
     {
       path: "/seller/product/editproduct",
-      element: <EditProduct/>
+      element: <EditProduct />
+    },
+    {
+      path: "/product/:productId",
+      element: <ProductPage />
     }
   ]);
 
@@ -118,7 +123,6 @@ function App() {
     <div className="App">
       <AuthContextProvider>
         <RouterProvider router={router}>
-
         </RouterProvider>
       </AuthContextProvider>
     </div>

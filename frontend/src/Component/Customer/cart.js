@@ -7,31 +7,26 @@ import CartItem from './cartItem';
 
 
 export async function loadItems(){
-    const cartList = await getItems();
-
-    return cartList
+    // const cartList = await getItems();
+    const ls = localStorage.cart
+    if(ls){
+        const cartList = JSON.parse(localStorage.cart)
+        return cartList
+    }
+    return []
 }
 
 export default function Cart(){
     const cartList = useLoaderData()
+    const [cart, setCart] = useState(cartList)
 
-    const [isLoading, setIsLoading] = useState(false)
-
-    const deleteProduct = id => {
-        
+    function deleteProduct(id) {
+        setCart(cart => {
+            return cart.filter(item => item.product.id !== id)
+        })
     }
 
-    // const { authState: {isAuthenticated}} = useContext(AuthContext)
-    // const navigate = useNavigate()
-
-    // useEffect(() => {
-    //     const path = handleAuth(isAuthenticated);
-    //     if(path!=null) navigate(path)
-    // });
-
-    
-
-    
+    const [isLoading, setIsLoading] = useState(false)
 
     return(
         <div className = "container py-5 h-100">
@@ -53,7 +48,7 @@ export default function Cart(){
                                     <hr></hr>
 
                                     {(isLoading) ? <Loader/> : <></>}
-                                    {cartList.map(product => <CartItem key={product.id} product={product} />)}
+                                    {cart.map(item => <CartItem key={item.product.id} item={item} deleteProduct={deleteProduct}/>)}
 
                                 </div>
                                 <div className = "col-lg-4" >

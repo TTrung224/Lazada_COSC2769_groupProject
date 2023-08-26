@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import AdminCategoryList from "./AdminCategoryList";
-import { Form, Link, useFetcher } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AdminCategoryItem = ({ categories, item, fetcher }) => {
     const [collapsed, setCollapsed] = useState(true)

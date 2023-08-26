@@ -57,10 +57,10 @@ export default function Navbar(){
     const { authState: {isAuthenticated, user}} = useContext(AuthContext)
     const navigate = useNavigate()
 
-    useEffect(() => {
-        const path = handleAuth(isAuthenticated, user?.type);
-        if(path!=null) navigate(path)
-    });
+    // useEffect(() => {
+    //     const path = handleAuth(isAuthenticated, user?.type);
+    //     if(path!=null) navigate(path)
+    // });
 
     let navList = [];
     let headList = [];
