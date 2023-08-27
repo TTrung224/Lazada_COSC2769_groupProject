@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
-const sellerRequestSchema = new Schema({
+const sellerRequestSchema = new mongoose.Schema({
   
 });
 
-export default model("sellerRequest", sellerRequestSchema);
+module.exports = mongoose.model("sellerRequest", sellerRequestSchema);

@@ -1,5 +1,7 @@
 // importing user context
-import { findOne, find, create } from "../model/account";
+const User = require("../model/Account");
+const bcrypt =  require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 class AccountController {
     // [GET] account/getaccount
@@ -287,4 +289,4 @@ class AccountController {
 
 }
 
-export default new AccountController();
+module.exports = new AccountController();

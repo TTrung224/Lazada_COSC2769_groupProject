@@ -1,6 +1,6 @@
-import { Router } from 'express';
+const express = require('express');
+const router = express.Router();
+const verifyToken = require('../middleware/verifyToken');
 
-const router = Router();
 
-
-export default router;
+module.exports = router;

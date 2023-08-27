@@ -1,6 +1,6 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose");
 
-const accountSchema = new Schema({
+const accountSchema = new mongoose.Schema({
   firstName: { type: String, default: null },
   lastName: { type: String, default: null },
   email: { type: String, unique: true, require: true },
@@ -9,4 +9,4 @@ const accountSchema = new Schema({
   type: { type: String, enum: ['student', 'lecturer', 'technician'], require: true}, // (lecturer / student / technician)
 });
 
-export default model("account", accountSchema);
+module.exports = mongoose.model("account", accountSchema);

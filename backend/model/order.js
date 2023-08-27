@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
-const orderSchema = new Schema({
+const orderSchema = new mongoose.Schema({
   
 });
 
-export default model("order", orderSchema);
+module.exports = mongoose.model("order", orderSchema);

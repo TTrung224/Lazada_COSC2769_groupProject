@@ -1,12 +1,14 @@
 require("dotenv").config();
-require("./config/database").connect();
-import cors from 'cors';
-import express, { json } from "express";
-import route from './routes';
-const { HOSTING_URL_BASE } = process.env 
+require("./config/Database").connect();
+const cors = require('cors')
+const express = require("express");
+const route = require('./routes/Index');
+// const cookies = require('cookie-parser')
 
 const app = express();
-app.use(json());
+app.use(express.json());
+// app.use(cookies());
+app.use(cors({origin: 'http://localhost:3000', credentials: true}))
 route(app);
 
-export default app;
+module.exports = app;

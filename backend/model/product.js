@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 
-const productSchema = new Schema({
+const productSchema = new mongoose.Schema({
   
 });
 
-export default model("product", productSchema);
+module.exports = mongoose.model("product", productSchema);

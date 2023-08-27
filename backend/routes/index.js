@@ -1,7 +1,7 @@
-import AccountRouter from './account';
-import CategogoryRouter from './category'
-import OrderRouter from './order'
-import ProductRouter from './porduct'
+const AccountRouter = require('./Account');
+const CategogoryRouter = require('./Category');
+const OrderRouter = require('./Order');
+const ProductRouter = require('./Product');
 
 function route(app) {
     
@@ -11,4 +11,4 @@ function route(app) {
     app.use('/product', ProductRouter);
 }
 
-export default route;
+module.exports = route;

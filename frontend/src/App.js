@@ -1,6 +1,5 @@
 import AuthContextProvider from './Context/loginSessionContext'
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import LoginPage from './Page/loginPage';
 import SignupPage from './Page/signupPage';

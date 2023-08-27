@@ -1,8 +1,9 @@
-import { connect } from 'mongoose';
+const mongoose = require('mongoose');
 const { MONGO_URL } = process.env 
 
-export function connect() {
-    connect(MONGO_URL)
+exports.connect = () => {
+    mongoose.set('strictQuery', true)
+    mongoose.connect(MONGO_URL)
     .then(() => {
         console.log('Connected to ' + MONGO_URL);
     }).catch((error) => {
