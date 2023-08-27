@@ -1,4 +1,4 @@
-const AdminSellerTable = ({ sellers }) => {
+const AdminSellerTable = ({ sellers, handleChangeStatus }) => {
 
       
 
@@ -26,8 +26,8 @@ const AdminSellerTable = ({ sellers }) => {
                                 <td>{seller.email}</td>
                                 <td>{seller.status}</td>
                                 <td>
-                                    <button className="btn btn-success mx-1" disabled={seller.status === 'Accepted'}><i className="bi-check-lg" /></button>
-                                    <button className="btn btn-danger mx-1" disabled={seller.status === 'Rejected'}><i className="bi-x-lg" /></button>
+                                    <button className="btn btn-success mx-1" disabled={seller.status === 'Accepted'} onClick={() => handleChangeStatus(seller.id, "Accepted")}><i className="bi-check-lg"/></button>
+                                    <button className="btn btn-danger mx-1" disabled={seller.status === 'Rejected'} onClick={() => handleChangeStatus(seller.id, "Rejected")}><i className="bi-x-lg" /></button>
                                 </td>
                             </tr>
                         )

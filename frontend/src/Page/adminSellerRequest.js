@@ -1,48 +1,44 @@
-import { useLoaderData, useSearchParams } from 'react-router-dom';
-import PaginationList, { paginateArray } from '../Component/Shared/Pagination';
 import AdminSellerTable from '../Component/Admin/AdminSellerTable.js';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Navbar from '../Component/Shared/navbar';
-import { getSellers } from '../Component/Admin/AdminAPI';
+import { getSellers, saveSeller } from '../Component/Admin/AdminAPI';
+import Loader from '../Component/Shared/loader.js';
 
 
-export async function loadSellers(){
-    const data = await getSellers()
-    return data
-}
 
 export default function AdminSellerRequest() {
-    const [searchParams] = useSearchParams()
-    let page = parseInt(searchParams.get("page"))
-    if (!page) {
-        page = 1
-    }
-    const maxItemsPerPage = 5
-    const sellers = useLoaderData()
-    
-    const [displaySellers, setDisplaySellers] = useState(paginateArray(sellers, page, maxItemsPerPage))
+    const [sellers, setSellers] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
-    // function handleChangeStatus(seller, status){
-    //     seller.status = status
-    //     const newSellers = sellers.map(s => {
-    //         if(s.id === seller.id){
-    //             return seller
-    //         } return s
-    //     })
-    //     setSellers(newSellers)
-    // } 
+    useEffect(() => {
+        const data = getSellers().then(data => {
+            setSellers(data)
+        }).finally(() => setIsLoading(false))
+    }, [])
 
+    async function handleChangeStatus(id, status){
+        setIsLoading(true)
+        const newSellers = sellers.map(s => {
+            if(s.id === id){
+                s.status = status
+            } return s
+        })
+        setSellers(newSellers)
+        await saveSeller(newSellers)
+        setIsLoading(false)
+    } 
 
     return (
         <>
             <Navbar />
+
             <div className='container'>
 
                 <h2 className='mb-4'>List of Sellers</h2>
 
-                <AdminSellerTable sellers={displaySellers} />
-                <PaginationList totalItems={sellers} setDisplayItems={setDisplaySellers} maxItemsPerPage={maxItemsPerPage} currentIdx={page}></PaginationList>
+                {sellers? <AdminSellerTable sellers={sellers} handleChangeStatus={handleChangeStatus}/> : <></>}
             </div>
+            {isLoading ? <Loader /> : <></>}
         </>
     )
 }

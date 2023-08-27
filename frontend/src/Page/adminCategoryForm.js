@@ -118,7 +118,7 @@ const AdminCategoryForm = () => {
 
                     {/* Submit, Cancel buttons */}
                     <hr />
-                    <div className="mt-3">
+                    <div className="my-3">
                         <input id="submitBtn" className="btn btn-primary" type="submit" value="Save" />
                         <input id="cancelBtn" className="btn btn-secondary ms-2" type="button" value="Cancel" onClick={() => {
                             navigate(-1)
