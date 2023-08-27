@@ -24,21 +24,27 @@ export default function Signup(){
         setType((type) =>type = "seller" )   
     }
 
-    const password = document.querySelector("#password")
-    const confirmPwd = document.querySelector("#re-pwd")
     const error = document.querySelector(".error-message")
 
     function handlerSubmit(e){
-        let message = []
+        
+        const password = document.querySelector("#password")
+        const confirmPwd = document.querySelector("#re-pwd")
+        let message = ""
         if(password.value !== confirmPwd.value){
-            message.push("Confirm password must be the same as password")
+            message= "Confirm password must be the same as password"
+            e.preventDefault()
+            error.style.display = 'block'
+        }else{
+            message = " ";
+            error.style.display = 'none'
         }
 
-        if(message.length > 0){
-            e.preventDefault()
-            error.innerText = message.join(", ")
-            error.style.display = 'block'
-        }
+      
+           
+            error.innerText = message
+           
+      
     }
    
 

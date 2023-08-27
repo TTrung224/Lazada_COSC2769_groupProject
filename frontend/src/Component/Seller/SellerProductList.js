@@ -16,9 +16,9 @@ export default function ProductList(){
 
     const [products,setProduct] = useState(productList)
 
-    const handleDelete =(id) =>{
+    const handleDelete =(id) =>{    
         setProduct(products => products.filter(product => product.id !== id))
-        alert("Product id: "+id+" deleted")
+        alert("Product id: "+id+" deleted")     
     }
     function handleSort(e){
         if(e.target.value ==="name"){
