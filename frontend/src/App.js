@@ -65,8 +65,7 @@ function App() {
     },
     {
       path: "/admin/seller-request",
-      element: <AdminSellerRequest />,
-      loader: loadSellers
+      element: <AdminSellerRequest />
     },
     {
       path: "/admin/product-category",
