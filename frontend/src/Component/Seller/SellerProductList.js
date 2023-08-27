@@ -14,6 +14,8 @@ export default function ProductList(){
         {id:"9",name:"wppple",img:"https://tse4.mm.bing.net/th?id=OIP.YwA6xGkFItqFcdN8eHm-aAAAAA&pid=Api&P=0&h=180",description: "eifjghsfuighuifghfdffgrgergwerg",prize:"6000000",category:"fruit,red",addedDate:1}
     ]
 
+    
+
     const [products,setProduct] = useState(productList)
 
     const handleDelete =(id) =>{    
