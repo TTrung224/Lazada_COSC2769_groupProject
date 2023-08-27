@@ -41,7 +41,7 @@ const AuthContextProvider = ({children}) => {
         try {
             let now = new Date()
             now.addHours(1)
-            const authObject = {isAuthenticated: true, user: {name: "test", type: "admin"}, expired_time: now}
+            const authObject = {isAuthenticated: true, user: {name: "test", type: "seller"}, expired_time: now}
             setAuth(authObject)
             localStorage.setItem(authenticationStorageKey, JSON.stringify(authObject));
         } catch (error) {

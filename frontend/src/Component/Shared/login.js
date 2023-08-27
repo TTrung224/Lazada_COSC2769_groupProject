@@ -18,7 +18,7 @@ export default function Login(){
                     <input type='text' id="email" placeholder='Enter email/phone number' required/>
                     <label c="password">Password</label>
                     <input type='password' id='password' placeholder='Enter password' required/>
-                    <button type='submit'>Login</button>
+                    <button type='submit' onClick={()=>loginFunc()}>Login</button>
                     <p>Dont have an account? <Link to='/signup'>Sign up</Link> here  </p>
                 </div>           
             </form>
