@@ -4,7 +4,7 @@ const bcrypt =  require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 class AccountController {
-    // [GET] account/getaccount
+    // [GET] account
     async getUser(req, res, next) {
         let data = {};
         let user = req.user;
@@ -170,7 +170,8 @@ class AccountController {
         }
     }    
 
-    // Support methods:
+// Support functions:
+
     async getUserNameByEmail(email){
         try {
             let result = await findOne({ email: email });
@@ -180,113 +181,6 @@ class AccountController {
             console.log(error);
         }
     }
-    
-    async getFineStatusByEmail(email){
-        try {
-            let result = await findOne({ email: email });
-            const status = result.fine;
-            console.log(status);
-            return status;
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    async fineSet(fineMessage, fineDes, userEmail){
-        try {
-            let userFine = await findOne({email: userEmail}, 'fine fineDescription');
-            if (!userFine) {
-                throw new Error('userNotFindError');
-                // res.status(400).json({success: false, message: 'cannot find this user'})
-            }
-            // console.log(userFine);
-
-            userFine.fine = fineMessage;
-            userFine.fineDescription = fineDes;
-            userFine.save();
-            // console.log(userFine);
-            return 'success'
-            // res.status(200).json({success: true, message: `fine of user ${userEmail} is set`})
-        } catch (error) {
-            if (error.message === 'userNotFindError') throw error
-            else throw new Error('fineMessageError')
-            // res.status(400).json({success: false, message: 'unallowed fine message'})
-        }
-    }
-
-    async fineReset (userEmail){
-        try {
-            let userFine = await findOne({email: userEmail}, 'fine fineDescription');
-            if (!userFine) {
-                throw new Error('userNotFindError');
-            }
-            userFine.fine = 'NONE';
-            userFine.fineDescription = 'NONE';
-            userFine.save();
-            return 'success'
-        } catch (error) {
-            if (error.message === 'userNotFindError') throw error
-            throw error;
-        }
-    }
-
-    async getAllTechnicians() {
-        let data = {};
-        try {
-            let result = await find({ type: "technician" }, 'first_name last_name email');
-            return result;
-        } catch (error) {
-            console.log(error);
-            return null
-        }
-    }
-
-
-    // Future development
-    async setFine(req, res){
-        const {fine_message, fine_description, target_email} = req.body;
-        if (!(fine_message)) res.status(400).json({success: false, message: "fine cannot be empty"})
-        if (!target_email) res.status(400).json({success: false, message: "cannot set to nobody"})
-        try {
-            const set = await this.fineSet(fine_message, fine_description, target_email);
-            if (set === 'success') {
-                res.status(200).json({success: true, message: `fine of user ${target_email} is set`})
-
-            }
-        } catch (error) {
-            if (error.message === 'userNotFindError'){
-                res.status(400).json({success: false, message: 'cannot find this user'})
-
-            }
-            else if (error.message === 'fineMessageError'){
-                res.status(400).json({success: false, message: 'unallowed fine message'})
-
-            } else {
-                console.log(error)
-                res.status(500).json({success: false, message: 'internal server error'})
-            }
-        }
-    }   
-
-    async resetFine(req, res){
-        const {target_email} = req.body;
-        if (!(target_email)) res.status(400).json({success: false, message: "cannot set to nobody"});
-        try {
-            const reset = await this.fineReset(target_email);
-            if (reset === 'success') {
-                res.status(200).json({success: true, message: `fine of user ${target_email} is reset`})
-            }
-        } catch (error) {
-            if (error.message === 'userNotFindError'){
-                res.status(400).json({success: false, message: 'cannot find this user'})
-
-            }else {
-                console.log(error)
-                res.status(500).json({success: false, message: 'internal server error'})
-            }
-        }
-    }
-
 }
 
 module.exports = new AccountController();
