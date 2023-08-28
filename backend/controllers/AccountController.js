@@ -123,9 +123,7 @@ class AccountController {
                 return res.status(400).send("re-password is not matched");
             }
 
-            // check existence of user
-            console.log(email)
-            console.log(phone)
+            // check existence of user)
             const dbUser = await Account.find({ email: email, phone: phone });
 
             if (dbUser) {
