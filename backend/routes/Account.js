@@ -5,6 +5,6 @@ const accountController = require('../controllers/AccountController');
 // const technician_auth = require('../middleware/technician_auth')
 
 router.post('/login', accountController.login);
-router.post('/register', accountController.register);
+router.post('/signup', accountController.register);
 
 module.exports = router;
