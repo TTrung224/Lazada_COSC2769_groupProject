@@ -1,10 +1,11 @@
-import { Schema, model } from "mongoose";
+const mongoose = require("mongoose")
 
 const categorySchema = new mongoose.Schema({
-  isTop: { type: Boolean, default: true },
-  name: { type: Boolean, require: true },
-  parentCategoryId: { type: String, default: null },
-  atributes: { type: [String], default: [] }
+  name: { type: String, require: true },
+  parentCategoryId: { type: mongoose.Schema.Types.ObjectId, default: null },
+  attributes: {
+    type: Array, default: []
+  }
 });
 
 module.exports = mongoose.model("category", categorySchema);

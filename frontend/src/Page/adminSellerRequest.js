@@ -11,7 +11,7 @@ export default function AdminSellerRequest() {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        const data = getSellers().then(data => {
+        getSellers().then(data => {
             setSellers(data)
         }).finally(() => setIsLoading(false))
     }, [])

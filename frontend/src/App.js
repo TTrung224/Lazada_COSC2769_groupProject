@@ -12,7 +12,7 @@ import CustomerProduct from './Page/customerProduct';
 import CustomerOrder from './Page/customerOrder';
 import CustomerCart from './Page/customerCart';
 import Logout from './Component/Shared/logout';
-import AdminCategory, { handleDeleteCategory, loadCategories } from './Page/adminCategory';
+import AdminCategory, { loadCategories } from './Page/adminCategory';
 import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from './Page/adminCategoryForm';
 import AddProduct from './Component/Seller/AddProduct';
 import EditProduct from './Component/Seller/EditProduct';
@@ -70,8 +70,7 @@ function App() {
     {
       path: "/admin/product-category",
       element: <AdminCategory />,
-      loader: loadCategories,
-      action: handleDeleteCategory
+      loader: loadCategories
     },
     {
       path: "/admin/product-category/add",
@@ -79,15 +78,13 @@ function App() {
       action: addNewCategory
     },
     {
-      path: "/admin/product-category/add/:categoryID",
+      path: "/admin/product-category/add/:categoryId",
       element: <AdminCategoryForm />,
-      loader: loadCategory,
       action: addNewCategory
     },
     {
-      path: "/admin/product-category/:categoryID",
+      path: "/admin/product-category/:categoryId",
       element: <AdminCategoryForm />,
-      loader: loadCategory,
       action: saveCategory
     },
     {

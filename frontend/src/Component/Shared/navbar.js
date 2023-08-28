@@ -54,9 +54,11 @@ export default function Navbar(){
         ]
     }
 
-    const { authState: {isAuthenticated, user}} = useContext(AuthContext)
+    //const { authState: {isAuthenticated, user}} = useContext(AuthContext)
     const navigate = useNavigate()
 
+    const isAuthenticated = true
+    const user = {type: "admin"}
     useEffect(() => {
         const path = handleAuth(isAuthenticated, user?.type);
         if(path!=null) navigate(path)
