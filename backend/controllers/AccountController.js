@@ -1,5 +1,4 @@
-// importing user context
-const User = require("../model/Account");
+const Account = require("../model/Account");
 const bcrypt =  require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -98,47 +97,58 @@ class AccountController {
     }
 
 
-    // [POST] account/register
+    // [POST] account/signup
     async register(req, res, next) {
-        // Our register logic starts here
         try {
-            // Get user input
-            const { first_name, last_name, email, password, type } = req.body;
-            // Validate user input
-            if (!(email && password && first_name && last_name)) {
-            return res.status(400).send("All input is required");
+            // user input
+            const { email, pwd, rePwd, fullName, userType, phone, address} = req.body;
+
+
+            // validate user input
+            if(!userType){
+                return res.status(400).send("user type is required");
+            }
+            if(userType == "customer"){
+                if (!(email && pwd && rePwd && fullName && phone && address)) {
+                    return res.status(400).send("All input is required");
+                }
+            }else if(userType == "seller"){
+                if (!(email && pwd && rePwd && fullName && phone)) {
+                    return res.status(400).send("All input is required");
+                }
+            }else{
+                return res.status(400).send("user type is incorrect");
+            }
+            if(!pwd === rePwd){
+                return res.status(400).send("re-password is not matched");
             }
 
-            // check if user already exist
-            // Validate if user exist in our database
-            const oldUser = await findOne({ email });
+            // check existence of user
+            console.log(email)
+            console.log(phone)
+            const dbUser = await Account.find({ email: email, phone: phone });
 
-            if (oldUser) {
-            return res.status(409).send("User Already Exist. Please Login");
+            if (dbUser) {
+                return res.status(409).send("Email or Phone number has been used with another account");
             }
 
-            //Encrypt user password
-            console.log("password: " + password)
-            const encryptedPassword = await bcrypt.hash(password, 10);
-
-            // Create user in our database
-            const user = await create({
-                first_name,
-                last_name,
-                email: email.toLowerCase(), // sanitize: convert email to lowercase
+            //hash and salted password
+            const encryptedPassword = await bcrypt.hash(pwd, 10);
+            const user = await Account.create({
+                fullName: fullName,
+                phone: phone,
+                email: email.toLowerCase(),
                 password: encryptedPassword,
-                type
+                type: userType,
+                address: address? address : null
             });
 
-            // Create token
+            // Token
             const token = jwt.sign(
-            { user_id: user._id, email, user_type: user.type },
-            process.env.TOKEN_KEY,
-            {
-                expiresIn: "2h",
-            }
+                { userId: user._id, email, userType: user.type },
+                process.env.TOKEN_KEY, 
+                {expiresIn: "2h"}
             );
-            // save user token
             user.token = token;
 
             //save cookie token
@@ -149,9 +159,7 @@ class AccountController {
         } catch (err) {
             console.log(err);
             res.status(500).send();
-        }
-        // Our login logic ends here
-        
+        }        
     }
 
 

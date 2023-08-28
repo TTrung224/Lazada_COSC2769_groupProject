@@ -2,7 +2,7 @@ import AuthContextProvider from './Context/loginSessionContext'
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 
 import LoginPage from './Page/loginPage';
-import SignupPage, { handleSignUp } from './Page/signupPage';
+import SignupPage from './Page/signupPage';
 import GuestProduct from './Page/guestProduct';
 import GuestCart from './Page/guestCart';
 import AdminSellerRequest, { loadSellers } from './Page/adminSellerRequest';
@@ -41,8 +41,7 @@ function App() {
     },
     {
       path: "/signup",
-      element: <SignupPage />,
-      action: handleSignUp
+      element: <SignupPage />
     },
     {
       path: "/customer",
