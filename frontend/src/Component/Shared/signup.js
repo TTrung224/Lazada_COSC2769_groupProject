@@ -34,6 +34,8 @@ export default function Signup(){
         if(message.length > 0){
             e.preventDefault()
             setError(message.join(", "))
+        }else {
+            setError("")
         }
     }
 
@@ -54,9 +56,9 @@ export default function Signup(){
                         <input type='email' id="email" placeholder='Enter yopur email' name='email' required/>
                         <label htmlFor="password">Password</label>
                         <input type='password' id='password' placeholder='Enter password' name='pwd' defaultValue={pwd} required onChange={(e) => setPwd(e.target.value)}/>
-                        {error!="" ? <p className='error-message'>{error}</p> : ""}
                         <label htmlFor="re-pwd">Confirm password</label>
                         <input type='password' id='re-pwd' placeholder='ReEnter your password' name='re_pwd' defaultValue={rePwd} required onChange={(e) => setRePwd(e.target.value)}/>
+                        {error!="" ? <p className='error-message'>{error}</p> : ""}
                         <button type='submit' onClick={(e)=>handlerSubmit(e)}>Create account</button>
                     </div>
                 

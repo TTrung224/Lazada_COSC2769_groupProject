@@ -30,6 +30,23 @@ export async function getSellers() {
     })
 }
 
+export async function getSeller(id) {
+    const seller = sellersTest.find(s => s.id === id)
+    return new Promise(resolve => {
+        setTimeout(() => resolve(seller), 500)
+    })
+}
+
+export async function saveSeller(seller) {
+    const newSellers = sellersTest.map(s => {
+        if(s.id === seller.id){
+            return seller
+        }else {return s}
+    })
+    return new Promise(resolve => {
+        setTimeout(() => resolve(seller), 500)
+    })
+}
 
 export async function getCategories() {
     return new Promise(resolve => {

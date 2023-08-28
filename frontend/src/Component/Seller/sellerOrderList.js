@@ -4,23 +4,23 @@ export default function OrderList() {
 
 
     var productList = [
-        { id: 1, name: "coffee", img: "https://tse4.mm.bing.net/th?id=OIP.YwA6xGkFItqFcdN8eHm-aAAAAA&pid=Api&P=0&h=180", quantity: 3, status: "On delivering" },
+        { id: 1, name: "coffee", img: "https://tse4.mm.bing.net/th?id=OIP.YwA6xGkFItqFcdN8eHm-aAAAAA&pid=Api&P=0&h=180", quantity: 3, status: "Pending" },
         { id: 2, name: "coffee", img: "https://tse4.mm.bing.net/th?id=OIP.YwA6xGkFItqFcdN8eHm-aAAAAA&pid=Api&P=0&h=180", quantity: 2, status: "delivered" },
         { id: 3, name: "coffee", img: "https://tse4.mm.bing.net/th?id=OIP.YwA6xGkFItqFcdN8eHm-aAAAAA&pid=Api&P=0&h=180", quantity: 1, status: "canceled" }
     ]
     const [products, setProduct] = useState(productList)
 
     var orderList = [
-        { id: "1", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "delivering", productList: products },
-        { id: "2", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "waiting", productList: products },
-        { id: "3", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "waiting", productList: products },
-        { id: "4", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "waiting", productList: products },
-        { id: "5", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "delivering", productList: products },
-        { id: "6", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "waiting", productList: products },
-        { id: "7", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "waiting", productList: products },
-        { id: "8", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "waiting", productList: products },
-        { id: "9", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "waiting", productList: products },
-        { id: "10", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", status: "done", productList: products },
+        { id: "1", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "2", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "3", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "4", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "5", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "6", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "7", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "8", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "9", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
+        { id: "10", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
     ]
 
 
@@ -56,7 +56,7 @@ export default function OrderList() {
                                 </div>
                                 <div className="order-item-right">
                                     <p>Customer phone number: <b>{order.phone}</b></p>
-                                    <p>Status: <b>{order.status}</b></p>
+                                    
                                 </div>
 
                             </div>
@@ -64,7 +64,7 @@ export default function OrderList() {
                                 return (
                                     <div className='order-products'>
                                         <div className='order-product-left'>
-                                            <p>ID: <b>{product.id}</b></p>
+                                            
                                             <img src={product.img} className="order-img" alt='image product'/>
                                         </div>
                                         <div className='order-item-middle'>
@@ -74,7 +74,7 @@ export default function OrderList() {
                                         </div>
                                         <div className="order-item-button">
                                             <button className="order-item-shipped">shipped</button>
-                                            <button className="order-item-cancel" onClick={() => handleCancel(product.id, product)}>cancel</button>
+                                            {product.status ==="Pending"? <button className="order-item-cancel" onClick={() => handleCancel(product.id, product)}>cancel</button>:""}
                                         </div>
                                     </div>
                                 )
