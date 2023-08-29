@@ -15,22 +15,6 @@ const AuthContextProvider = ({children}) => {
     const [authState, setAuth] = useState(noAuthenticatedState)
 
     useEffect(() =>  {
-        const loadUser = async () => {
-            try {
-                const res = await axiosSetting.get(`account`)
-                if (res.status === 200) {
-                    setAuth({
-                        isAuthenticated: true,
-                        user: res.data
-                    })
-                }
-            } catch (error) {
-                setAuth({
-                    isAuthenticated: false,
-                    user: null
-                })
-            }
-        }
         loadUser();
     },[])
 
@@ -84,7 +68,13 @@ const AuthContextProvider = ({children}) => {
 
     const loadUser = async () => {
         try {
-            
+            const res = await axiosSetting.get(`account`)
+            if (res.status === 200) {
+                setAuth({
+                    isAuthenticated: true,
+                    user: res.data
+                })
+            }
         } catch (error) {
             setAuth({
                 isAuthenticated: false,

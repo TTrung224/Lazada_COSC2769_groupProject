@@ -17,10 +17,9 @@ export default function Logout(){
     });
 
     async function logout() {
-        await delay(4000)
         await logoutFunc();
-        navigate("/")
-        console.log("loged out")
+        // navigate("/")
+        // console.log("loged out")
     }
 
     return(

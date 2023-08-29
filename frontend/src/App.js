@@ -25,15 +25,19 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <GuestProduct />
+      element: <CustomerProduct />
+    },
+    {
+      path: "/product/:productId",
+      element: <ProductPage />
     },
     {
       path: "/logout",
       element: <Logout />,
     },
     {
-      path: "/guest/cart",
-      element: <GuestCart />,
+      path: "/cart",
+      element: <CustomerCart />,
       loader: loadItems
     },
     {
@@ -45,20 +49,8 @@ function App() {
       element: <SignupPage />
     },
     {
-      path: "/customer",
-      element: <Navigate to="/customer/product" replace />,
-    },
-    {
-      path: "/customer/product",
-      element: <CustomerProduct />
-    },
-    {
-      path: "/customer/order",
+      path: "/order",
       element: <CustomerOrder />,
-    },
-    {
-      path: "/customer/cart",
-      element: <CustomerCart />,
     },
     {
       path: "/admin",
@@ -111,10 +103,6 @@ function App() {
     {
       path: "/seller/product/editproduct",
       element: <EditProduct />
-    },
-    {
-      path: "/product/:productId",
-      element: <ProductPage />
     }
   ]);
 

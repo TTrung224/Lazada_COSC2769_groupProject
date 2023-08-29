@@ -1,17 +1,5 @@
 import axios from 'axios'
-
-const test = [
-    { id: 0, name: 'Electronic Devices', attributes: [], parent: -1 },
-    { id: 1, name: 'Home Appliances', attributes: [], parent: -1 },
-    { id: 2, name: 'Groceries and Snack', attributes: [], parent: -1 },
-    { id: 3, name: 'Computer', attributes: [{ name: 'Model', type: 'text', required: true }], parent: 0 },
-    { id: 4, name: 'Laptop', attributes: [], parent: 0 },
-    { id: 5, name: 'Kitchen', attributes: [], parent: 1 },
-    { id: 6, name: 'Living Room', attributes: [], parent: 1 },
-    { id: 7, name: 'Sweet', attributes: [], parent: 2 },
-    { id: 8, name: 'Gaming', attributes: [], parent: 3 },
-    { id: 9, name: '3D Modelling', attributes: [], parent: 3 }
-]
+import { axiosSetting } from '../../Context/constants'
 
 const sellersTest = [
     { id: 1, name: 'Seller 1', email: 'test123@mail.com', status: 'Pending' },
@@ -51,26 +39,27 @@ export async function saveSeller(seller) {
 }
 
 export async function getCategories() {
-    const res = axios.get("http://localhost:2222/category")
+    const res = axiosSetting.get("/category")
     return res
 }
 
 export async function getCategoryWithParents(id) {
-    const res = axios.get(`http://localhost:2222/category/${id}`)
+    const res = axiosSetting.get(`/category/${id}`)
     return res
 }
 
 export async function addCategory(category) {
-    const res = await axios.post("http://localhost:2222/category/add", category)
+    const res = await axiosSetting.post("/category/add", category)
     return res
 }
 
 export async function updateCategory(id, category) {
     console.log(category)
-    const res = await axios.put(`http://localhost:2222/category/edit/${id}`, category)
+    const res = await axiosSetting.put(`/category/edit/${id}`, category)
     return res
 }
 
 export async function deleteCategory(id) {
-    const res = await axios.delete(`http://localhost:2222/category/delete/${id}`)
+    const res = await axiosSetting.delete(`/category/delete/${id}`)
+    return res
 }
