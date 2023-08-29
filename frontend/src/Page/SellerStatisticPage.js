@@ -1,12 +1,13 @@
 import React from 'react';
 import Navbar from '../Component/Shared/navbar';
-import Signup from '../Component/Shared/signup';
+import Statistic from '../Component/Seller/SellerStatistic';
+export default function SellerStatistic(){
 
-export default function SignupPage(){
     return(
         <>
             <Navbar/>
-            <Signup/>
+            <Statistic/>
         </>
     )
+
 }

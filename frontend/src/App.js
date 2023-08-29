@@ -8,6 +8,7 @@ import GuestCart from './Page/guestCart';
 import AdminSellerRequest, { loadSellers } from './Page/adminSellerRequest';
 import SellerOrder from './Page/sellerOrder';
 import SellerProduct from './Page/sellerProduct';
+import SellerStatistic from './Page/SellerStatisticPage';
 import CustomerProduct from './Page/customerProduct';
 import CustomerOrder from './Page/customerOrder';
 import CustomerCart from './Page/customerCart';
@@ -41,7 +42,7 @@ function App() {
     },
     {
       path: "/signup",
-      element: <SignupPage />,
+      element: <SignupPage />
     },
     {
       path: "/customer",
@@ -98,6 +99,10 @@ function App() {
     {
       path: "/seller/product",
       element: <SellerProduct />,
+    },
+    {
+      path:"/seller/statistic",
+      element:<SellerStatistic/>
     },
     {
       path: "/seller/product/addproduct",

@@ -36,6 +36,7 @@ export default function Navbar(){
         seller: [
             {name: "Orders", icon: "bi bi-clipboard2-check-fill", link: "/seller/order"},
             {name: "Products", icon: "bi bi-archive-fill", link: "/seller/product"},
+            {name: "Statistic",icon: "bi bi-bar-chart-fill", link:"/seller/statistic"},
         ],
         admin: [
             {name: "Seller Request", icon: "bi bi-clipboard2-check-fill", link: "/admin/seller-request"},
