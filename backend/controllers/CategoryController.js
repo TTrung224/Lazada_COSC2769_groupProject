@@ -7,7 +7,7 @@ class AccountController {
             res.status(200).send(categories)
         }catch(err){
             console.log(err)
-            res.status(500).send(null)
+            res.sendStatus(500)
         }
     }
 
@@ -23,7 +23,7 @@ class AccountController {
             res.status(200).send(category)
         }catch(err){
             console.log(err)
-            res.status(500).send(null)
+            res.sendStatus(500)
         }
     }
 
@@ -31,10 +31,10 @@ class AccountController {
         try {
             const category = req.body
             await Category.create(category)
-            res.status(201).send()
+            res.sendStatus(201)
         } catch (err) {
             console.log(err)
-            res.status(500).send()
+            res.sendStatus(500)
         }
     }
 
@@ -43,10 +43,10 @@ class AccountController {
             const {categoryId} = req.params
             const category = req.body
             await Category.findByIdAndUpdate( categoryId, category)
-            res.status(201).send()
+            res.sendStatus(201)
         }catch (err){
             console.log(err)
-            res.status(500).send()
+            res.sendStatus(500)
         }
     }
 
@@ -54,10 +54,10 @@ class AccountController {
         try{
             const {categoryId} = req.params
             await Category.findByIdAndDelete(categoryId)
-            res.status(200).send()
+            res.sendStatus(200)
         }catch (err) {
             console.log(err)
-            res.status(500).send()
+            res.sendStatus(500)
         }
     }
 }

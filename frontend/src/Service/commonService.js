@@ -7,12 +7,16 @@ export const handleAuth = (isAuthenticated, userTypeUpper) => {
     const sellerPath = ["/seller"]
     const adminPath = ["/admin"]
     const path = window.location.pathname
-    
-    if(isAuthenticated && (path === "/login" || path === "/signup")){
-        return false
+
+    if ((path === "/login" || path === "/signup")) {
+        if (isAuthenticated) {
+            return false
+        } else return true
     }
-    if(!isAuthenticated && path === "/logout"){
-        return false
+    if (path === "/logout") {
+        if (!isAuthenticated) {
+            return false
+        } else return true
     }
     if (sellerPath.some(p => path.includes(p))) {
         if (userTypeUpper === SELLER) {
@@ -35,7 +39,7 @@ export const handleAuth = (isAuthenticated, userTypeUpper) => {
         }
         return true
     }
-    
+
     // authenticated -> navigate to that user type's page
     // if (isAuthenticated && window.location.pathname !== "/logout" && (
     //     noAuth.includes(window.location.pathname) ||

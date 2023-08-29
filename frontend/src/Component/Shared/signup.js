@@ -12,11 +12,6 @@ export default function Signup(){
     const [formData, setFormData] = useState({userType: "customer", pwd: "", rePwd: "", email: "", phone: "", address: "", fullName: ""})
     const [error,setError] = useState("")
 
-    useEffect(() => {
-        const path = handleAuth(isAuthenticated, user?.type);
-        if(path!=null) navigate(path)
-    });
-
     function changeTypeCustomer(){
         setFormData({...formData, userType: "customer"})
     }
