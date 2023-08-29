@@ -13,18 +13,16 @@ export default function AdminSellerRequest() {
     useEffect(() => {
         const data = getSellers().then(data => {
             setSellers(data)
-        }).finally(() => setIsLoading(false))
+        }).finally(() => {setIsLoading(false); console.log(sellers)})
     }, [])
 
     async function handleChangeStatus(id, status){
         setIsLoading(true)
-        const newSellers = sellers.map(s => {
-            if(s.id === id){
-                s.status = status
-            } return s
-        })
-        setSellers(newSellers)
-        await saveSeller(newSellers)
+        const res = await saveSeller(id, status)
+        if(!res.success){
+            alert("Update status fail, please try again")
+        }
+        setSellers(await getSellers())
         setIsLoading(false)
     } 
 

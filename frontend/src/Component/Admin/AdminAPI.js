@@ -1,3 +1,5 @@
+import { axiosSetting } from "../../Context/constants"
+
 const test = [
     { id: 0, name: 'Electronic Devices', attributes: [], parent: -1 },
     { id: 1, name: 'Home Appliances', attributes: [], parent: -1 },
@@ -25,9 +27,17 @@ const sellersTest = [
 ]
 
 export async function getSellers() {
-    return new Promise(resolve => {
-        setTimeout(() => resolve(sellersTest), 500)
-    })
+    try{
+        const res = await axiosSetting.get("account/seller-request")
+        if(res.status == 200){
+            console.log(res)
+            return res.data
+        }else{
+            return[]
+        }
+    } catch(error){
+        return[]
+    }
 }
 
 export async function getSeller(id) {
@@ -37,15 +47,16 @@ export async function getSeller(id) {
     })
 }
 
-export async function saveSeller(seller) {
-    const newSellers = sellersTest.map(s => {
-        if(s.id === seller.id){
-            return seller
-        }else {return s}
-    })
-    return new Promise(resolve => {
-        setTimeout(() => resolve(seller), 500)
-    })
+export async function saveSeller(id, status) {
+    try{
+        const res = await axiosSetting.put(`account/seller-request/${id}`, {sellerStatus: status})
+        if(res.status != 200){
+            return {success: false}
+        }
+    } catch(error){
+        return {success: false}
+    }
+    return {success: true}
 }
 
 export async function getCategories() {

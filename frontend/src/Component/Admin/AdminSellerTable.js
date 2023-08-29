@@ -17,17 +17,17 @@ const AdminSellerTable = ({ sellers, handleChangeStatus }) => {
                 <tbody>
                     {sellers.map(seller => {
                         let rowColor = ""
-                        if(seller.status === "Accepted") rowColor = "table-success"
-                        else if(seller.status === "Rejected") rowColor = "table-danger"
+                        if(seller.sellerStatus === "accepted") rowColor = "table-success"
+                        else if(seller.sellerStatus === "rejected") rowColor = "table-danger"
                         return (
-                            <tr key={seller.id} className={`${rowColor} align-middle`}>
-                                <th scope="row">{seller.id}</th>
-                                <td>{seller.name}</td>
+                            <tr key={seller._id} className={`${rowColor} align-middle`}>
+                                <th scope="row">{seller._id}</th>
+                                <td>{seller.fullName}</td>
                                 <td>{seller.email}</td>
-                                <td>{seller.status}</td>
+                                <td>{seller.sellerStatus}</td>
                                 <td>
-                                    <button className="btn btn-success mx-1" disabled={seller.status === 'Accepted'} onClick={() => handleChangeStatus(seller.id, "Accepted")}><i className="bi-check-lg"/></button>
-                                    <button className="btn btn-danger mx-1" disabled={seller.status === 'Rejected'} onClick={() => handleChangeStatus(seller.id, "Rejected")}><i className="bi-x-lg" /></button>
+                                    <button className="btn btn-success mx-1" disabled={seller.sellerStatus === 'accepted'} onClick={() => handleChangeStatus(seller._id, "accepted")}><i className="bi-check-lg"/></button>
+                                    <button className="btn btn-danger mx-1" disabled={seller.sellerStatus === 'rejected'} onClick={() => handleChangeStatus(seller._id, "rejected")}><i className="bi-x-lg" /></button>
                                 </td>
                             </tr>
                         )

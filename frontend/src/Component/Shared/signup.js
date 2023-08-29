@@ -9,7 +9,7 @@ export default function Signup(){
     const { authState: {isAuthenticated, user}} = useContext(AuthContext)
     const navigate = useNavigate()
 
-    const [formData, setFormData] = useState({userType: "customer", pwd: "", rePwd: "", email: "", phone: "", address: "", fullName: ""})
+    const [formData, setFormData] = useState({type: "customer", pwd: "", rePwd: "", email: "", phone: "", address: "", fullName: ""})
     const [error,setError] = useState("")
 
     useEffect(() => {
@@ -18,10 +18,10 @@ export default function Signup(){
     });
 
     function changeTypeCustomer(){
-        setFormData({...formData, userType: "customer"})
+        setFormData({...formData, type: "customer"})
     }
     function changeTypeSeller(){
-        setFormData({...formData, userType: "seller"})
+        setFormData({...formData, type: "seller"})
     }
 
     const submitHandler = async event => {
@@ -71,7 +71,7 @@ export default function Signup(){
                         <button type='submit'>Create account</button>
                     </div>
                 
-                    {formData.userType === "customer"?(
+                    {formData.type === "customer"?(
                         <div className='signup-right'> 
                             <label htmlFor="full-name">Full name</label>
                             <input type='text' id='full-name' placeholder='Enter your full name' onChange={(e)=>setFormData({...formData, fullName: e.target.value})}  required/>
