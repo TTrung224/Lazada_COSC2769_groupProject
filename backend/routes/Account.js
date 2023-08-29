@@ -6,5 +6,7 @@ const accountController = require('../controllers/AccountController');
 
 router.post('/login', accountController.login);
 router.post('/signup', accountController.register);
+router.post('/logout',verifyToken, accountController.logout);
+router.get('/', verifyToken, accountController.getUser);
 
 module.exports = router;

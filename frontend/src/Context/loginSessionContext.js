@@ -1,4 +1,5 @@
-import {createContext, useState} from 'react'
+import {createContext, useEffect, useState} from 'react'
+import { axiosSetting } from './constants';
 
 export const AuthContext = createContext();
 
@@ -6,57 +7,76 @@ export const AuthContext = createContext();
 const noAuthenticatedState = {
     isAuthenticated: false,
     user: null,
-    expired_time: null,
-}
-
-const authenticationStorageKey = "authentication"
-
-Date.prototype.addHours = function(h) {
-    this.setTime(this.getTime() + (h*60*60*1000));
-    return this;
 }
 
 const AuthContextProvider = ({children}) => {
 
-    const checkAuth = () => {
-        const authObject = JSON.parse(localStorage.getItem(authenticationStorageKey))
-        if(authObject){
-            authObject.expired_time = Date.parse(authObject?.expired_time)
-        }
-        
-        if(authObject && authObject.expired_time > new Date()){
-            return authObject
-        } else if(authObject && authObject.expired_time <= new Date()){
-            console.log("login session expired")
-            localStorage.removeItem(authenticationStorageKey)
-            return noAuthenticatedState
-        }
-        return noAuthenticatedState
-    }
-
     // auth state
-    const [authState, setAuth] = useState(checkAuth())
+    const [authState, setAuth] = useState(noAuthenticatedState)
+
+    useEffect(() =>  {
+        const loadUser = async () => {
+            try {
+                const res = await axiosSetting.get(`account`)
+                if (res.status === 200) {
+                    setAuth({
+                        isAuthenticated: true,
+                        user: res.data
+                    })
+                }
+            } catch (error) {
+                setAuth({
+                    isAuthenticated: false,
+                    user: null
+                })
+            }
+        }
+        loadUser();
+    },[])
+
+    // const checkAuth = () => {
+    //     const authObject = JSON.parse(localStorage.getItem(authenticationStorageKey))
+    //     if(authObject){
+    //         authObject.expired_time = Date.parse(authObject?.expired_time)
+    //     }
+        
+    //     if(authObject && authObject.expired_time > new Date()){
+    //         return authObject
+    //     } else if(authObject && authObject.expired_time <= new Date()){
+    //         console.log("login session expired")
+    //         localStorage.removeItem(authenticationStorageKey)
+    //         return noAuthenticatedState
+    //     }
+    //     return noAuthenticatedState
+    // }
 
     const loginFunc = async (userForm) => {
         try {
-            let now = new Date()
-            now.addHours(1)
-            const authObject = {isAuthenticated: true, user: {name: "test", type: "seller"}, expired_time: now}
-            setAuth(authObject)
-            localStorage.setItem(authenticationStorageKey, JSON.stringify(authObject));
+            const res = await axiosSetting.post("account/login", userForm)
+            if(res.status == 200){
+                const authObject = {
+                    isAuthenticated: true, 
+                    user: res.data
+                }
+                setAuth(authObject)
+                return {success: true, data: res.data}
+            }
+            return {success: false, data: res.data}
         } catch (error) {
             console.log(error)
-            if (error.response.data) return error.response.data
-            else return {status: false, message: error.message}
+            if (error.response.data) return {success: false, data: error.response.data}
+            else return {status: false, data: error.message}
         }
     }
 
     const logoutFunc = async () => {
-        try{
-            setAuth(noAuthenticatedState)
-            localStorage.removeItem(authenticationStorageKey)
+        try {
+            const res = await axiosSetting.post(`account/logout`)
+            if (res.status === 200) {
+                setAuth(noAuthenticatedState)
+            }
+            return {success: true, message: "you are logged out"}
         } catch (error) {
-            console.log(error)
             if (error.response.data) return error.response.data
             else return {status: false, message: error.message}
         }
