@@ -3,9 +3,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 
 import LoginPage from './Page/loginPage';
 import SignupPage from './Page/signupPage';
-import GuestProduct from './Page/guestProduct';
-import GuestCart from './Page/guestCart';
-import AdminSellerRequest, { loadSellers } from './Page/adminSellerRequest';
+import AdminSellerRequest from './Page/adminSellerRequest';
 import SellerOrder from './Page/sellerOrder';
 import SellerProduct from './Page/sellerProduct';
 import SellerStatistic from './Page/SellerStatisticPage';
@@ -14,7 +12,7 @@ import CustomerOrder from './Page/customerOrder';
 import CustomerCart from './Page/customerCart';
 import Logout from './Component/Shared/logout';
 import AdminCategory, { loadCategories } from './Page/adminCategory';
-import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from './Page/adminCategoryForm';
+import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/adminCategoryForm';
 import AddProduct from './Component/Seller/AddProduct';
 import EditProduct from './Component/Seller/EditProduct';
 import { loadItems } from './Component/Customer/cart';

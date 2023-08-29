@@ -1,5 +1,5 @@
 const Account = require("../model/Account");
-const bcrypt =  require('bcrypt');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 class AccountController {
@@ -31,7 +31,7 @@ class AccountController {
 
             let user;
             user = await Account.findOne({ email: emailOrPhone });
-            if(!user){
+            if (!user) {
                 user = await Account.findOne({ phone: emailOrPhone });
             }
 
@@ -39,8 +39,8 @@ class AccountController {
                 // Create token
                 const token = jwt.sign(
                     { userId: user._id, email: user.email, userType: user.type },
-                    process.env.TOKEN_KEY, 
-                    {expiresIn: "2h"}
+                    process.env.TOKEN_KEY,
+                    { expiresIn: "2h" }
                 );
                 let data = {};
                 data.fullName = user.first_name;
@@ -66,25 +66,25 @@ class AccountController {
     // [POST] account/signup
     async register(req, res, next) {
         try {
-            const { email, pwd, rePwd, fullName, userType, phone, address} = req.body;
+            const { email, pwd, rePwd, fullName, userType, phone, address } = req.body;
 
 
             // validate user input
-            if(!userType){
+            if (!userType) {
                 return res.status(400).send("user type is required");
             }
-            if(userType == "customer"){
+            if (userType == "customer") {
                 if (!(email && pwd && rePwd && fullName && phone && address)) {
                     return res.status(400).send("All input is required");
                 }
-            }else if(userType == "seller"){
+            } else if (userType == "seller") {
                 if (!(email && pwd && rePwd && fullName && phone)) {
                     return res.status(400).send("All input is required");
                 }
-            }else{
+            } else {
                 return res.status(400).send("user type is incorrect");
             }
-            if(!pwd === rePwd){
+            if (!pwd === rePwd) {
                 return res.status(400).send("re-password is not matched");
             }
 
@@ -104,7 +104,7 @@ class AccountController {
                 email: email.toLowerCase(),
                 password: encryptedPassword,
                 type: userType,
-                address: address? address : null
+                address: address ? address : null
             });
 
             // if signup then not required login
@@ -123,26 +123,26 @@ class AccountController {
         } catch (err) {
             console.log(err);
             res.status(500).send();
-        }        
+        }
     }
 
 
     // [POST] account/logout
-    async logout(req, res){
+    async logout(req, res) {
         try {
-            if (req.user != null){
+            if (req.user != null) {
                 res.clearCookie('token');
-                return res.status(200).json({success: true, message: "logout successfully"});
+                return res.status(200).json({ success: true, message: "logout successfully" });
             }
         } catch (error) {
             console.log(error);
-            return res.status(500).json({success: false, message: "internal server error"})
+            return res.status(500).json({ success: false, message: "internal server error" })
         }
-    }    
+    }
 
-// Support functions:
+    // Support functions:
 
-    async getUserNameByEmail(email){
+    async getUserNameByEmail(email) {
         try {
             let result = await findOne({ email: email });
             const name = result.first_name + " " + result.last_name;

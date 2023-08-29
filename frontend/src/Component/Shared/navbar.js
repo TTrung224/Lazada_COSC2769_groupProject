@@ -62,8 +62,9 @@ export default function Navbar() {
     let headList = [];
     const userTypeUpper = (user?.type) ? user.type.toUpperCase() : null;
 
+    
     useEffect(() => {
-        const valid = handleAuth(userTypeUpper);
+        const valid = handleAuth(isAuthenticated, userTypeUpper);
         if (!valid) {
             if (userTypeUpper === ADMIN){
                 navigate("/admin", {replace: true})
@@ -73,7 +74,7 @@ export default function Navbar() {
                 navigate("/", {replace: true})
             }
         }
-    }, []);
+    });
 
     if (isAuthenticated && userTypeUpper === CUSTOMER) {
         navList = listNav.customer.map((item => <NavItem nav={item} key={item.name} />))

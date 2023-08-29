@@ -71,7 +71,7 @@ const AdminCategoryForm = () => {
                 }
             }).finally(() => { setIsLoading(false); })
         } else { setIsLoading(false) }
-    }, [categoryId])
+    }, [categoryId, state.for])
 
     let name = ""
     let parentId = ""

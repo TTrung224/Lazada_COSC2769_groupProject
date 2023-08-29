@@ -1,42 +1,41 @@
 import { ADMIN, CUSTOMER, SELLER } from "../constants"
 
 
-export const handleAuth = (userTypeUpper) => {
-    const allPath = ["/login", "signup", "/logout"]
+export const handleAuth = (isAuthenticated, userTypeUpper) => {
     const guestPath = ["/cart", "/product"]
     const userPath = ["/order"]
     const sellerPath = ["/seller"]
     const adminPath = ["/admin"]
     const path = window.location.pathname
-
-    if (allPath.some(p => path.includes(p))) {
-        return true
+    
+    if(isAuthenticated && (path === "/login" || path === "/signup")){
+        return false
     }
-
-    if (guestPath.some(p => path.includes(p)) || path === "/") {
-        if (userTypeUpper === ADMIN || userTypeUpper === SELLER) {
-            return false
-        }return true
+    if(!isAuthenticated && path === "/logout"){
+        return false
     }
-
-    if (userPath.some(p => path.includes(p))) {
-        if (userTypeUpper === CUSTOMER) {
-            return true
-        } return false
-    }
-
     if (sellerPath.some(p => path.includes(p))) {
         if (userTypeUpper === SELLER) {
             return true
         } return false
     }
-
-    if (adminPath.some(p => path.includes(p))) {
-        
+    else if (adminPath.some(p => path.includes(p))) {
         if (userTypeUpper === ADMIN) {
             return true
         } return false
     }
+    else if (userPath.some(p => path.includes(p))) {
+        if (userTypeUpper === CUSTOMER) {
+            return true
+        } return false
+    }
+    else if (guestPath.some(p => path.includes(p)) || path === "/") {
+        if (userTypeUpper === ADMIN || userTypeUpper === SELLER) {
+            return false
+        }
+        return true
+    }
+    
     // authenticated -> navigate to that user type's page
     // if (isAuthenticated && window.location.pathname !== "/logout" && (
     //     noAuth.includes(window.location.pathname) ||
