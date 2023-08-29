@@ -1,49 +1,51 @@
 import AdminCategoryList from '../Component/Admin/AdminCategoryList';
-import { Await, Link, defer, useFetcher, useLoaderData } from 'react-router-dom';
+import { Link, defer, useLoaderData } from 'react-router-dom';
 import { deleteCategory, getCategories } from '../Component/Admin/AdminAPI';
 import Navbar from '../Component/Shared/navbar';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Loader from '../Component/Shared/loader';
 
 
 export async function loadCategories() {
     const categoriesPromise = getCategories()
-    return defer({ categories: categoriesPromise })
+    return defer({ data: categoriesPromise })
 }
 
-export async function handleDeleteCategory({ request }) {
-    const formData = await request.formData()
-    const id = formData.get("categoryId")
-    await deleteCategory(id)
-    return null 
-}
 
 const AdminCategory = () => {
-    const data = useLoaderData()
-    const fetcher = useFetcher()
+    const { data } = useLoaderData()
+    const [categories, setCategories] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
+
+    useEffect(() => {
+        data.then(c =>
+            setCategories(c.data)
+        ).finally(() => { setIsLoading(false) })
+    }, [data])
+
+
+    async function handleDeleteCategory(id) {
+        setIsLoading(true)
+        try {
+            const newCategories = categories.filter(c => c._id !== id)
+            await deleteCategory(id)
+            setCategories(newCategories)
+        } catch (err) {
+            console.log(err)
+            alert(err.message)
+        } finally { setIsLoading(false) }
+    }
 
     return (
         <>
             <Navbar />
+            {isLoading ? <Loader /> : <></>}
             <div className="container">
                 <h2>Category</h2>
                 <hr />
-
-                {fetcher.state !== 'idle' ? <Loader/> : <></>}
-                <React.Suspense fallback={<Loader />}>
-                    <Await resolve={data.categories}>
-                        {
-                            (categories) => (
-                                <>
-                                    <Link to={"add"}><button className="btn btn-primary mt-4">Add Category</button></Link>
-                                    <AdminCategoryList categories={categories} parent={-1} fetcher={fetcher} />
-                                </>
-                            )
-                        }
-
-                    </Await>
-                </React.Suspense>
+                <Link to={"add"}><button className="btn btn-primary mt-4">Add Category</button></Link>
+                <AdminCategoryList categories={categories} parent={null} handleDeleteCategory={handleDeleteCategory} />
             </div>
         </>
 

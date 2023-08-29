@@ -60,53 +60,27 @@ export async function saveSeller(id, status) {
 }
 
 export async function getCategories() {
-    return new Promise(resolve => {
-        setTimeout(() => resolve([...test]), 500)
-    })
+    const res = axiosSetting.get("/category")
+    return res
 }
 
-export async function getCategory(id) {
-    const item = test.find(c => c.id === id)
-    return new Promise(resolve => {
-        setTimeout(() => resolve(item), 500)
-    })
+export async function getCategoryWithParents(id) {
+    const res = axiosSetting.get(`/category/${id}`)
+    return res
 }
 
-export async function addCategory(name, attributes, parent) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            test.push({ id: test.length, name: name, attributes: attributes, parent: parent })
-            resolve(true)
-        }, 500)
-    })
+export async function addCategory(category) {
+    const res = await axiosSetting.post("/category/add", category)
+    return res
 }
 
 export async function updateCategory(id, category) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            const newCat = {id: id, ...category}
-            for (let i = 0; i < test.length; i++) {
-                if (test[i].id === id) {
-                    test.splice(i, 1, newCat)
-                    resolve(newCat)
-                }
-            }
-            resolve(null)
-        }, 500)
-    })
+    console.log(category)
+    const res = await axiosSetting.put(`/category/edit/${id}`, category)
+    return res
 }
 
 export async function deleteCategory(id) {
-    
-    return new Promise(resolve => {
-        setTimeout(() => {
-            for(let i = 0; i < test.length; i++) {
-                if(test[i].id === parseInt(id)){
-                    test.splice(i, 1)
-                    resolve(true)
-                }
-            }
-            resolve(false)
-        }, 500)
-    })
+    const res = await axiosSetting.delete(`/category/delete/${id}`)
+    return res
 }

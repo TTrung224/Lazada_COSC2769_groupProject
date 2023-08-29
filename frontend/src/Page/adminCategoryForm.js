@@ -1,6 +1,6 @@
-import { Form, redirect, useLoaderData, useLocation, useNavigate } from "react-router-dom";
-import { addCategory, getCategory, updateCategory } from "../Component/Admin/AdminAPI";
-import React, { useState } from "react";
+import { Form, redirect, useLocation, useNavigate, useParams } from "react-router-dom";
+import { addCategory, getCategoryWithParents, updateCategory } from "../Component/Admin/AdminAPI";
+import React, { useEffect, useState } from "react";
 import AdminAttributeList from "../Component/Admin/AdminAttributeList";
 import AdminAddAttribute from "../Component/Admin/AdminAddAttribute";
 import Navbar from "../Component/Shared/navbar";
@@ -11,22 +11,24 @@ export async function addNewCategory({ request }) {
     document.querySelector("#cancelBtn").disabled = true
     document.querySelector("#submitBtn").disabled = true
     const formData = await request.formData()
-    const newData = Object.fromEntries(formData)
-    await addCategory(newData.name, JSON.parse(newData.attributes), parseInt(newData.parent))
-    return redirect("/admin/product-category")
+    const newData = (({ name, attributes, parentCategoryId }) => ({ name, attributes, parentCategoryId }))(Object.fromEntries(formData))
+    newData.attributes = JSON.parse(newData.attributes)
+    if (newData.parentCategoryId === "") {
+        newData.parentCategoryId = null
+    }
+    try {
+        await addCategory(newData)
+    } catch (err){
+        console.log(err)
+        alert(err.message)
+    }finally{
+        return redirect("/admin/product-category")
+    }
 }
 
-export async function loadCategory({ params }) {
+export async function loadCategory(categoryId) {
     // Load category and all of its parents
-    const category = [await getCategory(parseInt(params.categoryID))]
-    let parent = category[0].parent
-
-    while (parent !== -1) {
-        let parentCat = await getCategory(parseInt(parent))
-        category.push(parentCat)
-        parent = parentCat.parent
-    }
-
+    const category = await getCategoryWithParents(categoryId)
     return category
 }
 
@@ -36,51 +38,70 @@ export async function saveCategory({ request, params }) {
     document.querySelector("#submitBtn").disabled = true
     const formData = await request.formData()
     const data = Object.fromEntries(formData)
-    const updatedCategory = { name: data.name, attributes: JSON.parse(data.attributes), parent: parseInt(data.parent) }
-    await updateCategory(parseInt(params.categoryID), updatedCategory)
-    return redirect("/admin/product-category")
+    const updatedCategory = { name: data.name, attributes: JSON.parse(data.attributes), parentCategoryId: data.parentCategoryId === "" ? null : data.parentCategoryId }
+    try {
+        console.log(params.categoryId)
+        await updateCategory(params.categoryId, updatedCategory)
+    } catch (err){
+        console.log(err)
+        alert(err.message)
+    }finally{
+        return redirect("/admin/product-category")
+    }
+
 }
 
 
 const AdminCategoryForm = () => {
     const navigate = useNavigate()
-    const categories = useLoaderData()
+    const { categoryId } = useParams()
+    const [isLoading, setIsLoading] = useState(true)
+    const [categories, setCategories] = useState(null)
+    const [attributes, setAttributes] = useState([])
     const { state } = useLocation()
 
+    useEffect(() => {
+        if (categoryId) {
+            loadCategory(categoryId).then(c => {
+                if (c.status === 200) {
+                    setCategories(c.data)
+                    if (state.for === "edit") {
+                        setAttributes(c.data[0].attributes)
+                    }
+                }
+            }).finally(() => { setIsLoading(false); })
+        } else { setIsLoading(false) }
+    }, [categoryId, state.for])
+
     let name = ""
-    let attr = []
-    let parentVal = -1
+    let parentId = ""
     let parentAttributes = <></>
 
     // If edit, LoaderData will be defined. Assign its values to default values
     // If add subcategory, an empty category with parent id is used to display default values  
     if (categories) {
-
-        const category = state.for === 'subCategory' ? { id: -1, name: '', attributes: [], parent: categories[0].id } : categories[0]
-
+        const category = state.for === 'subCategory' ? { _id: "noId", name: '', attributes: [], parentCategoryId: categories[0]._id } : categories[0]
         name = category.name
-        attr = category.attributes
-        parentVal = category.parent
+        parentId = category.parentCategoryId ? category.parentCategoryId : ""
         parentAttributes =
             <div className="form-group my-4">
                 <h5>Parent{'(s)'}: </h5>
                 <ol>
                     {categories.toReversed().map((c) => {
-                        if (c.id !== category.id) {
+                        if (c._id !== category._id) {
                             return (
-                                <li key={c.id}>
+                                <li key={c._id}>
                                     <h6>{c.name}</h6>
                                     <AdminAttributeList attributes={c.attributes} allowDelete={false} />
                                 </li>
                             )
                         }
-                        return <React.Fragment key={c.id}></React.Fragment>
+                        return <React.Fragment key={c._id}></React.Fragment>
                     })}
                 </ol>
             </div>
     }
 
-    const [attributes, setAttributes] = useState(attr)
     function addAttribute(name, type, required) {
         const newAttributes = [...attributes, { name: name, type: type, required: required }]
         setAttributes(newAttributes)
@@ -90,10 +111,10 @@ const AdminCategoryForm = () => {
         setAttributes(newAttributes)
     }
 
-
     return (
         <>
             <Navbar />
+            {isLoading ? <Loader /> : <></>}
             <div className="container">
                 <h2>Fill in category information:</h2>
                 <hr />
@@ -114,7 +135,7 @@ const AdminCategoryForm = () => {
 
                     {/* To add values of attributes and parent into the FormData of POST request */}
                     <input name="attributes" id="attributes" type="hidden" value={JSON.stringify(attributes)} />
-                    <input name="parent" id="parent" type="hidden" value={parentVal} />
+                    <input name="parentCategoryId" id="parentCategoryId" type="hidden" value={parentId} />
 
                     {/* Submit, Cancel buttons */}
                     <hr />

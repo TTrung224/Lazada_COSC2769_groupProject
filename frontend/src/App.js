@@ -3,9 +3,7 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 
 import LoginPage from './Page/loginPage';
 import SignupPage from './Page/signupPage';
-import GuestProduct from './Page/guestProduct';
-import GuestCart from './Page/guestCart';
-import AdminSellerRequest, { loadSellers } from './Page/adminSellerRequest';
+import AdminSellerRequest from './Page/adminSellerRequest';
 import SellerOrder from './Page/sellerOrder';
 import SellerProduct from './Page/sellerProduct';
 import SellerStatistic from './Page/SellerStatisticPage';
@@ -13,8 +11,8 @@ import CustomerProduct from './Page/customerProduct';
 import CustomerOrder from './Page/customerOrder';
 import CustomerCart from './Page/customerCart';
 import Logout from './Component/Shared/logout';
-import AdminCategory, { handleDeleteCategory, loadCategories } from './Page/adminCategory';
-import AdminCategoryForm, { addNewCategory, loadCategory, saveCategory } from './Page/adminCategoryForm';
+import AdminCategory, { loadCategories } from './Page/adminCategory';
+import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/adminCategoryForm';
 import AddProduct from './Component/Seller/AddProduct';
 import EditProduct from './Component/Seller/EditProduct';
 import { loadItems } from './Component/Customer/cart';
@@ -25,15 +23,19 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
-      element: <GuestProduct />
+      element: <CustomerProduct />
+    },
+    {
+      path: "/product/:productId",
+      element: <ProductPage />
     },
     {
       path: "/logout",
       element: <Logout />,
     },
     {
-      path: "/guest/cart",
-      element: <GuestCart />,
+      path: "/cart",
+      element: <CustomerCart />,
       loader: loadItems
     },
     {
@@ -45,20 +47,8 @@ function App() {
       element: <SignupPage />
     },
     {
-      path: "/customer",
-      element: <Navigate to="/customer/product" replace />,
-    },
-    {
-      path: "/customer/product",
-      element: <CustomerProduct />
-    },
-    {
-      path: "/customer/order",
+      path: "/order",
       element: <CustomerOrder />,
-    },
-    {
-      path: "/customer/cart",
-      element: <CustomerCart />,
     },
     {
       path: "/admin",
@@ -71,8 +61,7 @@ function App() {
     {
       path: "/admin/product-category",
       element: <AdminCategory />,
-      loader: loadCategories,
-      action: handleDeleteCategory
+      loader: loadCategories
     },
     {
       path: "/admin/product-category/add",
@@ -80,15 +69,13 @@ function App() {
       action: addNewCategory
     },
     {
-      path: "/admin/product-category/add/:categoryID",
+      path: "/admin/product-category/add/:categoryId",
       element: <AdminCategoryForm />,
-      loader: loadCategory,
       action: addNewCategory
     },
     {
-      path: "/admin/product-category/:categoryID",
+      path: "/admin/product-category/:categoryId",
       element: <AdminCategoryForm />,
-      loader: loadCategory,
       action: saveCategory
     },
     {
@@ -114,10 +101,6 @@ function App() {
     {
       path: "/seller/product/editproduct",
       element: <EditProduct />
-    },
-    {
-      path: "/product/:productId",
-      element: <ProductPage />
     }
   ]);
 

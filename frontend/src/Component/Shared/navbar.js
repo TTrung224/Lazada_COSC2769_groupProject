@@ -6,81 +6,92 @@ import { handleAuth } from '../../Service/commonService';
 import { ADMIN, CUSTOMER, SELLER } from '../../constants';
 import '../componentStyle.css';
 
-function NavItem({nav}){
-    return(
+function NavItem({ nav }) {
+    return (
         <NavLink className="nav-item nav-link text-xl nav-custom-item" to={nav.link}>
             {nav.name}
             <i className={nav.icon}></i>
         </NavLink>
     )
-} 
+}
 
-function HeaderItem({nav}){
-    return(
+function HeaderItem({ nav }) {
+    return (
         <Link className="nav-item header-item" to={nav.link}>
             {nav.name}
         </Link>
     )
-} 
+}
 
-export default function Navbar(){
+export default function Navbar() {
     const listNav = {
         guest: [
-            {name: "Cart", icon: "bi bi-cart-fill", link: "/guest/cart"},
+            { name: "Products", icon: "bi bi-archive-fill", link: "/" },
+            { name: "Cart", icon: "bi bi-cart-fill", link: "/cart" },
         ],
         customer: [
-            {name: "Products", icon: "bi bi-archive-fill", link: "/customer/product"},
-            {name: "Orders", icon: "bi bi-clipboard2-check-fill", link: "/customer/order"},
-            {name: "Cart", icon: "bi bi-cart-fill", link: "/customer/cart"},
+            { name: "Products", icon: "bi bi-archive-fill", link: "/" },
+            { name: "Orders", icon: "bi bi-clipboard2-check-fill", link: "/order" },
+            { name: "Cart", icon: "bi bi-cart-fill", link: "/cart" },
         ],
         seller: [
-            {name: "Orders", icon: "bi bi-clipboard2-check-fill", link: "/seller/order"},
-            {name: "Products", icon: "bi bi-archive-fill", link: "/seller/product"},
-            {name: "Statistic",icon: "bi bi-bar-chart-fill", link:"/seller/statistic"},
+            { name: "Orders", icon: "bi bi-clipboard2-check-fill", link: "/seller/order" },
+            { name: "Products", icon: "bi bi-archive-fill", link: "/seller/product" },
+            { name: "Statistic", icon: "bi bi-bar-chart-fill", link: "/seller/statistic" },
         ],
         admin: [
-            {name: "Seller Request", icon: "bi bi-clipboard2-check-fill", link: "/admin/seller-request"},
-            {name: "Product Categories", icon: "bi bi-tags-fill", link: "/admin/product-category"},
+            { name: "Seller Request", icon: "bi bi-clipboard2-check-fill", link: "/admin/seller-request" },
+            { name: "Product Categories", icon: "bi bi-tags-fill", link: "/admin/product-category" },
         ],
     }
 
     const listHeader = {
         guest: [
-            {name: "Login", link:"/login"},
-            {name: "Signup", link:"/signup"},
+            { name: "Login", link: "/login" },
+            { name: "Signup", link: "/signup" },
         ],
         account: [
-            {name: "Account", link:"#"},
-            {name: "Logout", link:"/logout"},
+            { name: "Account", link: "#" },
+            { name: "Logout", link: "/logout" },
         ]
     }
 
-    const { authState: {isAuthenticated, user}} = useContext(AuthContext)
+    const { authState: { isAuthenticated, user } } = useContext(AuthContext)
     const navigate = useNavigate()
-
-    useEffect(() => {
-        const path = handleAuth(isAuthenticated, user?.type);
-        if(path!=null) navigate(path)
-    });
-
     let navList = [];
     let headList = [];
-    const userTypeUpper = (user?.type)? user.type.toUpperCase() : null;
-    if(isAuthenticated && userTypeUpper === CUSTOMER){
-        navList = listNav.customer.map((item => <NavItem nav={item} key={item.name}/>))
-        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
-    } else if(isAuthenticated && userTypeUpper === ADMIN){
-        navList = listNav.admin.map((item => <NavItem nav={item} key={item.name}/>))
-        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
-    } else if(isAuthenticated && userTypeUpper === SELLER){
-        navList = listNav.seller.map((item => <NavItem nav={item} key={item.name}/>))
-        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name}/>))
-    } else{
-        navList = listNav.guest.map((item => <NavItem nav={item} key={item.name}/>))
-        headList = listHeader.guest.map((item => <HeaderItem nav={item} key={item.name}/>))
+    const userTypeUpper = (user?.type) ? user.type.toUpperCase() : null;
+
+    
+    useEffect(() => {
+        const valid = handleAuth(isAuthenticated, userTypeUpper);
+        console.log(valid)
+        if (!valid) {
+            if (userTypeUpper === ADMIN){
+                navigate("/admin", {replace: true})
+            }else if (userTypeUpper === SELLER){
+                navigate("/seller", {replace: true})
+            }else {
+                navigate("/", {replace: true})
+            }
+        }
+    });
+
+    if (isAuthenticated && userTypeUpper === CUSTOMER) {
+        navList = listNav.customer.map((item => <NavItem nav={item} key={item.name} />))
+        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name} />))
+    } else if (isAuthenticated && userTypeUpper === ADMIN) {
+        navList = listNav.admin.map((item => <NavItem nav={item} key={item.name} />))
+        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name} />))
+    } else if (isAuthenticated && userTypeUpper === SELLER) {
+        navList = listNav.seller.map((item => <NavItem nav={item} key={item.name} />))
+        headList = listHeader.account.map((item => <HeaderItem nav={item} key={item.name} />))
+    } else {
+        navList = listNav.guest.map((item => <NavItem nav={item} key={item.name} />))
+        headList = listHeader.guest.map((item => <HeaderItem nav={item} key={item.name} />))
     }
 
-    return(
+    return (
         <div className='header-div mb-2'>
             <nav className="navbar header navbar-expand-lg navbar-light bg-light">
                 <div className="navbar-nav ms-auto me-3">

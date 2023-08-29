@@ -52,10 +52,6 @@ export default function ProductFilter(){
         }
     }
 
-    useEffect(() => {
-        console.log(atributeFilterList)
-    }, [atributeFilterList]);
-
     return(
         <div className='product-filters'>
             <h5>Price</h5>

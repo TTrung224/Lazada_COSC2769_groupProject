@@ -1,5 +1,5 @@
 const Account = require("../model/Account");
-const bcrypt =  require('bcrypt');
+const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 class AccountController {
@@ -32,7 +32,7 @@ class AccountController {
 
             let user;
             user = await Account.findOne({ email: emailOrPhone });
-            if(!user){
+            if (!user) {
                 user = await Account.findOne({ phone: emailOrPhone });
             }
 
@@ -82,10 +82,10 @@ class AccountController {
                 if (!(email && pwd && rePwd && fullName && phone)) {
                     return res.status(400).send("All input is required");
                 }
-            }else{
+            } else {
                 return res.status(400).send("user type is incorrect");
             }
-            if(!pwd === rePwd){
+            if (!pwd === rePwd) {
                 return res.status(400).send("re-password is not matched");
             }
 
@@ -129,19 +129,19 @@ class AccountController {
         } catch (err) {
             console.log(err);
             res.status(500).send();
-        }        
+        }
     }
 
     // [POST] account/logout
-    async logout(req, res){
+    async logout(req, res) {
         try {
-            if (req.user != null){
+            if (req.user != null) {
                 res.clearCookie('token');
-                return res.status(200).json({success: true, message: "logout successfully"});
+                return res.status(200).json({ success: true, message: "logout successfully" });
             }
         } catch (error) {
             console.log(error);
-            return res.status(500).json({success: false, message: "internal server error"})
+            return res.status(500).json({ success: false, message: "internal server error" })
         }
     }
 
@@ -170,9 +170,9 @@ class AccountController {
         }
     }
 
-// Support functions:
+    // Support functions:
 
-    async getUserNameByEmail(email){
+    async getUserNameByEmail(email) {
         try {
             let result = await findOne({ email: email });
             const name = result.first_name + " " + result.last_name;
