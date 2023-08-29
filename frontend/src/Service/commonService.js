@@ -5,7 +5,7 @@ export const handleAuth = (isAuthenticated, userType) => {
     const userTypeUpper = userType?.toUpperCase()
     const notRequiredAuthenticatedPath = ["/", "/login", "/signup", "/guest/cart"]
     // authenticated -> navigate to that user type's page
-    if (isAuthenticated && (
+    if (isAuthenticated && window.location.pathname !== "/logout" && (
         notRequiredAuthenticatedPath.includes(window.location.pathname) ||
         !window.location.pathname.includes("/"+userType.toLowerCase()+"/")
         )) {

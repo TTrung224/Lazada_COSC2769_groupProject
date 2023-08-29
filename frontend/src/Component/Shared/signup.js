@@ -10,9 +10,6 @@ export default function Signup(){
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({userType: "customer", pwd: "", rePwd: "", email: "", phone: "", address: "", fullName: ""})
-
-    const [pwd,setPwd] = useState("")
-    const [rePwd,setRePwd] = useState("")
     const [error,setError] = useState("")
 
     useEffect(() => {
@@ -35,7 +32,7 @@ export default function Signup(){
         } else {
             try{
                 const res = await axiosSetting.post("account/signup", formData)
-                if(res.status === 200){
+                if(res.status === 201){
                     alert("sign up successully")
                     navigate("/login")
                 }
