@@ -2,18 +2,19 @@ import { ADMIN, CUSTOMER, SELLER } from "../constants"
 
 
 export const handleAuth = (isAuthenticated, userTypeUpper) => {
-    const guestPath = ["/cart", "/product"]
-    const userPath = ["/order"]
-    const sellerPath = ["/seller"]
-    const adminPath = ["/admin"]
-    const path = window.location.pathname
+    const guestPath = ["cart", "product"]
+    const userPath = ["order"]
+    const sellerPath = ["seller"]
+    const adminPath = ["admin"]
+    const path = window.location.pathname.split("/")[1]
 
-    if ((path === "/login" || path === "/signup")) {
+    console.log(path)
+    if ((path === "login" || path === "signup")) {
         if (isAuthenticated) {
             return false
         } else return true
     }
-    if (path === "/logout") {
+    if (path === "logout") {
         if (!isAuthenticated) {
             return false
         } else return true
@@ -33,7 +34,7 @@ export const handleAuth = (isAuthenticated, userTypeUpper) => {
             return true
         } return false
     }
-    else if (guestPath.some(p => path.includes(p)) || path === "/") {
+    else if (guestPath.some(p => path.includes(p)) || path === "") {
         if (userTypeUpper === ADMIN || userTypeUpper === SELLER) {
             return false
         }

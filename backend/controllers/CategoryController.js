@@ -1,6 +1,6 @@
-const Category = require("../model/Category");
+const Category = require("../model/Category").model;
 
-class AccountController {
+class CategoryController {
     async getAllCategories(req, res) {
         try{
             const categories = await Category.find()
@@ -62,4 +62,4 @@ class AccountController {
     }
 }
 
-module.exports = new AccountController();
+module.exports = new CategoryController();

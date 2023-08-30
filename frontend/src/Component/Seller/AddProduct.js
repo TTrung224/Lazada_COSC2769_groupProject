@@ -1,14 +1,24 @@
 import { Link } from 'react-router-dom';
 import Navbar from '../Shared/navbar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios'
+
+async function loadProduct(){}
+async function loadCategories(){}
+async function saveProduct(){
+
+}
 
 export default function AddProduct(){
-
+    const [isLoading, setIsLoading] = useState(true)
     var categoryList = [
         {id:"1",name:"cat1"},
         {id:"2",name:"cat2"},
         {id:"3",name:"cat3"}
     ]
+
+
+    
 
     const[currenyCategory,setCurrentCategory] = useState("null")
      
@@ -19,9 +29,9 @@ export default function AddProduct(){
         
     }
     return(
-        <div className='add-product-grandparent'>
+        <>
             <Navbar/>
-            <div className="add-product-container">
+            <div className="container border shadow p-5 my-5">
                 <h2>Add Product</h2>
                 <div className='product-add-input'>
                     <div class="product-add-child product-add-child-left">
@@ -33,55 +43,22 @@ export default function AddProduct(){
                         <input type='text' id="add-product-des" placeholder='add product description' />
                     </div>
                     <div class="product-add-child">
-                        <label for="add-product-id">Product id</label>
-                        <input type='text' id="add-product-id" placeholder='add product id test' />
                         <label for="add-product-price">Product price</label>
                         <input type='text' id="add-product-price" placeholder='add product price' />
                         <label for="add-product-category">Product category</label>
                         <select type='text' id="add-product-category" placeholder='add product category' onChange={event=>handleInput(event)}>
-                            <option value="null">Sellect</option>
                             {categoryList.map(category =>{
                                 return(                      
-                                    <option value={category.id}>{category.name}</option>                                                                                                     
+                                    <option value={category.id}>{category.name}</option>                                
                                 )
                             })}
-                        </select>
-                       {currenyCategory ==="1"?(
-                            <div className='category-attribute-input'>
-                                <label for="attribute1">cat1 attribute</label>
-                                <input type="text"  id="attribute1" placeholder='input attribute'/>
-                                <label for="attribute2">cat1 attribute</label>
-                                <input type="text"  id="attribute2" placeholder='input attribute'/>
-                            </div>
-                       ):""}
-                      {currenyCategory ==="2"?(
-                            <div className='category-attribute-input'>
-                                <label for="attribute1">cat2 attribute</label>
-                                <input type="text"  id="attribute1" placeholder='input attribute'/>
-                                <label for="attribute2">cat2 attribute</label>
-                                <input type="text"  id="attribute2" placeholder='input attribute'/>
-                            </div>
-                       ):""}
-                       {currenyCategory ==="3"?(
-                            <div className='category-attribute-input'>
-                                <label for="attribute1">cat3 attribute</label>
-                                <input type="text"  id="attribute1" placeholder='input attribute'/>
-                                <label for="attribute2">cat3 attribute</label>
-                                <input type="text"  id="attribute2" placeholder='input attribute'/>
-                            </div>
-                       ):""}
-                            
-                     
-                                                                     
+                        </select>                                                
                     </div>     
                 </div>
-                <div className='product-add-button'>
-                    <Link to='/seller/product' className='product-add'>Add</Link>
-                    <Link to='/seller/product' className='product-cancel'>Cancel</Link>
-                </div>
-                
+                <button type="button" className='btn btn-primary'>Submit</button>
+                <button type="button" className="btn btn-secondary">Cancel</button>
             </div>
-        </div>
+        </>
         
     )
 }

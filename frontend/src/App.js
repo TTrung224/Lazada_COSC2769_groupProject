@@ -99,7 +99,7 @@ function App() {
       element: <AddProduct />
     },
     {
-      path: "/seller/product/editproduct",
+      path: "/seller/product/edit/:productId",
       element: <EditProduct />
     }
   ]);

@@ -6,7 +6,6 @@ import { handleAuth } from '../../Service/commonService';
 import { axiosSetting } from '../../Context/constants';
 
 export default function Signup(){
-    const { authState: {isAuthenticated, user}} = useContext(AuthContext)
     const navigate = useNavigate()
 
     const [formData, setFormData] = useState({userType: "customer", pwd: "", rePwd: "", email: "", phone: "", address: "", fullName: ""})

@@ -65,7 +65,6 @@ export default function Navbar() {
     
     useEffect(() => {
         const valid = handleAuth(isAuthenticated, userTypeUpper);
-        console.log(valid)
         if (!valid) {
             if (userTypeUpper === ADMIN){
                 navigate("/admin", {replace: true})
