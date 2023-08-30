@@ -12,6 +12,7 @@ class AccountController {
             data.fullName = result.fullName;
             data.email = result.email;
             data.type = result.type;
+            data.sellerStatus = result?.sellerStatus
 
             return res.status(200).json(data);
         } catch (error) {
@@ -38,15 +39,16 @@ class AccountController {
             if (user && bcrypt.compare(pwd, user.password)) {
                 // Create token
                 const token = jwt.sign(
-                    { userId: user._id, email: user.email, userType: user.type },
-                    process.env.TOKEN_KEY,
-                    { expiresIn: "2h" }
+                    { userId: user._id, email: user.email, type: user.type },
+                    process.env.TOKEN_KEY, 
+                    {expiresIn: "2h"}
                 );
                 let data = {};
-                data.fullName = user.first_name;
+                data.fullName = user.fullName;
                 data.email = user.email;
                 data.type = user.type;
                 data.token = token;
+                data.sellerStatus = user?.sellerStatus;
 
                 // save the token to cookie that send back in response
                 res.cookie('token', token, { httpOnly: true });
@@ -62,22 +64,21 @@ class AccountController {
         }
     }
 
-
     // [POST] account/signup
     async register(req, res, next) {
         try {
-            const { email, pwd, rePwd, fullName, userType, phone, address } = req.body;
+            const { email, pwd, rePwd, fullName, type, phone, address} = req.body;
 
 
             // validate user input
-            if (!userType) {
+            if(!type){
                 return res.status(400).send("user type is required");
             }
-            if (userType == "customer") {
+            if(type == "customer"){
                 if (!(email && pwd && rePwd && fullName && phone && address)) {
                     return res.status(400).send("All input is required");
                 }
-            } else if (userType == "seller") {
+            }else if(type == "seller"){
                 if (!(email && pwd && rePwd && fullName && phone)) {
                     return res.status(400).send("All input is required");
                 }
@@ -97,20 +98,25 @@ class AccountController {
 
             //hash and salted password
             const encryptedPassword = await bcrypt.hash(pwd, 10);
-            bcrypt.hash()
-            const user = await Account.create({
+            let tempUser = {
                 fullName: fullName,
                 phone: phone,
                 email: email.toLowerCase(),
                 password: encryptedPassword,
-                type: userType,
-                address: address ? address : null
-            });
+                type: type,
+                address: address? address : null
+            }
+
+            if(tempUser.type == "seller"){
+                tempUser.sellerStatus = "pending"
+            }
+
+            const user = await Account.create(tempUser);
 
             // if signup then not required login
             // // Token
             // const token = jwt.sign(
-            //     { userId: user._id, email, userType: user.type },
+            //     { userId: user._id, email, type: user.type },
             //     process.env.TOKEN_KEY, 
             //     {expiresIn: "2h"}
             // );
@@ -119,13 +125,12 @@ class AccountController {
             // //save cookie token
             // res.cookie('token', token, { httpOnly: true });
 
-            res.status(201).send("register user success");
+            res.status(201).send("register user successfully");
         } catch (err) {
             console.log(err);
             res.status(500).send();
         }
     }
-
 
     // [POST] account/logout
     async logout(req, res) {
@@ -137,6 +142,31 @@ class AccountController {
         } catch (error) {
             console.log(error);
             return res.status(500).json({ success: false, message: "internal server error" })
+        }
+    }
+
+    // [Get] getAllSellerRequest
+    async getAllSellerRequest(req, res){
+        try{
+            const result = await Account.find({type: "seller"})
+            res.status(200).json(result)
+        } catch(error){
+            console.log(error)
+            res.status(500).send()
+        }
+    }
+
+    // [PUT] seller-request/:sellerId
+    async updateSellerRequestStatus(req, res){
+        if(req.body.sellerStatus && (req.body.sellerStatus == "rejected" || req.body.sellerStatus == "accepted")){
+            try{
+                await Account.findByIdAndUpdate(req.params.sellerId, {sellerStatus: req.body.sellerStatus})
+                res.status(200).send("udpate request status successfully")
+            } catch(error){
+                res.status(500).send()
+            }
+        }else{
+            res.status(400).send("status is in wrong format")
         }
     }
 
