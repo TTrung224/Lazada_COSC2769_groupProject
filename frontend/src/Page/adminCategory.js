@@ -1,6 +1,6 @@
 import AdminCategoryList from '../Component/Admin/AdminCategoryList';
 import { Link, defer, useLoaderData } from 'react-router-dom';
-import { deleteCategory, getCategories } from '../Component/Admin/AdminAPI';
+import { deleteCategory, getCategories } from '../Service/CategoryAPI';
 import Navbar from '../Component/Shared/navbar';
 import React, { useEffect, useState } from 'react';
 import Loader from '../Component/Shared/loader';

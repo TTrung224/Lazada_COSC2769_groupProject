@@ -14,12 +14,10 @@ export default function Logout(){
 
     useEffect(() => {
         logout();
-    });
+    }, []);
 
     async function logout() {
         await logoutFunc();
-        // navigate("/")
-        // console.log("loged out")
     }
 
     return(

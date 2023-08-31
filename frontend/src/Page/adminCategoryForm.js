@@ -1,5 +1,5 @@
-import { Form, redirect, useLocation, useNavigate, useParams } from "react-router-dom";
-import { addCategory, getCategoryWithParents, updateCategory } from "../Component/Admin/AdminAPI";
+import { Form, redirect, useNavigate, useParams } from "react-router-dom";
+import { addCategory, getCategoryWithParents, updateCategory } from "../Service/CategoryAPI";
 import React, { useEffect, useState } from "react";
 import AdminAttributeList from "../Component/Admin/AdminAttributeList";
 import AdminAddAttribute from "../Component/Admin/AdminAddAttribute";
@@ -18,10 +18,10 @@ export async function addNewCategory({ request }) {
     }
     try {
         await addCategory(newData)
-    } catch (err){
+    } catch (err) {
         console.log(err)
         alert(err.message)
-    }finally{
+    } finally {
         return redirect("/admin/product-category")
     }
 }
@@ -42,36 +42,35 @@ export async function saveCategory({ request, params }) {
     try {
         console.log(params.categoryId)
         await updateCategory(params.categoryId, updatedCategory)
-    } catch (err){
+    } catch (err) {
         console.log(err)
         alert(err.message)
-    }finally{
+    } finally {
         return redirect("/admin/product-category")
     }
 
 }
 
 
-const AdminCategoryForm = () => {
+const AdminCategoryForm = ({ state }) => {
     const navigate = useNavigate()
     const { categoryId } = useParams()
     const [isLoading, setIsLoading] = useState(true)
     const [categories, setCategories] = useState(null)
     const [attributes, setAttributes] = useState([])
-    const { state } = useLocation()
 
     useEffect(() => {
         if (categoryId) {
             loadCategory(categoryId).then(c => {
                 if (c.status === 200) {
                     setCategories(c.data)
-                    if (state.for === "edit") {
+                    if (state === "edit") {
                         setAttributes(c.data[0].attributes)
                     }
                 }
             }).finally(() => { setIsLoading(false); })
         } else { setIsLoading(false) }
-    }, [categoryId, state.for])
+    }, [categoryId, state])
 
     let name = ""
     let parentId = ""

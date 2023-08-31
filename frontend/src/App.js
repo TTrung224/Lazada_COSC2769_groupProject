@@ -1,4 +1,4 @@
-import AuthContextProvider from './Context/loginSessionContext'
+import AuthContextProvider, { AuthContext } from './Context/loginSessionContext'
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 
 import LoginPage from './Page/loginPage';
@@ -13,10 +13,11 @@ import CustomerCart from './Page/customerCart';
 import Logout from './Component/Shared/logout';
 import AdminCategory, { loadCategories } from './Page/adminCategory';
 import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/adminCategoryForm';
-import AddProduct from './Component/Seller/AddProduct';
-import EditProduct from './Component/Seller/EditProduct';
 import { loadItems } from './Component/Customer/cart';
 import ProductPage from './Page/ProductPage';
+import ProductForm, { addProduct } from './Component/Seller/ProductForm';
+import { loadProducts } from './Component/Seller/SellerProductList';
+import { useContext } from 'react';
 
 function App() {
 
@@ -65,17 +66,17 @@ function App() {
     },
     {
       path: "/admin/product-category/add",
-      element: <AdminCategoryForm />,
+      element: <AdminCategoryForm state="add" />,
       action: addNewCategory
     },
     {
       path: "/admin/product-category/add/:categoryId",
-      element: <AdminCategoryForm />,
+      element: <AdminCategoryForm state="add" />,
       action: addNewCategory
     },
     {
       path: "/admin/product-category/:categoryId",
-      element: <AdminCategoryForm />,
+      element: <AdminCategoryForm state="edit" />,
       action: saveCategory
     },
     {
@@ -88,19 +89,20 @@ function App() {
     },
     {
       path: "/seller/product",
-      element: <SellerProduct />,
+      element: <SellerProduct />
     },
     {
-      path:"/seller/statistic",
-      element:<SellerStatistic/>
+      path: "/seller/statistic",
+      element: <SellerStatistic />
     },
     {
       path: "/seller/product/addproduct",
-      element: <AddProduct />
+      element: <ProductForm state="add" />,
+      action: addProduct
     },
     {
       path: "/seller/product/edit/:productId",
-      element: <EditProduct />
+      element: <ProductForm state="edit" />
     }
   ]);
 

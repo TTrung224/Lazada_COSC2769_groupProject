@@ -8,7 +8,6 @@ export const handleAuth = (isAuthenticated, userTypeUpper) => {
     const adminPath = ["admin"]
     const path = window.location.pathname.split("/")[1]
 
-    console.log(path)
     if ((path === "login" || path === "signup")) {
         if (isAuthenticated) {
             return false

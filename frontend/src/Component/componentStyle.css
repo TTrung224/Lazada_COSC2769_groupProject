@@ -526,6 +526,9 @@
     color:white;
 }
 
+.product-img {
+    max-height: 250px;
+}
 
 /* seller order list */
 .seller-order-list{

@@ -9,6 +9,7 @@ class AccountController {
         try {
             let result = await Account.findOne({ email: user.email });
             let data = {}
+            data._id = result._id
             data.fullName = result.fullName;
             data.email = result.email;
             data.type = result.type;
@@ -44,6 +45,7 @@ class AccountController {
                     {expiresIn: "2h"}
                 );
                 let data = {};
+                data._id = user._id
                 data.fullName = user.fullName;
                 data.email = user.email;
                 data.type = user.type;
