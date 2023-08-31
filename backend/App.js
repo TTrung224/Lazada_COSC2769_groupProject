@@ -10,14 +10,17 @@ const app = express();
 app.use(express.json());
 app.use(cookies());
 app.use(cors({origin: 'http://localhost:3000', credentials: true}))
+
+// For getting images from server
 app.get("/image/:imgName", (req, res) => {
     try {
         res.sendFile(path.join(__dirname, `./productImgs/${req.params.imgName}`))
     } catch (error) {
         console.log(error)
-        res.sendStatus(500)
+        res.sendFile(path.join(__dirname, `./productImgs/placeholder.png`))
     }
 })
+
 route(app);
 
 module.exports = app;

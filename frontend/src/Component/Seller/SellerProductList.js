@@ -1,6 +1,6 @@
-import { Link, defer, useLoaderData } from 'react-router-dom';
-import { useState, useRef, useEffect, useContext } from 'react';
-import { axiosSetting, backendUrl } from '../../Context/constants';
+import { Link } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
+import { backendUrl } from '../../Context/constants';
 import Loader from '../Shared/loader';
 import "../componentStyle.css"
 import { getUserProducts } from '../../Service/ProductAPI';
@@ -8,7 +8,9 @@ import { AuthContext } from '../../Context/loginSessionContext';
 
 
 async function loadProducts(user) {
-    console.log(user)
+    if(!user){
+        return []
+    }
     const products = await getUserProducts(user._id)
     if (products !== null) {
         return products
@@ -21,21 +23,23 @@ export default function SellerProductList() {
     const [isLoading, setIsLoading] = useState(true)
     const [products, setProducts] = useState([])
     const [search, setSearch] = useState("")
-    const [minPrice, setMinPrice] = useState(0)
-    const [maxPrice, setMaxPrice] = useState(0)
+    const [minPrice, setMinPrice] = useState("")
+    const [maxPrice, setMaxPrice] = useState("")
     const [minDate, setMinDate] = useState("")
     const [maxDate, setMaxDate] = useState("")
-
+ 
     useEffect(() => {
         loadProducts(user).then(p => {
             setProducts(p.data)
         }).finally(setIsLoading(false))
-    }, [])
+    }, [user])
 
 
     const handleDelete = (id) => {
         // setProducts(products => products.filter(product => product._id !== id))
     }
+
+    
     function handleSearch(list) {
 
         if (search.toLowerCase() === "") {
@@ -43,12 +47,20 @@ export default function SellerProductList() {
         }
         return list.filter(p => p.name.toLowerCase().includes(search))
     }
-
     function handlePriceFilter(list) {
-        if (minPrice == "" && maxPrice == "") {
+        if (minPrice === "" && maxPrice === "") {
             return list
         }
-        return list.filter(p => p.price >= Number.parseInt(minPrice) && p.price <= Number.parseInt(maxPrice))
+        const minVal = Number.parseInt(minPrice)
+        const maxVal = Number.parseInt(maxPrice)
+
+        if(isNaN(minVal)){
+            return list.filter(p => p.price <= maxVal)
+        }else if(isNaN(maxVal)) {
+            return list.filter(p => p.price >= minVal)
+        }else {
+            return list.filter(p => p.price >= minVal && p.price <= maxVal)
+        }
     }
 
     function handleDateFilter(list) {
@@ -77,6 +89,9 @@ export default function SellerProductList() {
     }
     const [currentSort, setCurrentSort] = useState("date")
     function handleSort(list) {
+        if(list.length < 2){
+            return list
+        }
         if (currentSort === "name") {
             const newProducts = list.sort((a, b) => a.name > b.name ? 1 : -1)
             return newProducts
@@ -93,7 +108,7 @@ export default function SellerProductList() {
                     return -1
                 }
             })
-            return list
+            return newProducts
         } else {
             return list
         }
@@ -106,7 +121,7 @@ export default function SellerProductList() {
             <div className="mx-4">
                 <div className="seller-header-bar rounded-4">
                     <Link className='btn btn-primary me-2' to="/seller/product/addproduct">Add Product</Link>
-                    <label for="seller-sort"><b>Sort by:</b></label>
+                    <label htmlFor="seller-sort"><b>Sort by:</b></label>
                     <select id="seller sort" className='seller-select-sort' onChange={(e) => {
                         setCurrentSort(e.target.value)
                     }}>

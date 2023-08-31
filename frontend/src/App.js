@@ -1,4 +1,4 @@
-import AuthContextProvider, { AuthContext } from './Context/loginSessionContext'
+import AuthContextProvider from './Context/loginSessionContext'
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 
 import LoginPage from './Page/loginPage';
@@ -15,9 +15,7 @@ import AdminCategory, { loadCategories } from './Page/adminCategory';
 import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/adminCategoryForm';
 import { loadItems } from './Component/Customer/cart';
 import ProductPage from './Page/ProductPage';
-import ProductForm, { addProduct } from './Component/Seller/ProductForm';
-import { loadProducts } from './Component/Seller/SellerProductList';
-import { useContext } from 'react';
+import ProductForm, { addProduct, editProduct } from './Component/Seller/ProductForm';
 
 function App() {
 
@@ -71,7 +69,7 @@ function App() {
     },
     {
       path: "/admin/product-category/add/:categoryId",
-      element: <AdminCategoryForm state="add" />,
+      element: <AdminCategoryForm state="subCategory" />,
       action: addNewCategory
     },
     {
@@ -102,7 +100,8 @@ function App() {
     },
     {
       path: "/seller/product/edit/:productId",
-      element: <ProductForm state="edit" />
+      element: <ProductForm state="edit" />,
+      action: editProduct
     }
   ]);
 
