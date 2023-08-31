@@ -1,19 +1,19 @@
 import { axiosSetting } from "../Context/constants"
 
-export async function getUserProducts(userId) {
+export async function getProduct(productId) {
     try {
-        const products = await axiosSetting.get(`/product/seller/${userId}`)
-        return products
+        const data = await axiosSetting.get(`/product/${productId}`)
+        return data
     } catch (error) {
         console.log(error.message)
         return null
     }
 }
 
-export async function getProduct(productId) {
+export async function getUserProducts(userId) {
     try {
-        const product = await axiosSetting.get(`/product/${productId}`)
-        return product
+        const data = await axiosSetting.get(`/product/seller/${userId}`)
+        return data
     } catch (error) {
         console.log(error.message)
         return null
@@ -23,19 +23,29 @@ export async function getProduct(productId) {
 export async function createProduct(formData){
     try{
         const res = await axiosSetting.post("/product/add", formData)
-        return res.message
+        return res
     }catch(error){
         console.log(error.message)
-        return error.message
+        return null
     }
 }
 
 export async function saveProduct( productId, formData){
     try{
         const res = await axiosSetting.post(`/product/edit/${productId}`, formData)
-        return res.message
+        return res
     }catch(error){
         console.log(error.message)
-        return error.message
+        return null
+    }
+}
+
+export async function deleteProduct(productId) {
+    try {
+        const res = await axiosSetting.delete(`product/delete/${productId}`)
+        return res
+    } catch (error) {
+        console.log(error)
+        return null
     }
 }

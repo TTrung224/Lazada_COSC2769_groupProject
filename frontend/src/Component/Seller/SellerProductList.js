@@ -3,43 +3,63 @@ import { useState, useEffect, useContext } from 'react';
 import { backendUrl } from '../../Context/constants';
 import Loader from '../Shared/loader';
 import "../componentStyle.css"
-import { getUserProducts } from '../../Service/ProductAPI';
+import { deleteProduct, getUserProducts } from '../../Service/ProductAPI';
 import { AuthContext } from '../../Context/loginSessionContext';
-
+import Modal from 'react-bootstrap/Modal';
 
 async function loadProducts(user) {
-    if(!user){
+    if (!user) {
         return []
     }
-    const products = await getUserProducts(user._id)
-    if (products !== null) {
-        return products
-    }else {return []}
+    const res = await getUserProducts(user._id)
+    if (res && res.status === 200) {
+        return res.data
+    } else { return [] }
+}
 
+async function removeProduct(productId) {
+    const res = await deleteProduct(productId)
+    return res
 }
 
 export default function SellerProductList() {
     const { authState: { user } } = useContext(AuthContext)
     const [isLoading, setIsLoading] = useState(true)
     const [products, setProducts] = useState([])
+    const [deleteModal, setDeleteModal] = useState({ show: false, productId: "" })
     const [search, setSearch] = useState("")
     const [minPrice, setMinPrice] = useState("")
     const [maxPrice, setMaxPrice] = useState("")
     const [minDate, setMinDate] = useState("")
     const [maxDate, setMaxDate] = useState("")
- 
+
     useEffect(() => {
-        loadProducts(user).then(p => {
-            setProducts(p.data)
+        loadProducts(user).then(prod => {
+            setProducts(prod)
         }).finally(setIsLoading(false))
     }, [user])
 
 
+    // DELETE HANDLE
     const handleDelete = (id) => {
-        // setProducts(products => products.filter(product => product._id !== id))
+        setIsLoading(true)
+        removeProduct(id).then(res => {
+            if (res && res.status === 200) {
+                const newProducts = products.filter(p => p._id !== id)
+                setProducts(newProducts)
+            }
+        }).finally(() => { 
+            setIsLoading(false)
+            setDeleteModal({show: false, productId: ""})
+        })
     }
 
-    
+    function handleCloseDelete(){
+        setDeleteModal({show: false, productId: ""})
+    }
+
+
+    // SORTING HANDLE
     function handleSearch(list) {
 
         if (search.toLowerCase() === "") {
@@ -54,11 +74,11 @@ export default function SellerProductList() {
         const minVal = Number.parseInt(minPrice)
         const maxVal = Number.parseInt(maxPrice)
 
-        if(isNaN(minVal)){
+        if (isNaN(minVal)) {
             return list.filter(p => p.price <= maxVal)
-        }else if(isNaN(maxVal)) {
+        } else if (isNaN(maxVal)) {
             return list.filter(p => p.price >= minVal)
-        }else {
+        } else {
             return list.filter(p => p.price >= minVal && p.price <= maxVal)
         }
     }
@@ -89,9 +109,6 @@ export default function SellerProductList() {
     }
     const [currentSort, setCurrentSort] = useState("date")
     function handleSort(list) {
-        if(list.length < 2){
-            return list
-        }
         if (currentSort === "name") {
             const newProducts = list.sort((a, b) => a.name > b.name ? 1 : -1)
             return newProducts
@@ -161,7 +178,7 @@ export default function SellerProductList() {
                                     </div>
                                     <div className="col-lg-3 my-auto px-5">
                                         <Link className="btn btn-primary d-block mb-2" to={`/seller/product/edit/${p._id}`}><b>Edit</b></Link>
-                                        <button className="btn btn-danger d-block w-100" type="button" onClick={() => handleDelete(p._id)}><b>Delete</b></button>
+                                        <button className="btn btn-danger d-block w-100" type="button" onClick={() => setDeleteModal({show: true, productId: p._id})}><b>Delete</b></button>
                                     </div>
                                 </div>
                             )
@@ -169,6 +186,19 @@ export default function SellerProductList() {
                         })}
                 </div>
 
+
+                <Modal show={deleteModal.show} onHide={handleCloseDelete} backdrop="static" centered>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Caution</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        Are you sure you want to delete this product?
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <button className="btn btn-danger" onClick={() => handleDelete(deleteModal.productId)}>Delete</button>
+                        <button className="btn btn-secondary" onClick={() =>handleCloseDelete()}>Cancel</button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </div>
     )

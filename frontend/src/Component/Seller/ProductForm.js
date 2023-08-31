@@ -160,9 +160,10 @@ export default function ProductForm({ state }) {
                         }
                     </div>
                     <input type="hidden" name="productAttributes" value={JSON.stringify(attributes)} />
+                    <input type="hidden" name="productSeller" value={user?._id} />
                     {isEdit ?
                         <p className='mb-3'>Product Category: <b>{categories.name}</b></p> :
-                        <input type="hidden" name="productSeller" value={user?._id} />
+                        <></>
                     }
 
                     <div className="form-group mb-3">
