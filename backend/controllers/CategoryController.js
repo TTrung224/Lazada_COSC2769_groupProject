@@ -1,10 +1,23 @@
 const Category = require("../model/Category");
+const Product = require("../model/Product");
 
 class CategoryController {
     async getAllCategories(req, res) {
         try{
             const categories = await Category.find()
-            res.status(200).send(categories)
+            const resultCategories = categories.map(item => {
+                console.log(item._id)
+                let isUpdatable = !Category.exists({parentCategoryId: item._id})
+                console.log("first: " + isUpdatable)
+                if(isUpdatable){
+                    isUpdatable = Product.exists({category: item._id})
+                    console.log("second: " + isUpdatable)
+                }
+                item.isUpdatable = isUpdatable;
+                console.log(item)
+                return item
+            })
+            res.status(200).send(resultCategories)
         }catch(err){
             console.log(err)
             res.sendStatus(500)
