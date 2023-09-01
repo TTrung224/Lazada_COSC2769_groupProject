@@ -6,7 +6,6 @@ import ProductSearchBar from '../Component/Customer/productSearch';
 import Navbar from '../Component/Shared/navbar';
 import './pageStyle.css';
 import { getAllProducts } from '../Service/ProductAPI'
-import { useSearchParams } from 'react-router-dom';
 import Loader from '../Component/Shared/loader';
 
 
@@ -17,15 +16,11 @@ async function loadProducts(page) {
 
 
 export default function CustomerProduct() {
-    const [searchParams] = useSearchParams()
     const [isLoading, setIsLoading] = useState(true)
     const [maxItem, setMaxItem] = useState(0)
     const [productList, setProductList] = useState([])
 
-    const [page, setPage] = useState(parseInt(searchParams.get("page")))
-    if (!page) {
-        setPage(1)
-    }
+    const [page, setPage] = useState(1)
 
     useEffect(() => {
         loadProducts(page).then((res) => {
@@ -36,7 +31,7 @@ export default function CustomerProduct() {
                 }
             }
         }).finally(() => { setIsLoading(false) })
-    }, [])
+    }, [page])
 
 
     return (
@@ -48,7 +43,7 @@ export default function CustomerProduct() {
                 <ProductCategories />
                 <div className='product-mega'>
                     <ProductFilter />
-                    <ProductList productList={productList} maxItem={maxItem} page={page} />
+                    <ProductList productList={productList} maxItem={maxItem} page={page} setPage={setPage}/>
                 </div>
             </div>
         </>

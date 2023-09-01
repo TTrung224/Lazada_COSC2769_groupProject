@@ -97,7 +97,7 @@ const ProductPage = () => {
                             </ul>
                             <div className="container my-4">
                                 <h3 className="">Description:</h3>
-                                <p>{product.description}</p>
+                                <p style={{whiteSpace:"pre-wrap"}}>{product.description}</p>
                             </div>
                         </div>
                     </div>
