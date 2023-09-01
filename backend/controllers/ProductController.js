@@ -5,6 +5,24 @@ const fs = require("fs");
 class ProductController {
 
     // NO AUTH
+    async getAllProducts(req, res) {
+        try {
+            var limit = 12
+            var pageNo = 1
+            if(req.query.page){
+                pageNo = req.query.page
+            }
+            var skip = (pageNo - 1) * (limit)
+
+            const products = await Product.find().skip(skip).limit(limit).populate('category')
+            const count = await Product.count()
+            return res.status(200).send({products: products, count: count})
+        } catch (error) {
+            console.log(error)
+            return res.sendStatus(500)
+        }
+    }
+
     async getProduct(req, res) {
         try {
             const productId = req.params.productId

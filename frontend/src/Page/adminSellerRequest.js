@@ -12,7 +12,7 @@ export default function AdminSellerRequest() {
 
     useEffect(() => {
         getSellers().then(data => {
-            setSellers(data)
+            setSellers(data) 
         }).finally(() => {setIsLoading(false); console.log(sellers)})
     }, [])
 

@@ -40,7 +40,7 @@ class AccountController {
             if (user && bcrypt.compare(pwd, user.password)) {
                 // Create token
                 const token = jwt.sign(
-                    { userId: user._id, email: user.email, type: user.type },
+                    { userId: user._id, email: user.email, type: user.type, sellerStatus: user.sellerStatus },
                     process.env.TOKEN_KEY, 
                     {expiresIn: "2h"}
                 );

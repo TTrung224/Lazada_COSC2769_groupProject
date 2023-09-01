@@ -67,10 +67,10 @@ export default function SellerProductList() {
     // SORTING HANDLE
     function handleSearch(list) {
 
-        if (search.toLowerCase() === "") {
+        if (search === "") {
             return list
         }
-        return list.filter(p => p.name.toLowerCase().includes(search))
+        return list.filter(p => p.name.toLowerCase().includes(search.toLocaleLowerCase()))
     }
     function handlePriceFilter(list) {
         if (minPrice === "" && maxPrice === "") {
@@ -118,7 +118,7 @@ export default function SellerProductList() {
             const newProducts = list.sort((a, b) => a.name > b.name ? 1 : -1)
             return newProducts
         } else if (currentSort === "price") {
-            const newProducts = list.sort((a, b) => a.prize < b.prize ? 1 : -1)
+            const newProducts = list.sort((a, b) => a.price < b.price ? -1 : 1)
             return newProducts
         } else if (currentSort === "date") {
             const newProducts = list.sort((a, b) => {
