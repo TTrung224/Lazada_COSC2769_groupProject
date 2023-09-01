@@ -59,8 +59,7 @@ function App() {
     },
     {
       path: "/admin/product-category",
-      element: <AdminCategory />,
-      loader: loadCategories
+      element: <AdminCategory />
     },
     {
       path: "/admin/product-category/add",

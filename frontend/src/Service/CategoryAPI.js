@@ -11,14 +11,29 @@ export async function getCategoryWithParents(id) {
 }
 
 export async function addCategory(category) {
-    const res = await axiosSetting.post("/category/add", category)
-    return res
+    try {
+        const res = await axiosSetting.post("/category/add", category)
+        return res
+    } catch(err){
+        if(err.code === "ERR_BAD_REQUEST"){
+            alert("dupplicate category name or attributes")
+        }else{
+            alert("Couldn't add category")
+        }
+    }
 }
 
 export async function updateCategory(id, category) {
-    console.log(category)
-    const res = await axiosSetting.put(`/category/edit/${id}`, category)
-    return res
+    try{
+        const res = await axiosSetting.put(`/category/edit/${id}`, category)
+        return res
+    } catch(err){
+        if(err.code === "ERR_BAD_REQUEST"){
+            alert("dupplicate category name or attributes")
+        }else{
+            alert("Couldn't update category")
+        }
+    }
 }
 
 export async function deleteCategory(id) {

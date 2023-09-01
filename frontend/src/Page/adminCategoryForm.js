@@ -74,6 +74,7 @@ const AdminCategoryForm = ({ state }) => {
 
     let name = ""
     let parentId = ""
+    let updatable = true
     let parentAttributes = <></>
 
     // If edit, LoaderData will be defined. Assign its values to default values
@@ -82,6 +83,7 @@ const AdminCategoryForm = ({ state }) => {
         const category = state === 'subCategory' ? { _id: "noId", name: '', attributes: [], parentCategoryId: categories[0]._id } : categories[0]
         name = category.name
         parentId = category.parentCategoryId ? category.parentCategoryId : ""
+        updatable = category.updatable
         parentAttributes =
             <div className="form-group my-4">
                 <h5>Parent{'(s)'}: </h5>
@@ -120,7 +122,12 @@ const AdminCategoryForm = ({ state }) => {
                 <Form method="POST">
                     <div className="form-group my-4">
                         <label className="h5" htmlFor="name">Category Name: </label>
-                        <input className="form-control" type="text" name="name" id="name" defaultValue={name} required />
+                        {
+                            updatable ? 
+                                <input className="form-control" type="text" name="name" id="name" defaultValue={name} required/>
+                            :
+                                <input className="form-control" type="text" name="name" id="name" defaultValue={name} readOnly/>
+                        }
                     </div>
 
 
@@ -128,8 +135,8 @@ const AdminCategoryForm = ({ state }) => {
                     {parentAttributes}
                     <div className="form-group my-4">
                         <h5>Attributes:</h5>
-                        <AdminAttributeList attributes={attributes} allowDelete={true} deleteAttribute={deleteAttribute} />
-                        <AdminAddAttribute addAttribute={addAttribute} />
+                        <AdminAttributeList attributes={attributes} allowDelete={updatable} deleteAttribute={deleteAttribute} />
+                        {updatable?<AdminAddAttribute addAttribute={addAttribute} />:""}
                     </div>
 
                     {/* To add values of attributes and parent into the FormData of POST request */}
@@ -139,7 +146,12 @@ const AdminCategoryForm = ({ state }) => {
                     {/* Submit, Cancel buttons */}
                     <hr />
                     <div className="my-3">
-                        <input id="submitBtn" className="btn btn-primary" type="submit" value="Save" />
+                        {
+                            updatable ?
+                                <input id="submitBtn" className="btn btn-primary" type="submit" value="Save"/>
+                            :
+                                <input id="submitBtn" className="btn btn-secondary" type="submit" value="Save" disabled/>
+                        }
                         <input id="cancelBtn" className="btn btn-secondary ms-2" type="button" value="Cancel" onClick={() => {
                             navigate(-1)
                             document.querySelector("#cancelBtn").disabled = true

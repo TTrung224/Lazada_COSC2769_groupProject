@@ -7,22 +7,24 @@ import Loader from '../Component/Shared/loader';
 
 
 export async function loadCategories() {
-    const categoriesPromise = getCategories()
-    return defer({ data: categoriesPromise })
+    try{
+        const categories = await getCategories()
+        return categories.data
+    }catch(err){
+        alert("Error loading categories")
+        return[]
+    }
 }
 
-
 const AdminCategory = () => {
-    const { data } = useLoaderData()
     const [categories, setCategories] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-
     useEffect(() => {
-        data.then(c =>
-            setCategories(c.data)
+        loadCategories().then(c =>
+            setCategories(c)
         ).finally(() => { setIsLoading(false) })
-    }, [data])
+    }, [])
 
 
     async function handleDeleteCategory(id) {

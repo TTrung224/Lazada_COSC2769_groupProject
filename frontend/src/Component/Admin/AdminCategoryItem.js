@@ -39,10 +39,16 @@ const AdminCategoryItem = ({ categories, item, handleDeleteCategory }) => {
                         </button>
                     </Link>
 
-                    <button type='button' className="btn" onClick={() => handleDeleteCategory(item._id)}>
-                        <i className="bi-trash"></i>
-                    </button>
-
+                    {
+                        item.updatable?
+                            <button type='button' className="btn" onClick={() => handleDeleteCategory(item._id)}>
+                                <i className="bi-trash"></i>
+                            </button>
+                        :
+                            <button type='button' className="btn border-0" disabled>
+                                <i className="bi-trash"></i>
+                            </button>
+                    }
                 </div>
             </div>
             {collapseElement}
