@@ -24,7 +24,7 @@ class ProductController {
             const userId = req.params.userId
 
             if (req.user.userId !== userId) {
-                return res.status(401).send("unauthorized request");
+                return res.status(401).send("Unauthorized Request");
             }
             const products = await Product
                 .find({ seller: userId })
@@ -46,7 +46,7 @@ class ProductController {
             const data = req.body
 
             if (data.productSeller !== req.user.userId) {
-                return res.status(401).send("unauthorized request");
+                return res.status(401).send("Unauthorized Request");
             }
 
             const newObject = {}
@@ -81,7 +81,7 @@ class ProductController {
             const data = req.body
 
             if (data.productSeller !== req.user.userId) {
-                return res.status(401).send("unauthorized request");
+                return res.status(401).send("Unauthorized Request");
             }
 
             const productId = req.params.productId
