@@ -5,15 +5,12 @@ export function paginateArray(array, currentIdx, maxItemsPerPage) {
 }
 
 
-const PaginationList = ({ totalItems, setDisplayItems, maxItemsPerPage, currentIdx }) => {
+const PaginationList = ({ totalItems, maxItemsPerPage, currentIdx }) => {
 
     const navigate = useNavigate()
-    const totalPage = Math.ceil(totalItems.length / maxItemsPerPage)
+    const totalPage = Math.ceil(totalItems / maxItemsPerPage)
     const pagingList = generatePagination(totalPage)
-
     const onChangePage = (newPage) => {
-        const newItems = paginateArray(totalItems, newPage, maxItemsPerPage)
-        setDisplayItems(newItems)
         navigate(`?page=${newPage}`)
     }
 

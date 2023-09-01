@@ -1,8 +1,18 @@
 import { axiosSetting } from "../Context/constants"
 
+export async function getAllProducts(page){
+    try {
+        const data = await axiosSetting.get(`/product?page=${page}`)
+        return data
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
 export async function getProduct(productId) {
     try {
-        const data = await axiosSetting.get(`/product/${productId}`)
+        const data = await axiosSetting.get(`/product/item/${productId}`)
         return data
     } catch (error) {
         console.log(error.message)

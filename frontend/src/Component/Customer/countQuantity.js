@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 
 const CountQuantity = ({ quantity, setQuantity, productId }) => {
 
-    const changeQuant = () => {
-        let newQuant = parseInt(document.querySelector(`#id${productId} #quantity`).value)
-        if(newQuant < 1){
+    const changeQuant = (e) => {
+        let newQuant = parseInt(e.target.value)
+
+        if(isNaN(newQuant) || newQuant < 1){
             newQuant = 1
         }
+
+        console.log(newQuant)
         setQuantity(newQuant)
     }
 
@@ -30,7 +33,7 @@ const CountQuantity = ({ quantity, setQuantity, productId }) => {
         <div className="input-group">
             <button className="btn btn-secondary" type='button' onClick={() => decreaseQuant()}> - </button>
             <input key={"quantity"} id="quantity" min="1" name="quantity" value={quantity} type="number"
-                className="form-control input-number form-control-sm" onChange={() => changeQuant()} />
+                className="form-control input-number form-control-sm" onChange={(e) => changeQuant(e)} />
             <button className="btn btn-secondary" type='button' onClick={() => increaseQuant()}> + </button>
         </div>
 

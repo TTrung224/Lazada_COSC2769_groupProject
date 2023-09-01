@@ -24,6 +24,7 @@ async function removeProduct(productId) {
 
 export default function SellerProductList() {
     const { authState: { user } } = useContext(AuthContext)
+    const isVerified = user.sellerStatus === "accepted"
     const [isLoading, setIsLoading] = useState(true)
     const [products, setProducts] = useState([])
     const [deleteModal, setDeleteModal] = useState({ show: false, productId: "" })
@@ -44,28 +45,32 @@ export default function SellerProductList() {
     const handleDelete = (id) => {
         setIsLoading(true)
         removeProduct(id).then(res => {
-            if (res && res.status === 200) {
-                const newProducts = products.filter(p => p._id !== id)
-                setProducts(newProducts)
-            }
-        }).finally(() => { 
+            if (res) {
+                if (res.status === 200) {
+                    const newProducts = products.filter(p => p._id !== id)
+                    setProducts(newProducts)
+                } else {
+                    alert(res.status + ": " + res.data)
+                }
+            } else { alert("Error deleting") }
+        }).finally(() => {
             setIsLoading(false)
-            setDeleteModal({show: false, productId: ""})
+            setDeleteModal({ show: false, productId: "" })
         })
     }
 
-    function handleCloseDelete(){
-        setDeleteModal({show: false, productId: ""})
+    function handleCloseDelete() {
+        setDeleteModal({ show: false, productId: "" })
     }
 
 
     // SORTING HANDLE
     function handleSearch(list) {
 
-        if (search.toLowerCase() === "") {
+        if (search === "") {
             return list
         }
-        return list.filter(p => p.name.toLowerCase().includes(search))
+        return list.filter(p => p.name.toLowerCase().includes(search.toLocaleLowerCase()))
     }
     function handlePriceFilter(list) {
         if (minPrice === "" && maxPrice === "") {
@@ -113,7 +118,7 @@ export default function SellerProductList() {
             const newProducts = list.sort((a, b) => a.name > b.name ? 1 : -1)
             return newProducts
         } else if (currentSort === "price") {
-            const newProducts = list.sort((a, b) => a.prize < b.prize ? 1 : -1)
+            const newProducts = list.sort((a, b) => a.price < b.price ? -1 : 1)
             return newProducts
         } else if (currentSort === "date") {
             const newProducts = list.sort((a, b) => {
@@ -135,9 +140,19 @@ export default function SellerProductList() {
     return (
         <div className='seller-product-container'>
             {isLoading ? <Loader /> : <></>}
+            {isVerified ? <></> :
+                <div className='text-center my-5'>
+                    <h5>You are currently not verified by the Admin</h5>
+                    <h6>You may not make changes to your merchandise</h6>
+                    <h6>Contact the Admin for more information</h6>
+                </div>
+            }
             <div className="mx-4">
                 <div className="seller-header-bar rounded-4">
-                    <Link className='btn btn-primary me-2' to="/seller/product/addproduct">Add Product</Link>
+                    {isVerified ?
+                        <Link className='btn btn-primary me-2' to="/seller/product/addproduct">Add Product</Link> :
+                        <></>
+                    }
                     <label htmlFor="seller-sort"><b>Sort by:</b></label>
                     <select id="seller sort" className='seller-select-sort' onChange={(e) => {
                         setCurrentSort(e.target.value)
@@ -177,8 +192,12 @@ export default function SellerProductList() {
                                         <p className='fs-6 mb-2'>Added Date: <b>{createdDate.toString()}</b></p>
                                     </div>
                                     <div className="col-lg-3 my-auto px-5">
-                                        <Link className="btn btn-primary d-block mb-2" to={`/seller/product/edit/${p._id}`}><b>Edit</b></Link>
-                                        <button className="btn btn-danger d-block w-100" type="button" onClick={() => setDeleteModal({show: true, productId: p._id})}><b>Delete</b></button>
+                                        {isVerified ?
+                                            <>
+                                                <Link className="btn btn-primary d-block mb-2" to={`/seller/product/edit/${p._id}`}><b>Edit</b></Link>
+                                                <button className="btn btn-danger d-block w-100" type="button" onClick={() => setDeleteModal({ show: true, productId: p._id })}><b>Delete</b></button>
+                                            </> : <></>
+                                        }
                                     </div>
                                 </div>
                             )
@@ -196,7 +215,7 @@ export default function SellerProductList() {
                     </Modal.Body>
                     <Modal.Footer>
                         <button className="btn btn-danger" onClick={() => handleDelete(deleteModal.productId)}>Delete</button>
-                        <button className="btn btn-secondary" onClick={() =>handleCloseDelete()}>Cancel</button>
+                        <button className="btn btn-secondary" onClick={() => handleCloseDelete()}>Cancel</button>
                     </Modal.Footer>
                 </Modal>
             </div>
