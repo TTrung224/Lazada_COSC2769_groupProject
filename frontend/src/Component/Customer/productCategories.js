@@ -1,49 +1,84 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {Link, Navigate} from 'react-router-dom'
 import categoryTest from "../../Asset/categoryTest.png";
 import '../componentStyle.css';
 
-function Category({categoryName}){
+function Category({category, filters, setFilters}){
+    function chooseCategory(id){
+        if(filters.category && filters.category == id){
+            setFilters({...filters, page: 1, category: null})
+        } else {
+            setFilters({...filters, page: 1, category: id})
+        }
+        return
+    }
+    if(filters.category && filters.category == category._id){
+        return (
+            <div className='category card'>
+            <Link onClick={() => chooseCategory(category._id)}>
+                <div className="card active">
+                    <p className="category-name">{category.name}</p>
+                </div>
+            </Link>
+        </div> 
+        )
+    }
     return(
         <div className='category card'>
-            <Link to={"/#"}>
-                <div class="card">
-                    <img src={categoryTest} class="card-img-top" alt="..."></img>
-                    <p class="category-name">{categoryName}</p>
+            <Link onClick={() => chooseCategory(category._id)}>
+                <div className="card">
+                    <p className="category-name">{category.name}</p>
                 </div>
             </Link>
         </div> 
     )
 }
 
-function CategoryGroup({categoryList}){
+function CategoryGroup({categoryList, filters, setFilters}){
     return(
         <div className='category-group row justify-content-center'>
-            {categoryList.map(item => <Category categoryName={item}/>)}
+            {categoryList.map(item => <Category category={item} filters={filters} setFilters={setFilters}/>)}
         </div> 
     )
 }
 
-export default function ProductCategories(){
-    const categoryList = ["test1", "test2", "test3", "test4", "test5", "test6", "test7"]
+export default function ProductCategories({categoryList, filters, setFilters}){
+    let categorySliceList = []
+    const numberPerSlice = 7;
+    const numberOfSlice = Math.ceil( categoryList.length / numberPerSlice );
+    for(let i = 0; i < numberOfSlice; i++){
+        if(i == 0){
+            categorySliceList.push(
+                <div className="carousel-item active">
+                    <CategoryGroup categoryList={categoryList.slice(i*numberPerSlice, (i*numberPerSlice)+(numberPerSlice))} filters={filters} setFilters={setFilters}/>
+                </div>
+            )
+        }else{
+            categorySliceList.push(
+                <div className="carousel-item">
+                    <CategoryGroup categoryList={categoryList.slice(i*numberPerSlice, (i*numberPerSlice)+(numberPerSlice))} filters={filters} setFilters={setFilters}/>
+                </div>
+            )
+        }
+    }
+
+    // useEffect(()=>{
+    //     categorySliceList = calCategorySliceList()
+    // }, [categoryList])
+
 
     return(
         <div className='product-categories'>
             <h5>Categories</h5>
-            <div id="carouselCategory" class="carousel slide">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <CategoryGroup categoryList={categoryList}/>
-                    </div>
-                    <div class="carousel-item">
-                        <CategoryGroup categoryList={categoryList}/>
-                    </div>
+            <div id="carouselCategory" className="carousel slide">
+                <div className="carousel-inner">
+                    {categorySliceList.map(item => {return item})}
                 </div>
-                <button class="carousel-arrow carousel-control-prev" type="button" data-bs-target="#carouselCategory" data-bs-slide="prev">
-                    <i class="bi bi-caret-left-fill"></i>
+                <button className="carousel-arrow carousel-control-prev" type="button" data-bs-target="#carouselCategory" data-bs-slide="prev">
+                    <i className="bi bi-caret-left-fill"></i>
                 </button>
-                <button class="carousel-arrow carousel-control-next" type="button" data-bs-target="#carouselCategory" data-bs-slide="next">
-                    <i class="bi bi-caret-right-fill"></i>
+                <button className="carousel-arrow carousel-control-next" type="button" data-bs-target="#carouselCategory" data-bs-slide="next">
+                    <i className="bi bi-caret-right-fill"></i>
                 </button>
             </div>
         </div>

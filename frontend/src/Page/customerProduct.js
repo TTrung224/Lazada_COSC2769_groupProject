@@ -7,10 +7,11 @@ import Navbar from '../Component/Shared/navbar';
 import './pageStyle.css';
 import { getAllProducts } from '../Service/ProductAPI'
 import Loader from '../Component/Shared/loader';
+import { getCategories } from '../Service/CategoryAPI';
 
 
-async function loadProducts(page) {
-    const res = await getAllProducts(page)
+async function loadProducts(filters) {
+    const res = await getAllProducts(filters)
     return res
 }
 
@@ -19,11 +20,15 @@ export default function CustomerProduct() {
     const [isLoading, setIsLoading] = useState(true)
     const [maxItem, setMaxItem] = useState(0)
     const [productList, setProductList] = useState([])
+    const [categoryList, setCategoryList] = useState([])
 
-    const [page, setPage] = useState(1)
+    // const [page, setPage] = useState(1)
+    const [filters, setFilters] = useState({page: 1, search: "", minPrice: "", maxPrice: "", minDate: "", maxDate: "", attributes: [], category: null})
 
     useEffect(() => {
-        loadProducts(page).then((res) => {
+        setIsLoading(true)
+        console.log(filters)
+        loadProducts(filters).then((res) => {
             if (res) {
                 if (res.status === 200) {
                     setProductList(res.data.products)
@@ -31,19 +36,29 @@ export default function CustomerProduct() {
                 }
             }
         }).finally(() => { setIsLoading(false) })
-    }, [page])
+    }, [filters])
 
+    useEffect(() => {
+        setIsLoading(true)
+        getCategories().then((res) => {
+            if (res) {
+                if (res.status === 200) {
+                    setCategoryList(res.data)
+                }
+            }
+        }).finally(() => { setIsLoading(false) })
+    }, [])
 
     return (
         <>
             <Navbar />
             {isLoading ? <Loader /> : <></>}
             <div className='product-all-container'>
-                <ProductSearchBar />
-                <ProductCategories />
+                <ProductSearchBar filters={filters} setFilters={setFilters}/>
+                <ProductCategories filters={filters} setFilters={setFilters} categoryList={categoryList}/>
                 <div className='product-mega'>
-                    <ProductFilter />
-                    <ProductList productList={productList} maxItem={maxItem} page={page} setPage={setPage}/>
+                    <ProductFilter filters={filters} setFilters={setFilters}/>
+                    <ProductList productList={productList} maxItem={maxItem} filters={filters} setFilters={setFilters}/>
                 </div>
             </div>
         </>

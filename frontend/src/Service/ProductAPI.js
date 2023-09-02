@@ -1,8 +1,15 @@
 import { axiosSetting } from "../Context/constants"
 
-export async function getAllProducts(page){
+export async function getAllProducts(filters){
     try {
-        const data = await axiosSetting.get(`/product?page=${page}`)
+        const data = await axiosSetting.get(`/product?` +
+            `page=${filters.page}&` +
+            `search=${filters.search}&` +
+            `category=${filters.category}&` +
+            `minPrice=${filters.minPrice}&` +
+            `maxPrice=${filters.maxPrice}&` +
+            `minDate=${filters.minDate}&` +
+            `maxDate=${filters.maxDate}`)
         return data
     } catch (error) {
         console.log(error)

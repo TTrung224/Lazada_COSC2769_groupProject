@@ -21,7 +21,7 @@ function ProductCard({product}){
 }
 
 
-export default function ProductList( {productList, maxItem, page, setPage} ){
+export default function ProductList( {productList, maxItem, filters, setFilters} ){
     const maxItemsPerPage = 12
 
     return(
@@ -30,7 +30,7 @@ export default function ProductList( {productList, maxItem, page, setPage} ){
                 {productList.map(product => <ProductCard key={product._id} product={product} />)}
             </div>
 
-            <PaginationList totalItems={maxItem} maxItemsPerPage={maxItemsPerPage} page={page} setPage={setPage} />
+            <PaginationList totalItems={maxItem} maxItemsPerPage={maxItemsPerPage} filters={filters} setFilters={setFilters} />
         </div>
     )
 }

@@ -20,7 +20,7 @@ function AtributeFilter({atribute, onCheck}){
     )
 }
 
-export default function ProductFilter(){
+export default function ProductFilter({filters, setFilters}){
     const atributeList = [
         {
             name: "test1",
@@ -56,9 +56,17 @@ export default function ProductFilter(){
         <div className='product-filters'>
             <h5>Price</h5>
             <div className='price-filter'>
-                <input type="number" class="form-control" id="min-price-input" placeholder="Min"></input>
+                <input type="number" class="form-control" id="min-price-input" placeholder="Min" onChange={(e)=>setFilters({...filters, page: 1, minPrice: e.target.value})}></input>
                 <nav> - </nav>
-                <input type="number" class="form-control" id="min-price-input" placeholder="Max"></input>
+                <input type="number" class="form-control" id="min-price-input" placeholder="Max" onChange={(e)=>setFilters({...filters, page: 1, maxPrice: e.target.value})}></input>
+                <i class="bi bi-funnel-fill price-filter-icon"></i>
+            </div>
+            <hr />
+            <h5>Date Added</h5>
+            <div className='price-filter'>
+                <input type="date" class="form-control" id="min-price-input" placeholder="Min" onChange={(e)=>setFilters({...filters, page: 1, minDate: e.target.value})}></input>
+                <nav> - </nav>
+                <input type="date" class="form-control" id="min-price-input" placeholder="Max" onChange={(e)=>setFilters({...filters, page: 1, maxDate: e.target.value})}></input>
                 <i class="bi bi-funnel-fill price-filter-icon"></i>
             </div>
             <hr />

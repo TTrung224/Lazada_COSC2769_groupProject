@@ -7,14 +7,49 @@ class ProductController {
     // NO AUTH
     async getAllProducts(req, res) {
         try {
-            var limit = 12
+            const limit = 12
             var pageNo = 1
-            if(req.query.page){
-                pageNo = req.query.page
-            }
             var skip = (pageNo - 1) * (limit)
 
-            const products = await Product.find().skip(skip).limit(limit).populate('category')
+            // Query products
+            let query = {}
+            console.log('req')
+            console.log(req.query)
+            if(req.query?.page){
+                pageNo = req.query.page
+            }
+            if(req.query?.category !== "null"){
+                query.category = req.query.category
+            }
+            if(req.query?.search !== ""){
+                query.$or = [
+                    {name: new RegExp(req.query.search, 'gisu')},
+                    {description: new RegExp(req.query.search, 'gisu')}
+                ]
+            }
+            if(req.query?.minPrice !== "" && req.query.maxPrice !== ""){
+                query.price = { $gte: req.query.minPrice, $lte: req.query.maxPrice}
+            }else if (req.query?.minPrice !== ""){
+                query.price = { $gte: req.query.minPrice }
+            } else if(req.query?.maxPrice !== ""){
+                query.price = { $lte: req.query.maxPrice }
+            }
+            if(req.query?.minDate !== "" && req.query.maxDate !== ""){
+                query.createdAt = { $gte: req.query.minDate, $lte: req.query.maxDate}
+            }else if (req.query?.minDate !== ""){
+                query.createdAt = { $gte: req.query.minDate }
+            } else if(req.query?.minDate !== ""){
+                query.createdAt = { $lte: req.query.maxDate }
+            }
+            console.log('query')
+            console.log(query)
+            let products
+            if(Object.keys(query).length){
+                products = await Product.find(query).skip(skip).limit(limit).populate('category')
+            }else{
+                products = await Product.find().skip(skip).limit(limit).populate('category')
+            }
+
             const count = await Product.count()
             return res.status(200).send({products: products, count: count})
         } catch (error) {

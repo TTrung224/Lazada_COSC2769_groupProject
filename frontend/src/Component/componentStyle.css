@@ -165,14 +165,24 @@
 }
 
 .product-categories .category-group .category .card{
+    height: 60px;
     border-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.product-categories .category-group .category img{
+
+.product-categories .category-group .category .active{
+    border-style: solid;
+    border-width: 1px;
+}
+
+/* .product-categories .category-group .category img{
     width: 60px;
     margin-left: auto;
     margin-right: auto;
-}
+} */
 
 .product-categories .category-group .category a{
     text-decoration: none;
@@ -183,6 +193,7 @@
 .product-categories .category-group .category .category-name{
     text-align: center;
     width: 100px;
+    margin-bottom: 0;
 }
 
 .product-categories .carousel-arrow{
