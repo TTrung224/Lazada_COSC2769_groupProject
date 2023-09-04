@@ -47,6 +47,23 @@ export default function CustomerProduct() {
                 }
             }
         }).finally(() => { setIsLoading(false) })
+
+        const searchInput = document.getElementById("product-search-input");
+
+        let timeout = null;
+        const handleInputChange = (event) => {
+            clearTimeout(timeout);
+
+            timeout = setTimeout(async function(){
+                console.log(filters)
+                setFilters({...filters, page: 1, search: searchInput.value})
+                console.log(filters)
+            }, 300);
+        }
+        searchInput.addEventListener("keyup", handleInputChange)
+        return () => {
+            searchInput.removeEventListener('keyup', handleInputChange);
+        };
     }, [])
 
     return (
