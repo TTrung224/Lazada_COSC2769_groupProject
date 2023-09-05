@@ -7,13 +7,12 @@ import AdminSellerRequest from './Page/adminSellerRequest';
 import SellerOrder from './Page/sellerOrder';
 import SellerProduct from './Page/sellerProduct';
 import SellerStatistic from './Page/SellerStatisticPage';
-import CustomerProduct from './Page/customerProduct';
-import CustomerOrder from './Page/customerOrder';
-import CustomerCart from './Page/customerCart';
+import CustomerProduct from './Page/CustomerProduct';
+import CustomerOrder from './Page/CustomerOrder';
+import CustomerCart from './Page/CustomerCart';
 import Logout from './Component/Shared/logout';
 import AdminCategory, { loadCategories } from './Page/adminCategory';
 import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/adminCategoryForm';
-import { loadItems } from './Component/Customer/cart';
 import ProductPage from './Page/ProductPage';
 import ProductForm, { addProduct, editProduct } from './Component/Seller/ProductForm';
 
@@ -35,7 +34,6 @@ function App() {
     {
       path: "/cart",
       element: <CustomerCart />,
-      loader: loadItems
     },
     {
       path: "/login",

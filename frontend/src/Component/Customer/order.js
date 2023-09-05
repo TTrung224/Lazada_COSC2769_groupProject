@@ -1,19 +1,15 @@
 import React, { useState } from 'react';
 import '../componentStyle.css';
 import Loader from '../Shared/loader';
-import { getItems } from './cartItemsApi';
-import { useLoaderData } from 'react-router-dom';
 import OrderItem from './orderItem';
 
 
 export async function loadItems() {
-    const orderList = await getItems();
-
-    return orderList
+    return []
 }
 
 export default function Order() {
-    const orderList = useLoaderData()
+    const orderList = []
 
     const [isLoading, setIsLoading] = useState(false)
 

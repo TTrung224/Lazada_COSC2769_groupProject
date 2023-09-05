@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-
-const CountQuantity = ({ quantity, setQuantity, productId }) => {
+const CountQuantity = ({ quantity, setQuantity }) => {
 
     const changeQuant = (e) => {
         let newQuant = parseInt(e.target.value)
@@ -9,7 +7,6 @@ const CountQuantity = ({ quantity, setQuantity, productId }) => {
             newQuant = 1
         }
 
-        console.log(newQuant)
         setQuantity(newQuant)
     }
 
