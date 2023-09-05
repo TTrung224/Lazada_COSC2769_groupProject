@@ -9,7 +9,8 @@ export async function getAllProducts(filters){
             `minPrice=${filters.minPrice}&` +
             `maxPrice=${filters.maxPrice}&` +
             `minDate=${filters.minDate}&` +
-            `maxDate=${filters.maxDate}`)
+            `maxDate=${filters.maxDate}&` +
+            `attributes=${filters.attributes!=[] ? filters.attributes.join(",") : "" }`)
         return data
     } catch (error) {
         console.log(error)

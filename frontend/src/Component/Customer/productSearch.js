@@ -1,7 +1,7 @@
 import React from 'react';
 import '../componentStyle.css';
 
-export default function ProductSearchBar({filters, setFilters}){
+export default function ProductSearchBar(){
     return(
         <div className="search-div">
             <input class="product-search form-control" id="product-search-input" type="text" placeholder="Search" aria-label="default input example"></input>

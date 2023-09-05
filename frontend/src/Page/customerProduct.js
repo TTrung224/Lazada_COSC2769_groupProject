@@ -24,6 +24,7 @@ export default function CustomerProduct() {
 
     // const [page, setPage] = useState(1)
     const [filters, setFilters] = useState({page: 1, search: "", minPrice: "", maxPrice: "", minDate: "", maxDate: "", attributes: [], category: null})
+    const [attributeFilterList, setAtributeFilterList] = useState({})
 
     useEffect(() => {
         setIsLoading(true)
@@ -31,11 +32,56 @@ export default function CustomerProduct() {
         loadProducts(filters).then((res) => {
             if (res) {
                 if (res.status === 200) {
-                    setProductList(res.data.products)
-                    setMaxItem(res.data.count)
+                    setProductList(res.data?.products)
+                    setMaxItem(res.data?.count)
+                    setAtributeFilterList(res.data?.attributes)
                 }
             }
         }).finally(() => { setIsLoading(false) })
+
+        //Event timeout event listener for filtering text input
+        const searchInput = document.getElementById("product-search-input");
+        const minPriceInput = document.getElementById("min-price-input");
+        const maxPriceInput = document.getElementById("max-price-input");
+
+        let timeout1 = null;
+        const handleSearchChange = (event) => {
+            clearTimeout(timeout1);
+
+            timeout1 = setTimeout(async function(){
+                console.log(filters)
+                setFilters({...filters, page: 1, search: searchInput.value})
+                console.log(filters)
+            }, 300);
+        }
+        searchInput.addEventListener("keyup", handleSearchChange)
+
+        let timeout2 = null;
+        const handleMinPriceChange = (event) => {
+            clearTimeout(timeout2);
+
+            timeout2 = setTimeout(async function(){
+                setFilters({...filters, page: 1, minPrice: minPriceInput.value})
+            }, 300);
+        }
+        minPriceInput.addEventListener("keyup", handleMinPriceChange)
+        
+        let timeout3 = null;
+        const handleMaxPriceChange = (event) => {
+            clearTimeout(timeout3);
+
+            timeout3 = setTimeout(async function(){
+                setFilters({...filters, page: 1, maxPrice: maxPriceInput.value})
+            }, 300);
+        }
+        maxPriceInput.addEventListener("keyup", handleMaxPriceChange)
+
+
+        return () => {
+            searchInput.removeEventListener('keyup', handleSearchChange);
+            minPriceInput.removeEventListener('keyup', handleMinPriceChange);
+            maxPriceInput.removeEventListener('keyup', handleMaxPriceChange);
+        };
     }, [filters])
 
     useEffect(() => {
@@ -47,23 +93,6 @@ export default function CustomerProduct() {
                 }
             }
         }).finally(() => { setIsLoading(false) })
-
-        const searchInput = document.getElementById("product-search-input");
-
-        let timeout = null;
-        const handleInputChange = (event) => {
-            clearTimeout(timeout);
-
-            timeout = setTimeout(async function(){
-                console.log(filters)
-                setFilters({...filters, page: 1, search: searchInput.value})
-                console.log(filters)
-            }, 300);
-        }
-        searchInput.addEventListener("keyup", handleInputChange)
-        return () => {
-            searchInput.removeEventListener('keyup', handleInputChange);
-        };
     }, [])
 
     return (
@@ -71,10 +100,10 @@ export default function CustomerProduct() {
             <Navbar />
             {isLoading ? <Loader /> : <></>}
             <div className='product-all-container'>
-                <ProductSearchBar filters={filters} setFilters={setFilters}/>
+                <ProductSearchBar/>
                 <ProductCategories filters={filters} setFilters={setFilters} categoryList={categoryList}/>
                 <div className='product-mega'>
-                    <ProductFilter filters={filters} setFilters={setFilters}/>
+                    <ProductFilter filters={filters} setFilters={setFilters} attributeList={attributeFilterList}/>
                     <ProductList productList={productList} maxItem={maxItem} filters={filters} setFilters={setFilters}/>
                 </div>
             </div>

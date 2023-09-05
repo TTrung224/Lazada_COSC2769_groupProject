@@ -44,14 +44,30 @@ class ProductController {
             console.log('query')
             console.log(query)
             let products
+            let attributeList = {}
             if(Object.keys(query).length){
                 products = await Product.find(query).skip(skip).limit(limit).populate('category')
+
+                //Get and group products' attribute
+                products.forEach(item => {
+                    if(item?.attributes){
+                        item.attributes.forEach(attribute => {
+                            if(Object.keys(attributeList).includes(attribute?.attribute?.name)){
+                                attributeList[attribute?.attribute?.name].push(attribute?.value)
+                            }else{
+                                attributeList[attribute?.attribute?.name] = [attribute?.value]
+                            }
+                        })
+                    }
+                })
+                console.log("attributes")
+                console.log(attributeList)
             }else{
                 products = await Product.find().skip(skip).limit(limit).populate('category')
             }
 
             const count = await Product.count()
-            return res.status(200).send({products: products, count: count})
+            return res.status(200).send({products: products, count: count, attributes: attributeList})
         } catch (error) {
             console.log(error)
             return res.sendStatus(500)
