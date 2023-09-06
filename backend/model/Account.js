@@ -10,7 +10,8 @@ const accountSchema = new mongoose.Schema({
   sellerStatus: { type: String, enum: ['pending', 'accepted', 'rejected'] },
   cart: [{
     product: { type: mongoose.Schema.Types.ObjectId, ref: 'product' },
-    quantity: { type: Number }
+    quantity: { type: Number },
+    _id: false
   }]
 });
 module.exports = mongoose.model("account", accountSchema);

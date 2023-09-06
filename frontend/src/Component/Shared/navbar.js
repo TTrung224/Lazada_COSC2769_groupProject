@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from "../../Asset/webLogo.png";
-import { AuthContext } from '../../Context/loginSessionContext';
+import { AuthContext } from '../../Context/LoginSessionContext';
 import { handleAuth } from '../../Service/commonService';
 import { ADMIN, CUSTOMER, SELLER } from '../../constants';
 import '../componentStyle.css';
@@ -45,36 +45,36 @@ export default function Navbar() {
         ],
     }
 
+    const { authState: { isAuthenticated, user} } = useContext(AuthContext)
+
     const listHeader = {
         guest: [
             { name: "Login", link: "/login" },
             { name: "Signup", link: "/signup" },
         ],
         account: [
-            { name: "Account", link: "#" },
+            { name: user ? user.fullName : "Guest", link: "#" },
             { name: "Logout", link: "/logout" },
         ]
     }
-
-    const { authState: { isAuthenticated, user } } = useContext(AuthContext)
     const navigate = useNavigate()
     let navList = [];
     let headList = [];
     const userTypeUpper = (user?.type) ? user.type.toUpperCase() : null;
 
-    
     useEffect(() => {
         const valid = handleAuth(isAuthenticated, userTypeUpper);
         if (!valid) {
-            if (userTypeUpper === ADMIN){
-                navigate("/admin", {replace: true})
-            }else if (userTypeUpper === SELLER){
-                navigate("/seller", {replace: true})
-            }else {
-                navigate("/", {replace: true})
+            if (userTypeUpper === ADMIN) {
+                navigate("/admin", { replace: true })
+            } else if (userTypeUpper === SELLER) {
+                navigate("/seller", { replace: true })
+            } else {
+                navigate("/", { replace: true })
             }
         }
-    });
+        // eslint-disable-next-line
+    }, []);
 
     if (isAuthenticated && userTypeUpper === CUSTOMER) {
         navList = listNav.customer.map((item => <NavItem nav={item} key={item.name} />))

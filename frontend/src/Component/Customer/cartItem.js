@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import CountQuantity from './CountQuantity';
-import { backendUrl } from '../../Context/constants';
+import { backendUrl, numberFormat } from '../../Context/constants';
 // import DeleteProduct from './removeProduct';
 
 const CartItem = ({ item, deleteProduct, cart, setCart }) => {
@@ -42,7 +42,7 @@ const CartItem = ({ item, deleteProduct, cart, setCart }) => {
                 <CountQuantity quantity={quantity} setQuantity={setQuantity} ></CountQuantity>
             </div>
             <div className="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h6 className="mb-0">{product.price} VND</h6>
+                <h6 className="mb-0">{numberFormat(product.price)} VND</h6>
 
             </div>
 

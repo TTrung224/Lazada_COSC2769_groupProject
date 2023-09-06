@@ -4,7 +4,7 @@ import { backendUrl } from '../../Context/constants';
 import Loader from '../Shared/loader';
 import "../componentStyle.css"
 import { deleteProduct, getUserProducts } from '../../Service/ProductAPI';
-import { AuthContext } from '../../Context/loginSessionContext';
+import { AuthContext } from '../../Context/LoginSessionContext';
 import Modal from 'react-bootstrap/Modal';
 
 async function loadProducts(user) {
@@ -24,7 +24,6 @@ async function removeProduct(productId) {
 
 export default function SellerProductList() {
     const { authState: { user } } = useContext(AuthContext)
-    const isVerified = user.sellerStatus === "accepted"
     const [isLoading, setIsLoading] = useState(true)
     const [products, setProducts] = useState([])
     const [deleteModal, setDeleteModal] = useState({ show: false, productId: "" })
@@ -33,7 +32,8 @@ export default function SellerProductList() {
     const [maxPrice, setMaxPrice] = useState("")
     const [minDate, setMinDate] = useState("")
     const [maxDate, setMaxDate] = useState("")
-
+    const isVerified = user.sellerStatus === "accepted"
+    
     useEffect(() => {
         loadProducts(user).then(prod => {
             setProducts(prod)

@@ -1,13 +1,13 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Navbar from "../Component/Shared/navbar";
 import CountQuantity from "../Component/Customer/CountQuantity";
 import { useContext, useEffect, useState } from "react";
 import { getProduct } from "../Service/ProductAPI";
-import { backendUrl } from "../Context/constants";
+import { backendUrl, numberFormat } from "../Context/constants";
 import Loader from "../Component/Shared/loader";
-import Modal from 'react-bootstrap/Modal';
-import { AuthContext } from "../Context/loginSessionContext";
+import { AuthContext } from "../Context/LoginSessionContext";
 import { loadCartItems, updateCart } from "../Service/CartAPI";
+import StatusModal from "../Component/Shared/StatusModal";
 
 
 async function loadProduct(id) {
@@ -56,12 +56,10 @@ const ProductPage = () => {
     const { productId } = useParams()
     const [quantity, setQuantity] = useState(1)
     const [product, setProduct] = useState(null)
+    const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true)
     const [cartModal, setCartModal] = useState({ show: false, success: false })
 
-    function handleCloseModal() {
-        setCartModal({ show: false, success: cartModal.success })
-    }
 
     useEffect(() => {
         loadProduct(productId).then(res => {
@@ -88,7 +86,7 @@ const ProductPage = () => {
                             <h2>{product.name}</h2>
                             <hr />
 
-                            <h3 className="text-primary">{product.price} VND</h3>
+                            <h3 className="text-primary">{numberFormat(product.price)} VND</h3>
 
 
                             <div className="d-inline-flex mt-2">
@@ -103,7 +101,12 @@ const ProductPage = () => {
 
 
                             <div className="mt-3">
-                                <button type="button" className="btn btn-lg btn-primary me-3">Buy Now</button>
+                                <button type="button" className="btn btn-lg btn-primary me-3" onClick={() => {
+                                    handleAddToCart(authState.isAuthenticated, product, quantity).then(res => {
+                                        setCartModal({ show: true, success: res })
+                                        navigate("/cart")
+                                    })
+                                }}>Buy Now</button>
                                 <button type="button" className="btn btn-lg btn-outline-primary" onClick={() => {
                                     setIsLoading(true)
                                     handleAddToCart(authState.isAuthenticated, product, quantity).then(res => {
@@ -135,24 +138,7 @@ const ProductPage = () => {
                 </div> : <></>
             }
 
-            <Modal show={cartModal.show} onHide={handleCloseModal}>
-                <Modal.Header closeButton>
-                    {cartModal.success ?
-                        <Modal.Title>Success</Modal.Title> :
-                        <Modal.Title>Failed</Modal.Title>
-                    }
-                </Modal.Header>
-                <Modal.Body>
-                    {cartModal.success ?
-                        <p>Item added to your cart.</p> :
-                        <p>Failed to add to cart.</p>
-                    }
-                    
-                </Modal.Body>
-                <Modal.Footer>
-                    <button className="btn btn-primary" onClick={() => handleCloseModal()}>Close</button>
-                </Modal.Footer>
-            </Modal>
+            <StatusModal modal={cartModal} setModal={setCartModal} successMsg={"Item added to your cart."} failMsg={"Failed to add to cart."} />
         </>
     );
 }

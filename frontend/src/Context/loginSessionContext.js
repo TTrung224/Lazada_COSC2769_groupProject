@@ -1,29 +1,31 @@
-import {createContext, useEffect, useState} from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { axiosSetting } from './constants';
+import Loader from '../Component/Shared/loader';
 
 export const AuthContext = createContext();
 
 
 const noAuthenticatedState = {
     isAuthenticated: false,
-    user: null,
+    user: null
 }
 
-const AuthContextProvider = ({children}) => {
+const AuthContextProvider = ({ children }) => {
 
     // auth state
     const [authState, setAuth] = useState(noAuthenticatedState)
+    const [loading, setLoading] = useState(true)
 
-    useEffect(() =>  {
-        loadUser();
-    },[])
+    useEffect(() => {
+        loadUser().finally(() => setLoading(false));
+    }, [])
 
     // const checkAuth = () => {
     //     const authObject = JSON.parse(localStorage.getItem(authenticationStorageKey))
     //     if(authObject){
     //         authObject.expired_time = Date.parse(authObject?.expired_time)
     //     }
-        
+
     //     if(authObject && authObject.expired_time > new Date()){
     //         return authObject
     //     } else if(authObject && authObject.expired_time <= new Date()){
@@ -37,19 +39,19 @@ const AuthContextProvider = ({children}) => {
     const loginFunc = async (userForm) => {
         try {
             const res = await axiosSetting.post("account/login", userForm)
-            if(res.status == 200){
+            if (res.status === 200) {
                 const authObject = {
-                    isAuthenticated: true, 
+                    isAuthenticated: true,
                     user: res.data
                 }
                 setAuth(authObject)
-                return {success: true, data: res.data}
+                return { success: true, data: res.data }
             }
-            return {success: false, data: res.data}
+            return { success: false, data: res.data }
         } catch (error) {
             console.log(error)
-            if (error.response.data) return {success: false, data: error.response.data}
-            else return {status: false, data: error.message}
+            if (error.response.data) return { success: false, data: error.response.data }
+            else return { status: false, data: error.message }
         }
     }
 
@@ -59,10 +61,10 @@ const AuthContextProvider = ({children}) => {
             if (res.status === 200) {
                 setAuth(noAuthenticatedState)
             }
-            return {success: true, message: "you are logged out"}
+            return { success: true, message: "you are logged out" }
         } catch (error) {
             if (error.response.data) return error.response.data
-            else return {status: false, message: error.message}
+            else return { status: false, message: error.message }
         }
     }
 
@@ -83,14 +85,15 @@ const AuthContextProvider = ({children}) => {
         }
     }
 
-    const authContextData = { 
+    const authContextData = {
         authState, loginFunc, logoutFunc, loadUser
     };
+
     
-    return (
+    return loading? (<Loader></Loader>) : (
         <AuthContext.Provider value={authContextData}>
             {children}
-        </AuthContext.Provider>    
+        </AuthContext.Provider>
     )
 }
 

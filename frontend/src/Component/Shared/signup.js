@@ -1,8 +1,6 @@
-import React, {useContext, useEffect,useState} from 'react';
-import { Link, useNavigate, Form } from 'react-router-dom';
-import {AuthContext} from '../../Context/loginSessionContext'
+import React, {useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../componentStyle.css';
-import { handleAuth } from '../../Service/commonService';
 import { axiosSetting } from '../../Context/constants';
 
 export default function Signup(){
@@ -61,7 +59,7 @@ export default function Signup(){
                         <input type='password' id='password' placeholder='Enter password' onChange={(e)=>setFormData({...formData, pwd: e.target.value})} required />
                         <label htmlFor="re-pwd">Confirm password</label>
                         <input type='password' id='re-pwd' placeholder='ReEnter your password' onChange={(e)=>setFormData({...formData, rePwd: e.target.value})} required />
-                        {error!="" ? <p className='error-message'>{error}</p> : ""}
+                        {error!=="" ? <p className='error-message'>{error}</p> : ""}
                         <button type='submit'>Create account</button>
                     </div>
                 
