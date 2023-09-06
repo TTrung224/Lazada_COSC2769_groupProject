@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../componentStyle.css';
 import Loader from '../Shared/loader';
 import OrderItem from './OrderItem'
-import { getCustomerOrder } from '../../Service/OrderAPI';
+import { getCustomerOrder, updateStatusOrder } from '../../Service/OrderAPI';
 import { numberFormat } from '../../Context/constants';
 
 
@@ -11,18 +11,37 @@ export async function loadItems() {
     return res
 }
 
+export async function patchOrderStatus(orderId, productId, status) {
+    const res = await updateStatusOrder(orderId, productId, status)
+    return res
+}
+
 export default function Order() {
     const [orders, setOrders] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
-    function handleChangeStatus(id, status) {
-        const newOrders = orders.map((o) => {
-            if (o.order.product._id === id) {
-                o.order.status = status
+    function handleChangeStatus(orderId, productId, status) {
+        setIsLoading(true)
+        patchOrderStatus(orderId, productId, status).then(res => {
+            if (res && res.status === 200) {
+                const newOrders = orders.map((o) => {
+                    if (o._id === orderId) {
+                        const order = o.order
+                        const newOrder = order.map(p => {
+                            if (p.product._id === productId) {
+                                p.status = status
+                            }
+                            return p
+                        })
+                        o.order = newOrder
+                    }
+                    return o
+                })
+                setOrders(newOrders)
+            }else {
+                alert("Error changing status")
             }
-            return o
-        })
-        setOrders(newOrders)
+        }).finally(setIsLoading(false))
     }
 
 
@@ -44,9 +63,9 @@ export default function Order() {
                     {orders.map(ord => {
                         let totalPrice = 0
                         return (
-                            <div className="card my-3">
+                            <div className="card my-3" key={ord._id}>
                                 <div className="card-body">
-                                    <div className="table-responsive" key={ord._id}>
+                                    <div className="table-responsive" >
                                         <h3>Order {ord._id.slice(-10)}</h3>
                                         <table className="table text-center">
                                             <thead>
@@ -56,13 +75,13 @@ export default function Order() {
                                                     <th>Price</th>
                                                     <th>Quantity</th>
                                                     <th>Seller</th>
-                                                    <th></th>
+                                                    <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {ord.order.map(item => {
                                                     totalPrice += item.product.price * item.quantity
-                                                    return <OrderItem key={item.product._id} item={item} handleChangeStatus={handleChangeStatus} />
+                                                    return <OrderItem key={item.product._id} orderId={ord._id} item={item} handleChangeStatus={handleChangeStatus} />
                                                 })}
                                             </tbody>
                                         </table>

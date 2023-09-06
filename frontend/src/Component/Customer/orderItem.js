@@ -1,22 +1,19 @@
 import { backendUrl, numberFormat } from "../../Context/constants";
 
-const OrderItem = ({ item }) => {
+const OrderItem = ({ orderId, item, handleChangeStatus }) => {
     const product = item.product
 
 
     const statusButtons = () => {
-        if (item.status === "New") {
-            return "Pending..."
-        }
         if (item.status === "Shipped") {
             return (
                 <>
-                    <button className="btn btn-success btn-sm d-block w-100 my-1">Accept</button>
-                    <button className="btn btn-danger btn-sm d-block w-100 my-1">Reject</button>
+                    <button className="btn btn-success btn-sm d-block w-100 my-1" onClick={() => handleChangeStatus(orderId, product._id, "Accept")}>Accept</button>
+                    <button className="btn btn-danger btn-sm d-block w-100 my-1" onClick={() => handleChangeStatus(orderId, product._id, "Reject")}>Reject</button>
                 </>
             )
         }
-        return "Complete"
+        return item.status
     }
     return (
         <tr className="align-middle">

@@ -9,5 +9,6 @@ router.use(userAuth)
 
 router.get("/", OrderController.getCustomerOrder)
 router.post("/create", OrderController.createOrder)
+router.patch("/:orderId/:productId", OrderController.changeOrderStatus)
 
 module.exports = router;

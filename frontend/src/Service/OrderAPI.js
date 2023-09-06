@@ -19,3 +19,13 @@ export async function createOrder(cart){
         return null
     }
 }
+
+export async function updateStatusOrder(orderId, productId, status){
+    try {
+        const res = await axiosSetting.patch(`order/${orderId}/${productId}?status=${status}`)
+        return res
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
