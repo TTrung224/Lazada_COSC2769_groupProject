@@ -1,19 +1,14 @@
 import React, { useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../Context/loginSessionContext';
+import { AuthContext } from '../../Context/LoginSessionContext';
 import '../componentStyle.css';
 import Navbar from './navbar';
 
 export default function Logout(){
     const { logoutFunc } = useContext(AuthContext)
-    const navigate = useNavigate()
-
-    const delay = ms => new Promise(
-        resolve => setTimeout(resolve, ms)
-    );
 
     useEffect(() => {
         logout();
+        // eslint-disable-next-line
     }, []);
 
     async function logout() {

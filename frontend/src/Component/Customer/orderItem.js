@@ -1,35 +1,37 @@
-const orderItem = ({product}) => {
-    return ( 
-    <div class = "col">
-        <div class="row mb-4 d-flex justify-content-between align-items-center">
-            <div class="col-md-2 col-lg-2 col-xl-2">
-            <img
-                src={product.img} alt="product img"
-                class="img-fluid rounded-3" style ={{width:"100px"}}/>
-            </div>
-            
-            <div class="col-md-3 col-lg-3 col-xl-3">
-            <h6 class="text-black mb-0">{product.name}</h6>
-            </div>
-            
-            <input id="quantity" min="1" name="quantity" defaultValue= {product.quantity} type="number"
-                class="form-control form-control-sm" />
+import { backendUrl, numberFormat } from "../../Context/constants";
+
+const OrderItem = ({ orderId, item, handleChangeStatus }) => {
+    const product = item.product
 
 
-            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
-                <h6 class="mb-0">${product.price}</h6>
-            </div>
-
-            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
-                <button type ="button" class = "btn btn-success">Accept</button>
-                <button type ="button" class = "btn btn-danger">Deny</button>
-            </div>
-        </div>
-    </div>
-     );
+    const statusButtons = () => {
+        if (item.status === "Shipped") {
+            return (
+                <>
+                    <button className="btn btn-success btn-sm d-block w-100 my-1" onClick={() => handleChangeStatus(orderId, product._id, "Accept")}>Accept</button>
+                    <button className="btn btn-danger btn-sm d-block w-100 my-1" onClick={() => handleChangeStatus(orderId, product._id, "Reject")}>Reject</button>
+                </>
+            )
+        }
+        return item.status
+    }
+    return (
+        <tr className="align-middle">
+            <td style={{width: "150px"}}>
+                <img
+                    src={backendUrl + `/image/${product.imgName}`} alt="product"
+                    className="img-fluid" style={{ maxHeight: "100px" }} />
+            </td>
+            <td>{product.name}</td>
+            <td>{numberFormat(product.price)} VND</td>
+            <td>{item.quantity}</td>
+            <td>{product.seller.fullName}</td>
+            <td><b>{statusButtons()}</b></td>
+        </tr>
+    );
 
 }
 
 
- 
-export default orderItem;
+
+export default OrderItem;

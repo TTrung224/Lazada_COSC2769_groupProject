@@ -4,7 +4,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { getCategories } from '../../Service/CategoryAPI';
 import Loader from '../Shared/loader';
 import { createProduct, getProduct, saveProduct } from '../../Service/ProductAPI';
-import { AuthContext } from '../../Context/loginSessionContext';
+import { AuthContext } from '../../Context/LoginSessionContext';
 
 async function loadCategories() {
     try {

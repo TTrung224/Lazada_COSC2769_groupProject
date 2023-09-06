@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import Loader from '../Shared/loader';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import '../componentStyle.css';
-import PaginationList, { paginateArray } from '../Shared/Pagination';
-import { backendUrl } from '../../Context/constants';
+import PaginationList from '../Shared/Pagination';
+import { backendUrl, numberFormat } from '../../Context/constants';
 
 function ProductCard({product}){
     return(
@@ -12,7 +11,7 @@ function ProductCard({product}){
                 <img src={backendUrl + `/image/${product.imgName}`} className="card-img-top" alt="product "/>
                 <div className="card-body">
                     <h5>{product.name}</h5>
-                    <p className="card-text price">{product.price} VND</p>
+                    <p className="card-text price">{numberFormat(product.price)} VND</p>
                     <p className="card-text"><b>{product.category.name}</b></p>
                 </div>
             </div>
