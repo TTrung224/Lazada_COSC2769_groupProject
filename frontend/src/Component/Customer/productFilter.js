@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import '../componentStyle.css';
 
-function AtributeFilter({atribute, attributeName, onCheck}){
+function AtributeFilter({atribute, attributeName, onCheck, selectedValues}){
     return(
         <div className='attribute-filters'>
             <h5>{attributeName}</h5>
             <div className='attribute-filter'>
                 {atribute.map(item => {
                     return (
-                    <>
-                        <input class="attibute-checkbox" type="checkbox" onClick={()=>onCheck(attributeName, item)}></input>
+                    <div key={item}>
+                        <input class="attibute-checkbox" type="checkbox" onClick={()=>onCheck(attributeName, item)} checked={selectedValues.includes(item)}></input>
                         <label>{item}</label><br />
-                    </>
+                    </div>
                     )
                 })}
             </div>
@@ -23,8 +23,6 @@ function AtributeFilter({atribute, attributeName, onCheck}){
 export default function ProductFilter({filters, setFilters, attributeList}){
     const attributeNameList = Object.keys(attributeList)
 
-    const [attributeFilterList, setAttributeFilterList] = useState([])
-
     function onCheck(attributeName, value){
         // let existed = false
         // attributeFilterList.forEach(each =>{
@@ -32,20 +30,16 @@ export default function ProductFilter({filters, setFilters, attributeList}){
             //     existed = true
             // }
         // })
-        if(attributeFilterList.includes(value)){
+        if(filters.attributes.includes(value)){
             // setAttributeFilterList(attributeFilterList.filter(each => each.value !== value || (each.value === value && each.name !== attributeName)))
-            setAttributeFilterList(attributeFilterList.filter(each => each !== value))
+            const attributes = filters.attributes.filter(each => each !== value)
+            setFilters({...filters, attributes: attributes})
         }else{            
             // setAtributeFilterList([...atributeFilterList, {name: atributeName, value: value}])
-            setAttributeFilterList([...attributeFilterList, value])
+            const attributes = [...filters.attributes, value]
+            setFilters({...filters, attributes: attributes})
         }
     }
-
-    useEffect(()=>{
-        console.log(attributeFilterList)
-        setFilters({...filters, attributes: attributeFilterList})
-
-    }, [attributeFilterList])
 
     return(
         <div className='product-filters'>
@@ -66,7 +60,7 @@ export default function ProductFilter({filters, setFilters, attributeList}){
             </div>
             <hr />
             {attributeNameList.map(attributeName => {
-                return <AtributeFilter atribute={attributeList[attributeName]} attributeName={attributeName} onCheck={onCheck}/>
+                return <AtributeFilter key={attributeName} atribute={attributeList[attributeName]} attributeName={attributeName} onCheck={onCheck} selectedValues={filters.attributes}/>
             })}
         </div>
     )

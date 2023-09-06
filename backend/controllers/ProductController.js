@@ -15,9 +15,10 @@ class ProductController {
             let query = {}
             console.log('req')
             console.log(req.query)
-            if(req.query?.page){
-                pageNo = req.query.page
-            }
+            console.log()
+
+            let attributeList = {}
+
             if(req.query?.category !== "null"){
                 query.category = req.query.category
             }
@@ -27,6 +28,36 @@ class ProductController {
                     {description: new RegExp(req.query.search, 'gisu')}
                 ]
             }
+
+            if(Object.keys(query).length){
+                const tempProducts = await Product.find(query).skip(skip).limit(limit).populate('category')
+
+                //Get and group products' attribute
+                tempProducts.forEach(item => {
+                    if(item?.attributes){
+                        item.attributes.forEach(attribute => {
+                            if(Object.keys(attributeList).includes(attribute?.attribute?.name)){
+                                if(!attributeList[attribute?.attribute?.name].includes(attribute?.value)){
+                                    attributeList[attribute?.attribute?.name].push(attribute?.value)
+                                }
+                            }else{
+                                attributeList[attribute?.attribute?.name] = [attribute?.value]
+                            }
+                        })
+                    }
+                })
+                console.log("attributes")
+                console.log(attributeList)
+                console.log()
+            }
+
+            if(req.query?.page){
+                pageNo = req.query.page
+            }
+            if(req.query?.attributes !== ""){
+                query["attributes.value"] = { $in: req.query?.attributes.split(",")}
+            }
+
             if(req.query?.minPrice !== "" && req.query.maxPrice !== ""){
                 query.price = { $gte: req.query.minPrice, $lte: req.query.maxPrice}
             }else if (req.query?.minPrice !== ""){
@@ -41,27 +72,13 @@ class ProductController {
             } else if(req.query?.minDate !== ""){
                 query.createdAt = { $lte: req.query.maxDate }
             }
+
             console.log('query')
             console.log(query)
+            console.log()
             let products
-            let attributeList = {}
             if(Object.keys(query).length){
                 products = await Product.find(query).skip(skip).limit(limit).populate('category')
-
-                //Get and group products' attribute
-                products.forEach(item => {
-                    if(item?.attributes){
-                        item.attributes.forEach(attribute => {
-                            if(Object.keys(attributeList).includes(attribute?.attribute?.name)){
-                                attributeList[attribute?.attribute?.name].push(attribute?.value)
-                            }else{
-                                attributeList[attribute?.attribute?.name] = [attribute?.value]
-                            }
-                        })
-                    }
-                })
-                console.log("attributes")
-                console.log(attributeList)
             }else{
                 products = await Product.find().skip(skip).limit(limit).populate('category')
             }

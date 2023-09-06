@@ -15,6 +15,11 @@ async function loadProducts(filters) {
     return res
 }
 
+// function resetAttributeList(filterAttributes, existedAttributes){
+//     filterAttributes = filterAttributes.filter(item => existedAttributes.includes(item))
+//     return filterAttributes
+// }
+
 
 export default function CustomerProduct() {
     const [isLoading, setIsLoading] = useState(true)
@@ -49,9 +54,8 @@ export default function CustomerProduct() {
             clearTimeout(timeout1);
 
             timeout1 = setTimeout(async function(){
-                console.log(filters)
-                setFilters({...filters, page: 1, search: searchInput.value})
-                console.log(filters)
+                // resetAttributeList(filters.attributes, )
+                setFilters({...filters, page: 1, search: searchInput.value, attributes: []})
             }, 300);
         }
         searchInput.addEventListener("keyup", handleSearchChange)
