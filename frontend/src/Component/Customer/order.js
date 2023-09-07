@@ -60,7 +60,7 @@ export default function Order() {
                 <div class="card-body">
                     <h2>My Orders</h2>
                     <hr className='mb-5'></hr>
-                    {orders.map(ord => {
+                    {orders.reverse().map(ord => {
                         let totalPrice = 0
                         return (
                             <div className="card my-3" key={ord._id}>
@@ -81,7 +81,7 @@ export default function Order() {
                                             <tbody>
                                                 {ord.order.map(item => {
                                                     totalPrice += item.product.price * item.quantity
-                                                    return <OrderItem key={item.product._id} orderId={ord._id} item={item} handleChangeStatus={handleChangeStatus} />
+                                                    return <OrderItem key={item.product._id} isSeller={false} orderId={ord._id} item={item} handleChangeStatus={handleChangeStatus} />
                                                 })}
                                             </tbody>
                                         </table>

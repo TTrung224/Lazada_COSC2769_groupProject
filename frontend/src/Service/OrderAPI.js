@@ -10,6 +10,16 @@ export async function getCustomerOrder(){
     }
 }
 
+export async function getSellerOrder() {
+    try {
+        const res = await axiosSetting.get("/order/seller")
+        return res
+    } catch (error) {
+        console.log(error)
+        return null
+    }
+}
+
 export async function createOrder(cart){
     try {
         const res = await axiosSetting.post("order/create", cart)

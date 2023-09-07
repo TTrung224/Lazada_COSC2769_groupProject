@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose")
 const Order = require("../model/Order")
 
 class OrderController {
@@ -33,6 +34,37 @@ class OrderController {
         }
     }
 
+    async getSellerOrder(req, res) {
+        try {
+            const user = req.user
+            // const data = await Order.find({"order.product.seller": user.userId}).populate("customer", "fullName")
+            const selectedSellers = await Order.aggregate([
+                {
+                    $unwind: "$order"
+                },
+                {
+                    $match: { "order.product.seller": mongoose.Types.ObjectId(user.userId) }
+                },
+                {
+                    $group: {
+                        _id: "$_id",
+                        customer: {$first : "$customer"},
+                        order: { $push: { product: "$order.product", quantity: "$order.quantity", status: "$order.status" } },
+                        createdAt: {$first: "$createdAt"} ,
+                        updatedAt: {$first: "$updatedAt"}
+                    }
+                }
+            ])
+
+            const mappedData = selectedSellers.map(o => new Order(o))
+            const data = await Order.populate(mappedData, {path: "customer", select: "fullName"})
+            return res.status(200).send(data)
+        } catch (error) {
+            console.log(error)
+            return res.status(500).send(error.message)
+        }
+    }
+
     async changeOrderStatus(req, res) {
         try {
             const orderId = req.params.orderId
@@ -49,7 +81,7 @@ class OrderController {
 
             }
             const update = {
-                $set: {"order.$.status" : status}
+                $set: { "order.$.status": status }
             }
 
             await Order.findOneAndUpdate(filter, update)

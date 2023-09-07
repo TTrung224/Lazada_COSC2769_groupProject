@@ -1,90 +1,88 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { getSellerOrder } from '../../Service/OrderAPI';
+import Loader from '../Shared/loader';
+import OrderItem from '../Customer/OrderItem';
+import { patchOrderStatus } from '../Customer/Order';
+
+async function loadOrders() {
+    const res = await getSellerOrder()
+    return res
+}
 
 export default function OrderList() {
+    const [isLoading, setIsLoading] = useState(true)
+    const [orders, setOrders] = useState([])
 
-
-    var productList = [
-        { id: 1, name: "coffee", img: "https://tse4.mm.bing.net/th?id=OIP.YwA6xGkFItqFcdN8eHm-aAAAAA&pid=Api&P=0&h=180", quantity: 3, status: "Pending" },
-        { id: 2, name: "coffee", img: "https://tse4.mm.bing.net/th?id=OIP.YwA6xGkFItqFcdN8eHm-aAAAAA&pid=Api&P=0&h=180", quantity: 2, status: "delivered" },
-        { id: 3, name: "coffee", img: "https://tse4.mm.bing.net/th?id=OIP.YwA6xGkFItqFcdN8eHm-aAAAAA&pid=Api&P=0&h=180", quantity: 1, status: "canceled" }
-    ]
-    const [products, setProduct] = useState(productList)
-
-    var orderList = [
-        { id: "1", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "2", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "3", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "4", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "5", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "6", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "7", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "8", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "9", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-        { id: "10", date: "Octorber 18 2023", phone: 123, cusName: "Khoi", cusAddress: "HCM D4", productList: products },
-    ]
-
-
-
-
-    const handleCancel = (id, product) => {
-        if (product.status !== "delivered") {
-            setProduct(products => products.filter(product => product.id !== id))
-            alert("Product id: " + id + " canceled")
-        } else {
-            alert("product already delivered, cannot cancel")
-        }
-
-    }
-    return (
-        <div className="seller-order-container">
-            <div className="seller-order-list">
-                <div className="seller-header-bar">
-                    <h3>Order management</h3>
-                </div>
-                {orderList.map(order => {
-                    return (
-                        <div key={order.id} className='order-product-item'>
-                            <div className="order-item">
-                                <div className="order-item-left">
-                                    <p>Order ID: <b>{order.id}</b></p>
-                                    <p>Create date: <b>{order.date}</b></p>
-
-                                </div>
-                                <div className="order-item-middle">
-                                    <p>Customer name: <b>{order.cusName}</b></p>
-                                    <p>Customer address: <b>{order.cusAddress}</b></p>
-                                </div>
-                                <div className="order-item-right">
-                                    <p>Customer phone number: <b>{order.phone}</b></p>
-                                    
-                                </div>
-
-                            </div>
-                            {order.productList.map(product => {
-                                return (
-                                    <div className='order-products'>
-                                        <div className='order-product-left'>
-                                            
-                                            <img src={product.img} className="order-img" alt='image product'/>
-                                        </div>
-                                        <div className='order-item-middle'>
-                                            <p>Product name: <b>{product.name}</b></p>
-                                            <p>Quantity: <b>{product.quantity}</b></p>
-                                            <p>Status: <b>{product.status}</b></p>
-                                        </div>
-                                        <div className="order-item-button">
-                                            <button className="order-item-shipped">shipped</button>
-                                            {product.status ==="Pending"? <button className="order-item-cancel" onClick={() => handleCancel(product.id, product)}>cancel</button>:""}
-                                        </div>
-                                    </div>
-                                )
+    function handleChangeStatus(orderId, productId, status) {
+        setIsLoading(true)
+        patchOrderStatus(orderId, productId, status).then(res => {
+            if (res && res.status === 200) {
+                const newOrders = orders.map((o) => {
+                    if (o._id === orderId) {
+                        const order = o.order
+                        const newOrder = order.map(p => {
+                            if (p.product._id === productId) {
+                                p.status = status
                             }
-                            )}
+                            return p
+                        })
+                        o.order = newOrder
+                    }
+                    return o
+                })
+                setOrders(newOrders)
+            } else {
+                alert("Error changing status")
+            }
+        }).finally(setIsLoading(false))
+    }
 
-                        </div>
+    useEffect(() => {
+        loadOrders().then(res => {
+            if (res && res.status === 200) {
+                setOrders(res.data)
+            }
+        }).finally(setIsLoading(false))
+    }, [])
 
-                    )
-                })}
+
+    return (
+        <div className="container py-5">
+            {isLoading ? <Loader /> : <></>}
+            <div className="card shadow">
+                <div className="card-body">
+                    <h2>Order Management</h2>
+                    <hr className='mb-5'></hr>
+
+                    {orders.reverse().map(ord => {
+                        return (
+                            <div className="card my-3" key={ord._id}>
+                                <div className="card-body">
+                                    <div className="table-responsive" >
+                                        <h3>Order {ord._id.slice(-10)}</h3>
+                                        <h5>Customer: {ord.customer.fullName}</h5>
+                                        <table className="table text-center">
+                                            <thead>
+                                                <tr>
+                                                    <th>Image</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {ord.order.map(item => {
+                                                    return <OrderItem key={item.product._id} isSeller={true} orderId={ord._id} item={item} handleChangeStatus={handleChangeStatus} />
+                                                })}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
 
             </div>
         </div>

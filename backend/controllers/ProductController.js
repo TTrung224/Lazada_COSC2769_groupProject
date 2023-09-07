@@ -13,9 +13,6 @@ class ProductController {
 
             // Query products
             let query = {}
-            console.log('req')
-            console.log(req.query)
-            console.log()
 
             let attributeList = {}
 
@@ -46,9 +43,6 @@ class ProductController {
                         })
                     }
                 })
-                console.log("attributes")
-                console.log(attributeList)
-                console.log()
             }
 
             if(req.query?.page){
@@ -73,9 +67,6 @@ class ProductController {
                 query.createdAt = { $lte: req.query.maxDate }
             }
 
-            console.log('query')
-            console.log(query)
-            console.log()
             let products
             if(Object.keys(query).length){
                 products = await Product.find(query).skip(skip).limit(limit).populate('category')

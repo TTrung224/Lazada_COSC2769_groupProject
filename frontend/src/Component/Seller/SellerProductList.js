@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
-import { backendUrl } from '../../Context/constants';
+import { backendUrl, numberFormat } from '../../Context/constants';
 import Loader from '../Shared/loader';
 import "../componentStyle.css"
 import { deleteProduct, getUserProducts } from '../../Service/ProductAPI';
@@ -187,7 +187,7 @@ export default function SellerProductList() {
 
                                     <div className="col-lg-6 text-lg-start text-center  my-auto">
                                         <h2 ><b>{p.name}</b></h2>
-                                        <h4><b>{p.price} VND</b></h4>
+                                        <h4><b>{numberFormat(p.price)} VND</b></h4>
                                         <p className='fs-6 mb-0'>Category: <b>{p.category.name}</b></p>
                                         <p className='fs-6 mb-2'>Added Date: <b>{createdDate.toString()}</b></p>
                                     </div>

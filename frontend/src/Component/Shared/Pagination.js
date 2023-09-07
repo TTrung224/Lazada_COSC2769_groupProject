@@ -1,10 +1,6 @@
-import { useNavigate } from "react-router-dom"
-
-
 const PaginationList = ({ totalItems, maxItemsPerPage, filters, setFilters}) => {
 
     const page = filters.page
-    const navigate = useNavigate()
     const totalPage = Math.ceil(totalItems / maxItemsPerPage)
     const pagingList = generatePagination(totalPage)
     const onChangePage = (newPage) => {

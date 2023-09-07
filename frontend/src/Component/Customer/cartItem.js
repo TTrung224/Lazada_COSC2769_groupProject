@@ -15,7 +15,7 @@ const CartItem = ({ item, deleteProduct, cart, setCart }) => {
             firstRender.current = false
             return
         }
-        console.log("is called")
+        
         const newCart = cart.map(i => {
             if(i.product._id === product._id){
                 i.quantity = quantity

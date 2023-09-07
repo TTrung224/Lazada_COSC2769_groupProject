@@ -1,7 +1,7 @@
 import AdminSellerTable from '../Component/Admin/AdminSellerTable.js';
 import { useEffect, useState } from 'react';
-import Navbar from '../Component/Shared/navbar';
-import { getSellers, saveSeller } from '../Service/AdminAPI';
+import Navbar from '../Component/Shared/navbar.js';
+import { getSellers, saveSeller } from '../Service/AdminAPI.js';
 import Loader from '../Component/Shared/loader.js';
 
 
@@ -14,6 +14,7 @@ export default function AdminSellerRequest() {
         getSellers().then(data => {
             setSellers(data) 
         }).finally(() => {setIsLoading(false); console.log(sellers)})
+        // eslint-disable-next-line
     }, [])
 
     async function handleChangeStatus(id, status){

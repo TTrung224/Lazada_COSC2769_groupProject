@@ -113,8 +113,8 @@ export default function Cart() {
                                         </div>
 
                                         <div className="d-flex justify-content-between">
-                                            <p>Total</p>
-                                            <p>{numberFormat (cart.reduce((acc, next) => acc += next.product.price * next.quantity, 0))} VND</p>
+                                            <p><b>Total</b></p>
+                                            <p><b>{numberFormat (cart.reduce((acc, next) => acc += next.product.price * next.quantity, 0))} VND</b></p>
                                         </div>
 
                                         <div className="d-flex justify-content-between">

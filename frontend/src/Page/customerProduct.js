@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import ProductCategories from '../Component/Customer/productCategories';
-import ProductFilter from '../Component/Customer/productFilter';
-import ProductList from '../Component/Customer/productList';
-import ProductSearchBar from '../Component/Customer/productSearch';
+import ProductCategories from '../Component/Customer/ProductCategories';
+import ProductFilter from '../Component/Customer/ProductFilter';
+import ProductList from '../Component/Customer/ProductList';
+import ProductSearchBar from '../Component/Customer/ProductSearch';
 import Navbar from '../Component/Shared/navbar';
 import './pageStyle.css';
 import { getAllProducts } from '../Service/ProductAPI'
@@ -33,7 +33,6 @@ export default function CustomerProduct() {
 
     useEffect(() => {
         setIsLoading(true)
-        console.log(filters)
         loadProducts(filters).then((res) => {
             if (res) {
                 if (res.status === 200) {

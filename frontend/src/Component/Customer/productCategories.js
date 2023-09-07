@@ -1,62 +1,61 @@
-import React, { useEffect } from 'react';
-import {Link, Navigate} from 'react-router-dom'
-import categoryTest from "../../Asset/categoryTest.png";
+import React from 'react';
+import { Link } from 'react-router-dom'
 import '../componentStyle.css';
 
-function Category({category, filters, setFilters}){
-    function chooseCategory(id){
-        if(filters.category && filters.category == id){
-            setFilters({...filters, page: 1, category: null, attributes: []})
+function Category({ category, filters, setFilters }) {
+    function chooseCategory(id) {
+        if (filters.category && filters.category === id) {
+            setFilters({ ...filters, page: 1, category: null, attributes: [] })
         } else {
-            setFilters({...filters, page: 1, category: id, attributes: []})
+            setFilters({ ...filters, page: 1, category: id, attributes: [] })
         }
         return
     }
-    if(filters.category && filters.category == category._id){
+    if (filters.category && filters.category === category._id) {
         return (
             <div className='category card'>
-            <Link onClick={() => chooseCategory(category._id)}>
-                <div className="card active">
-                    <p className="category-name">{category.name}</p>
-                </div>
-            </Link>
-        </div> 
+                <Link onClick={() => chooseCategory(category._id)}>
+                    <div className="card active">
+                        <p className="category-name">{category.name}</p>
+                    </div>
+                </Link>
+            </div>
         )
     }
-    return(
+    return (
         <div className='category card'>
             <Link onClick={() => chooseCategory(category._id)}>
                 <div className="card">
                     <p className="category-name">{category.name}</p>
                 </div>
             </Link>
-        </div> 
+        </div>
     )
 }
 
-function CategoryGroup({categoryList, filters, setFilters}){
-    return(
+function CategoryGroup({ categoryList, filters, setFilters }) {
+    return (
         <div className='category-group row justify-content-center'>
-            {categoryList.map(item => <Category category={item} filters={filters} setFilters={setFilters}/>)}
-        </div> 
+            {categoryList.map(item => <Category category={item} filters={filters} setFilters={setFilters} />)}
+        </div>
     )
 }
 
-export default function ProductCategories({categoryList, filters, setFilters}){
+export default function ProductCategories({ categoryList, filters, setFilters }) {
     let categorySliceList = []
     const numberPerSlice = 7;
-    const numberOfSlice = Math.ceil( categoryList.length / numberPerSlice );
-    for(let i = 0; i < numberOfSlice; i++){
-        if(i == 0){
+    const numberOfSlice = Math.ceil(categoryList.length / numberPerSlice);
+    for (let i = 0; i < numberOfSlice; i++) {
+        if (i === 0) {
             categorySliceList.push(
                 <div className="carousel-item active">
-                    <CategoryGroup categoryList={categoryList.slice(i*numberPerSlice, (i*numberPerSlice)+(numberPerSlice))} filters={filters} setFilters={setFilters}/>
+                    <CategoryGroup categoryList={categoryList.slice(i * numberPerSlice, (i * numberPerSlice) + (numberPerSlice))} filters={filters} setFilters={setFilters} />
                 </div>
             )
-        }else{
+        } else {
             categorySliceList.push(
                 <div className="carousel-item">
-                    <CategoryGroup categoryList={categoryList.slice(i*numberPerSlice, (i*numberPerSlice)+(numberPerSlice))} filters={filters} setFilters={setFilters}/>
+                    <CategoryGroup categoryList={categoryList.slice(i * numberPerSlice, (i * numberPerSlice) + (numberPerSlice))} filters={filters} setFilters={setFilters} />
                 </div>
             )
         }
@@ -67,12 +66,12 @@ export default function ProductCategories({categoryList, filters, setFilters}){
     // }, [categoryList])
 
 
-    return(
+    return (
         <div className='product-categories'>
             <h5>Categories</h5>
             <div id="carouselCategory" className="carousel slide">
                 <div className="carousel-inner">
-                    {categorySliceList.map(item => {return item})}
+                    {categorySliceList.map(item => { return item })}
                 </div>
                 <button className="carousel-arrow carousel-control-prev" type="button" data-bs-target="#carouselCategory" data-bs-slide="prev">
                     <i className="bi bi-caret-left-fill"></i>

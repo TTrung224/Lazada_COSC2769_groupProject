@@ -3,16 +3,16 @@ import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 
 import LoginPage from './Page/LoginPage';
 import SignupPage from './Page/SignupPage';
-import AdminSellerRequest from './Page/adminSellerRequest';
-import SellerOrder from './Page/sellerOrder';
+import AdminSellerRequest from './Page/AdminSellerRequest';
+import SellerOrder from './Page/SellerOrder';
 import SellerProduct from './Page/sellerProduct';
 import SellerStatistic from './Page/SellerStatisticPage';
 import CustomerProduct from './Page/CustomerProduct';
 import CustomerOrder from './Page/CustomerOrder';
 import CustomerCart from './Page/CustomerCart';
 import Logout from './Component/Shared/Logout';
-import AdminCategory, { loadCategories } from './Page/adminCategory';
-import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/adminCategoryForm';
+import AdminCategory from './Page/AdminCategory';
+import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/AdminCategoryForm';
 import ProductPage from './Page/ProductPage';
 import ProductForm, { addProduct, editProduct } from './Component/Seller/ProductForm';
 
