@@ -1,8 +1,8 @@
 import AdminSellerTable from '../Component/Admin/AdminSellerTable.js';
 import { useEffect, useState } from 'react';
-import Navbar from '../Component/Shared/navbar.js';
+import Navbar from '../Component/Shared/Navbar.js';
 import { getSellers, saveSeller } from '../Service/AdminAPI.js';
-import Loader from '../Component/Shared/loader.js';
+import Loader from '../Component/Shared/Loader.js';
 
 
 

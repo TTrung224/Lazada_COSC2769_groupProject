@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from "../../Asset/webLogo.png";
 import { AuthContext } from '../../Context/LoginSessionContext';
-import { handleAuth } from '../../Service/commonService';
+import { handleAuth } from '../../Service/CommonService';
 import { ADMIN, CUSTOMER, SELLER } from '../../constants';
 import '../componentStyle.css';
 

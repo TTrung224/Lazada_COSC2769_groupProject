@@ -11,7 +11,8 @@ export async function getAllProducts(filters){
             `maxPrice=${filters.maxPrice}&` +
             `minDate=${filters.minDate}&` +
             `maxDate=${filters.maxDate}&` +
-            `attributes=${filters.attributes!==[] ? filters.attributes.join(",") : "" }`)
+            `attributes=${filters.attributes!==[] ? filters.attributes.join(",") : "" }&` +
+            `isUpdateAttribute=${filters.isUpdateAttribute}`)
         return data
     } catch (error) {
         console.log(error)

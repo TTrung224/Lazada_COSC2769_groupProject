@@ -5,9 +5,9 @@ import '../componentStyle.css';
 function Category({ category, filters, setFilters }) {
     function chooseCategory(id) {
         if (filters.category && filters.category === id) {
-            setFilters({ ...filters, page: 1, category: null, attributes: [] })
+            setFilters({ ...filters, page: 1, category: null, attributes: [], isUpdateAttribute: true })
         } else {
-            setFilters({ ...filters, page: 1, category: id, attributes: [] })
+            setFilters({ ...filters, page: 1, category: id, attributes: [], isUpdateAttribute: true })
         }
         return
     }

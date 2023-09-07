@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { AuthContext } from '../../Context/LoginSessionContext';
 import '../componentStyle.css';
-import Navbar from './navbar';
+import Navbar from './Navbar';
 
 export default function Logout(){
     const { logoutFunc } = useContext(AuthContext)

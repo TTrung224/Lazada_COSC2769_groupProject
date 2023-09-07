@@ -1,24 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import '../componentStyle.css';
-import Loader from '../Shared/loader';
-import OrderItem from './OrderItem'
-import { getCustomerOrder, updateStatusOrder } from '../../Service/OrderAPI';
-import { numberFormat } from '../../Context/constants';
+import { useEffect, useState } from 'react';
+import { getSellerOrder } from '../../Service/OrderAPI';
+import Loader from '../Shared/Loader';
+import OrderItem from '../Customer/OrderItem';
+import { patchOrderStatus } from '../Customer/Order';
 
-
-export async function loadItems() {
-    const res = await getCustomerOrder()
+async function loadOrders() {
+    const res = await getSellerOrder()
     return res
 }
 
-export async function patchOrderStatus(orderId, productId, status) {
-    const res = await updateStatusOrder(orderId, productId, status)
-    return res
-}
-
-export default function Order() {
-    const [orders, setOrders] = useState([])
+export default function OrderList() {
     const [isLoading, setIsLoading] = useState(true)
+    const [orders, setOrders] = useState([])
 
     function handleChangeStatus(orderId, productId, status) {
         setIsLoading(true)
@@ -38,35 +31,36 @@ export default function Order() {
                     return o
                 })
                 setOrders(newOrders)
-            }else {
+            } else {
                 alert("Error changing status")
             }
         }).finally(setIsLoading(false))
     }
 
-
     useEffect(() => {
-        loadItems().then(res => {
+        loadOrders().then(res => {
             if (res && res.status === 200) {
                 setOrders(res.data)
             }
         }).finally(setIsLoading(false))
     }, [])
 
+
     return (
-        <div class="container py-5">
-            {(isLoading) ? <Loader /> : <></>}
-            <div class="card">
-                <div class="card-body">
-                    <h2>My Orders</h2>
+        <div className="container my-5">
+            {isLoading ? <Loader /> : <></>}
+            <div className="card shadow">
+                <div className="card-body">
+                    <h2>Order Management</h2>
                     <hr className='mb-5'></hr>
+
                     {orders.reverse().map(ord => {
-                        let totalPrice = 0
                         return (
                             <div className="card my-3" key={ord._id}>
                                 <div className="card-body">
                                     <div className="table-responsive" >
                                         <h3>Order {ord._id.slice(-10)}</h3>
+                                        <h5>Customer: {ord.customer.fullName}</h5>
                                         <table className="table text-center">
                                             <thead>
                                                 <tr>
@@ -74,27 +68,24 @@ export default function Order() {
                                                     <th>Name</th>
                                                     <th>Price</th>
                                                     <th>Quantity</th>
-                                                    <th>Seller</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {ord.order.map(item => {
-                                                    totalPrice += item.product.price * item.quantity
-                                                    return <OrderItem key={item.product._id} isSeller={false} orderId={ord._id} item={item} handleChangeStatus={handleChangeStatus} />
+                                                    return <OrderItem key={item.product._id} isSeller={true} orderId={ord._id} item={item} handleChangeStatus={handleChangeStatus} />
                                                 })}
                                             </tbody>
                                         </table>
-
-                                        <h5 className='text-end mt-4 mx-5'>Total Price: {numberFormat(totalPrice)} VND</h5>
                                     </div>
                                 </div>
                             </div>
-
                         )
                     })}
                 </div>
+
             </div>
         </div>
+
     )
 }

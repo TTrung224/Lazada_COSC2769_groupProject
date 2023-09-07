@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from '../Component/Shared/navbar';
+import Navbar from '../Component/Shared/Navbar';
 import Order from '../Component/Customer/Order';
 
 

@@ -3,10 +3,10 @@ import ProductCategories from '../Component/Customer/ProductCategories';
 import ProductFilter from '../Component/Customer/ProductFilter';
 import ProductList from '../Component/Customer/ProductList';
 import ProductSearchBar from '../Component/Customer/ProductSearch';
-import Navbar from '../Component/Shared/navbar';
+import Navbar from '../Component/Shared/Navbar';
 import './pageStyle.css';
 import { getAllProducts } from '../Service/ProductAPI'
-import Loader from '../Component/Shared/loader';
+import Loader from '../Component/Shared/Loader';
 import { getCategories } from '../Service/CategoryAPI';
 
 
@@ -28,7 +28,7 @@ export default function CustomerProduct() {
     const [categoryList, setCategoryList] = useState([])
 
     // const [page, setPage] = useState(1)
-    const [filters, setFilters] = useState({page: 1, maxPerPage: 12, search: "", minPrice: "", maxPrice: "", minDate: "", maxDate: "", attributes: [], category: null})
+    const [filters, setFilters] = useState({page: 1, maxPerPage: 12, search: "", minPrice: "", maxPrice: "", minDate: "", maxDate: "", attributes: [], category: null, isUpdateAttribute: false})
     const [attributeFilterList, setAtributeFilterList] = useState({})
 
     useEffect(() => {
@@ -38,7 +38,10 @@ export default function CustomerProduct() {
                 if (res.status === 200) {
                     setProductList(res.data?.products)
                     setMaxItem(res.data?.count)
-                    setAtributeFilterList(res.data?.attributes)
+                    console.log(filters.isUpdateAttribute)
+                    if(filters.isUpdateAttribute){
+                        setAtributeFilterList(res.data?.attributes)
+                    }
                 }
             }
         }).finally(() => { setIsLoading(false) })
@@ -54,7 +57,7 @@ export default function CustomerProduct() {
 
             timeout1 = setTimeout(async function(){
                 // resetAttributeList(filters.attributes, )
-                setFilters({...filters, page: 1, search: searchInput.value, attributes: []})
+                setFilters({...filters, page: 1, search: searchInput.value, attributes: [], isUpdateAttribute: true})
             }, 300);
         }
         searchInput.addEventListener("keyup", handleSearchChange)
@@ -64,7 +67,7 @@ export default function CustomerProduct() {
             clearTimeout(timeout2);
 
             timeout2 = setTimeout(async function(){
-                setFilters({...filters, page: 1, minPrice: minPriceInput.value})
+                setFilters({...filters, page: 1, minPrice: minPriceInput.value, isUpdateAttribute: false})
             }, 300);
         }
         minPriceInput.addEventListener("keyup", handleMinPriceChange)
@@ -74,7 +77,7 @@ export default function CustomerProduct() {
             clearTimeout(timeout3);
 
             timeout3 = setTimeout(async function(){
-                setFilters({...filters, page: 1, maxPrice: maxPriceInput.value})
+                setFilters({...filters, page: 1, maxPrice: maxPriceInput.value, isUpdateAttribute: false})
             }, 300);
         }
         maxPriceInput.addEventListener("keyup", handleMaxPriceChange)

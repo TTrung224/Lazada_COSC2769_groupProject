@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { backendUrl, numberFormat } from '../../Context/constants';
-import Loader from '../Shared/loader';
+import Loader from '../Shared/Loader';
 import "../componentStyle.css"
 import { deleteProduct, getUserProducts } from '../../Service/ProductAPI';
 import { AuthContext } from '../../Context/LoginSessionContext';

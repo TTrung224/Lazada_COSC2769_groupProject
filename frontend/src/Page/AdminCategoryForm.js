@@ -3,8 +3,8 @@ import { addCategory, getCategoryWithParents, updateCategory } from "../Service/
 import React, { useEffect, useState } from "react";
 import AdminAttributeList from "../Component/Admin/AdminAttributeList";
 import AdminAddAttribute from "../Component/Admin/AdminAddAttribute";
-import Navbar from "../Component/Shared/navbar";
-import Loader from "../Component/Shared/loader";
+import Navbar from "../Component/Shared/Navbar";
+import Loader from "../Component/Shared/Loader";
 
 
 export async function addNewCategory({ request }) {

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import '../componentStyle.css';
-import Loader from '../Shared/loader';
+import Loader from '../Shared/Loader';
 import CartItem from './CartItem';
 import { AuthContext } from '../../Context/LoginSessionContext';
 import { loadCartItems, updateCart } from '../../Service/CartAPI';

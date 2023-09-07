@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from 'react'
 import { axiosSetting } from './constants';
-import Loader from '../Component/Shared/loader';
+import Loader from '../Component/Shared/Loader';
 
 export const AuthContext = createContext();
 

@@ -1,8 +1,8 @@
 import { Form, redirect, useNavigate, useParams } from 'react-router-dom';
-import Navbar from '../Shared/navbar';
+import Navbar from '../Shared/Navbar';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { getCategories } from '../../Service/CategoryAPI';
-import Loader from '../Shared/loader';
+import Loader from '../Shared/Loader';
 import { createProduct, getProduct, saveProduct } from '../../Service/ProductAPI';
 import { AuthContext } from '../../Context/LoginSessionContext';
 

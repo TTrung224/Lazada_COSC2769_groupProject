@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { getProductStat } from "../../Service/ProductAPI"
-import Loader from "../Shared/loader"
+import Loader from "../Shared/Loader"
 import SellerStatEntry from "./SellerStatEntry"
 
 async function loadStat() {

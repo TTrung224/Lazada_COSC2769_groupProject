@@ -1,10 +1,10 @@
 import { useNavigate, useParams } from "react-router-dom";
-import Navbar from "../Component/Shared/navbar";
+import Navbar from "../Component/Shared/Navbar";
 import CountQuantity from "../Component/Customer/CountQuantity";
 import { useContext, useEffect, useState } from "react";
 import { getProduct } from "../Service/ProductAPI";
 import { backendUrl, numberFormat } from "../Context/constants";
-import Loader from "../Component/Shared/loader";
+import Loader from "../Component/Shared/Loader";
 import { AuthContext } from "../Context/LoginSessionContext";
 import { loadCartItems, updateCart } from "../Service/CartAPI";
 import StatusModal from "../Component/Shared/StatusModal";
