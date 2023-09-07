@@ -12,6 +12,7 @@ router.get("/item/:productId", ProductController.getProduct)
 // SELLER AUTH REQUIRED
 router.use(verifyToken)
 router.get("/seller/:userId", ProductController.getUserProducts)
+router.get("/statistic", ProductController.getProductStat)
 
 // SELLER STATUS "ACCEPTED" REQUIRED
 router.use(sellerAuth)

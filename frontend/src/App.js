@@ -5,7 +5,7 @@ import LoginPage from './Page/LoginPage';
 import SignupPage from './Page/SignupPage';
 import AdminSellerRequest from './Page/AdminSellerRequest';
 import SellerOrder from './Page/SellerOrder';
-import SellerProduct from './Page/sellerProduct';
+import SellerProduct from './Page/SellerProduct';
 import SellerStatistic from './Page/SellerStatisticPage';
 import CustomerProduct from './Page/CustomerProduct';
 import CustomerOrder from './Page/CustomerOrder';

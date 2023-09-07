@@ -185,7 +185,7 @@ export default function SellerProductList() {
                                         <img src={`${backendUrl}/image/${p.imgName}`} className="product-img mx-auto d-block img-fluid" alt='product img' />
                                     </div>
 
-                                    <div className="col-lg-6 text-lg-start text-center  my-auto">
+                                    <div className="col-lg-6 text-lg-start text-center my-auto">
                                         <h2 ><b>{p.name}</b></h2>
                                         <h4><b>{numberFormat(p.price)} VND</b></h4>
                                         <p className='fs-6 mb-0'>Category: <b>{p.category.name}</b></p>

@@ -47,7 +47,7 @@ export default function OrderList() {
 
 
     return (
-        <div className="container py-5">
+        <div className="container my-5">
             {isLoading ? <Loader /> : <></>}
             <div className="card shadow">
                 <div className="card-body">

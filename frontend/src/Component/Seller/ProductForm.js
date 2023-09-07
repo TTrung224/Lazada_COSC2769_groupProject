@@ -124,20 +124,20 @@ export default function ProductForm({ state }) {
                     <h2>Product Form</h2>
 
                     <div className="form-group mb-3">
-                        <label for="productImg">Product Image</label>
+                        <label htmlFor="productImg">Product Image</label>
                         <input className='form-control' type='file' name='productImg' id='productImg'  required={!isEdit} />
                     </div>
 
 
                     <div className="form-group mb-3">
-                        <label for="productName">Product Name</label>
+                        <label htmlFor="productName">Product Name</label>
                         <input className='form-control' type='text' name='productName' id="productName" placeholder='Name of Product' defaultValue={pName.current} required />
                     </div>
 
 
                     <div className="row mb-3">
                         <div className="col">
-                            <label for="productPrice">Product Price</label>
+                            <label htmlFor="productPrice">Product Price</label>
                             <div className="input-group">
                                 <input className='form-control' min={500} type='number' name='productPrice' id="productPrice" placeholder='Price of Product' defaultValue={pPrice.current} required />
                                 <span className="input-group-text">VND</span>
@@ -147,7 +147,7 @@ export default function ProductForm({ state }) {
                         {isEdit ?
                             <></> :
                             <div className="col">
-                                <label for="productCat">Product Category</label>
+                                <label htmlFor="productCat">Product Category</label>
                                 <select className='form-control' name="productCategory" placeholder='add product category' onChange={event => handleInput(event)} required>
                                     <option value="" disabled>Select a category for your product</option>
                                     {categories.map(category => {
@@ -187,7 +187,7 @@ export default function ProductForm({ state }) {
 
 
                     <div className="mb-3">
-                        <label for="add-product-des">Product Description</label>
+                        <label htmlFor="add-product-des">Product Description</label>
                         <textarea className='form-control' name="productDesc" id="productDesc" cols="30" rows="10" minLength={50} maxLength={1000} defaultValue={pDesc.current} required />
                     </div>
 
