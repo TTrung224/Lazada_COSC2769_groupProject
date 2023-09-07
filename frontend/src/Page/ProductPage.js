@@ -60,7 +60,6 @@ const ProductPage = () => {
     const [isLoading, setIsLoading] = useState(true)
     const [cartModal, setCartModal] = useState({ show: false, success: false })
 
-
     useEffect(() => {
         loadProduct(productId).then(res => {
             if (res) {
@@ -117,7 +116,8 @@ const ProductPage = () => {
                             </div>
 
                         </div>
-                        <div className="mt-5">
+                        <div className="container mt-5">
+                            <p><b>Date Added: </b> {Date(product.createdAt)}</p>
                             <ul className="list-group">
                                 {product.attributes.map(a => {
                                     return (
@@ -128,7 +128,7 @@ const ProductPage = () => {
                                     )
                                 })}
                             </ul>
-                            <div className="container my-4">
+                            <div className="my-4">
                                 <h3 className="">Description:</h3>
                                 <p style={{ whiteSpace: "pre-wrap" }}>{product.description}</p>
                             </div>

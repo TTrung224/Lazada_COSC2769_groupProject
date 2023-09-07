@@ -36,7 +36,7 @@ function Category({ category, filters, setFilters }) {
 function CategoryGroup({ categoryList, filters, setFilters }) {
     return (
         <div className='category-group row justify-content-center'>
-            {categoryList.map(item => <Category category={item} filters={filters} setFilters={setFilters} />)}
+            {categoryList.map(item => <Category key={item.name} category={item} filters={filters} setFilters={setFilters} />)}
         </div>
     )
 }
@@ -48,13 +48,13 @@ export default function ProductCategories({ categoryList, filters, setFilters })
     for (let i = 0; i < numberOfSlice; i++) {
         if (i === 0) {
             categorySliceList.push(
-                <div className="carousel-item active">
+                <div className="carousel-item active" key={i}>
                     <CategoryGroup categoryList={categoryList.slice(i * numberPerSlice, (i * numberPerSlice) + (numberPerSlice))} filters={filters} setFilters={setFilters} />
                 </div>
             )
         } else {
             categorySliceList.push(
-                <div className="carousel-item">
+                <div className="carousel-item" key={i}>
                     <CategoryGroup categoryList={categoryList.slice(i * numberPerSlice, (i * numberPerSlice) + (numberPerSlice))} filters={filters} setFilters={setFilters} />
                 </div>
             )

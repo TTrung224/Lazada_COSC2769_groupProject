@@ -28,7 +28,7 @@ export default function CustomerProduct() {
     const [categoryList, setCategoryList] = useState([])
 
     // const [page, setPage] = useState(1)
-    const [filters, setFilters] = useState({page: 1, search: "", minPrice: "", maxPrice: "", minDate: "", maxDate: "", attributes: [], category: null})
+    const [filters, setFilters] = useState({page: 1, maxPerPage: 12, search: "", minPrice: "", maxPrice: "", minDate: "", maxDate: "", attributes: [], category: null})
     const [attributeFilterList, setAtributeFilterList] = useState({})
 
     useEffect(() => {

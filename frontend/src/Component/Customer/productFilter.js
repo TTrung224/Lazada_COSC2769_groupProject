@@ -9,7 +9,7 @@ function AtributeFilter({atribute, attributeName, onCheck, selectedValues}){
                 {atribute.map(item => {
                     return (
                     <div key={item}>
-                        <input class="attibute-checkbox" type="checkbox" onClick={()=>onCheck(attributeName, item)} checked={selectedValues.includes(item)}></input>
+                        <input className="attibute-checkbox" type="checkbox" onClick={()=>onCheck(attributeName, item)} defaultChecked={selectedValues.includes(item)}></input>
                         <label>{item}</label><br />
                     </div>
                     )
@@ -45,18 +45,18 @@ export default function ProductFilter({filters, setFilters, attributeList}){
         <div className='product-filters'>
             <h5>Price</h5>
             <div className='price-filter'>
-                <input type="number" class="form-control" id="min-price-input" placeholder="Min" min="0"></input>
+                <input type="number" className="form-control" id="min-price-input" placeholder="Min" min="0"></input>
                 <nav> - </nav>
-                <input type="number" class="form-control" id="max-price-input" placeholder="Max" min="0"></input>
-                <i class="bi bi-funnel-fill price-filter-icon"></i>
+                <input type="number" className="form-control" id="max-price-input" placeholder="Max" min="0"></input>
+                <i className="bi bi-funnel-fill price-filter-icon"></i>
             </div>
             <hr />
             <h5>Date Added</h5>
             <div className='price-filter'>
-                <input type="date" class="form-control" id="min-date-input" placeholder="Min" onChange={(e)=>setFilters({...filters, page: 1, minDate: e.target.value})}></input>
+                <input type="date" className="form-control" id="min-date-input" placeholder="Min" onChange={(e)=>setFilters({...filters, page: 1, minDate: e.target.value})}></input>
                 <nav> - </nav>
-                <input type="date" class="form-control" id="max-date-input" placeholder="Max" onChange={(e)=>setFilters({...filters, page: 1, maxDate: e.target.value})}></input>
-                <i class="bi bi-funnel-fill price-filter-icon"></i>
+                <input type="date" className="form-control" id="max-date-input" placeholder="Max" onChange={(e)=>setFilters({...filters, page: 1, maxDate: e.target.value})}></input>
+                <i className="bi bi-funnel-fill price-filter-icon"></i>
             </div>
             <hr />
             {attributeNameList.map(attributeName => {

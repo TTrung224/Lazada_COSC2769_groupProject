@@ -4,11 +4,12 @@ import '../componentStyle.css';
 import PaginationList from '../Shared/Pagination';
 import { backendUrl, numberFormat } from '../../Context/constants';
 
-function ProductCard({product}){
-    return(
+function ProductCard({ product }) {
+    return (
         <Link to={`/product/${product._id}`}>
             <div className="card">
-                <img src={backendUrl + `/image/${product.imgName}`} className="card-img-top" alt="product "/>
+
+                <img src={backendUrl + `/image/${product.imgName}`} className='card-img-top' style={{ width: "100%", height: "16em", objectFit: "cover" }} alt="product " />
                 <div className="card-body">
                     <h5>{product.name}</h5>
                     <p className="card-text price">{numberFormat(product.price)} VND</p>
@@ -20,16 +21,14 @@ function ProductCard({product}){
 }
 
 
-export default function ProductList( {productList, maxItem, filters, setFilters} ){
-    const maxItemsPerPage = 12
-
-    return(
+export default function ProductList({ productList, maxItem, filters, setFilters }) {
+    return (
         <div className='product-list'>
             <div className='card-holder row justify-content-center'>
                 {productList.map(product => <ProductCard key={product._id} product={product} />)}
             </div>
 
-            <PaginationList totalItems={maxItem} maxItemsPerPage={maxItemsPerPage} filters={filters} setFilters={setFilters} />
+            <PaginationList totalItems={maxItem}  filters={filters} setFilters={setFilters} />
         </div>
     )
 }

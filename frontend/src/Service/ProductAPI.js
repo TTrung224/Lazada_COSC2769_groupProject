@@ -4,6 +4,7 @@ export async function getAllProducts(filters){
     try {
         const data = await axiosSetting.get(`/product?` +
             `page=${filters.page}&` +
+            `maxPerPage=${filters.maxPerPage}&` +
             `search=${filters.search}&` +
             `category=${filters.category}&` +
             `minPrice=${filters.minPrice}&` +

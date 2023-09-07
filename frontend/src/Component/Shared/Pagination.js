@@ -1,6 +1,7 @@
-const PaginationList = ({ totalItems, maxItemsPerPage, filters, setFilters}) => {
+const PaginationList = ({ totalItems, filters, setFilters}) => {
 
     const page = filters.page
+    const maxItemsPerPage = filters.maxPerPage
     const totalPage = Math.ceil(totalItems / maxItemsPerPage)
     const pagingList = generatePagination(totalPage)
     const onChangePage = (newPage) => {

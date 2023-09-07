@@ -7,9 +7,9 @@ class ProductController {
     // NO AUTH
     async getAllProducts(req, res) {
         try {
-            const limit = 12
+            const limit = parseInt(req.query.maxPerPage)
             var pageNo = 1
-            var skip = (pageNo - 1) * (limit)
+            
 
             // Query products
             let query = {}
@@ -46,7 +46,7 @@ class ProductController {
             }
 
             if(req.query?.page){
-                pageNo = req.query.page
+                pageNo = parseInt(req.query.page)
             }
             if(req.query?.attributes !== ""){
                 query["attributes.value"] = { $in: req.query?.attributes.split(",")}
@@ -68,13 +68,16 @@ class ProductController {
             }
 
             let products
+            let count
+            var skip = (pageNo - 1) * (limit)
             if(Object.keys(query).length){
                 products = await Product.find(query).skip(skip).limit(limit).populate('category')
+                count = await Product.find(query).count()
             }else{
                 products = await Product.find().skip(skip).limit(limit).populate('category')
+                count = await Product.count()
             }
 
-            const count = await Product.count()
             return res.status(200).send({products: products, count: count, attributes: attributeList})
         } catch (error) {
             console.log(error)
