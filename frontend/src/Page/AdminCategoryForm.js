@@ -80,7 +80,7 @@ const AdminCategoryForm = ({ state }) => {
     // If edit, LoaderData will be defined. Assign its values to default values
     // If add subcategory, an empty category with parent id is used to display default values  
     if (categories) {
-        const category = state === 'subCategory' ? { _id: "noId", name: '', attributes: [], parentCategoryId: categories[0]._id } : categories[0]
+        const category = state === 'subCategory' ? { _id: "noId", name: '', attributes: [], parentCategoryId: categories[0]._id, updatable: true } : categories[0]
         name = category.name
         parentId = category.parentCategoryId ? category.parentCategoryId : ""
         updatable = category.updatable
