@@ -1,6 +1,6 @@
 import { axiosSetting } from "../Context/constants"
 
-export async function getAllProducts(filters){
+export async function getAllProducts(filters) {
     try {
         const data = await axiosSetting.get(`/product?` +
             `page=${filters.page}&` +
@@ -11,7 +11,7 @@ export async function getAllProducts(filters){
             `maxPrice=${filters.maxPrice}&` +
             `minDate=${filters.minDate}&` +
             `maxDate=${filters.maxDate}&` +
-            `attributes=${filters.attributes!==[] ? filters.attributes.join(",") : "" }&` +
+            `attributes=${filters.attributes.join(",")}&` +
             `isUpdateAttribute=${filters.isUpdateAttribute}`)
         return data
     } catch (error) {
@@ -40,7 +40,7 @@ export async function getUserProducts(userId) {
     }
 }
 
-export async function getProductStat(){
+export async function getProductStat() {
     try {
         const data = await axiosSetting.get("/product/statistic")
         return data
@@ -50,21 +50,21 @@ export async function getProductStat(){
     }
 }
 
-export async function createProduct(formData){
-    try{
+export async function createProduct(formData) {
+    try {
         const res = await axiosSetting.post("/product/add", formData)
         return res
-    }catch(error){
+    } catch (error) {
         console.log(error.message)
         return null
     }
 }
 
-export async function saveProduct( productId, formData){
-    try{
+export async function saveProduct(productId, formData) {
+    try {
         const res = await axiosSetting.post(`/product/edit/${productId}`, formData)
         return res
-    }catch(error){
+    } catch (error) {
         console.log(error.message)
         return null
     }

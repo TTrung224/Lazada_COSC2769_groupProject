@@ -30,7 +30,6 @@ class ProductController {
 
             //Get attribute list base on category and search input
             if (Object.keys(query).length != 0 && req.query.isUpdateAttribute == "true") {
-                console.log("update attribute")
 
                 const tempProducts = await Product.find(query).skip(skip).limit(limit).populate('category')
 
@@ -48,7 +47,6 @@ class ProductController {
                         })
                     }
                 })
-                console.log("update attribute")
             }
 
             if (req.query?.page) {

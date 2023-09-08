@@ -1,12 +1,12 @@
 import { axiosSetting } from "../Context/constants"
 
 export async function getCategories() {
-    const res = axiosSetting.get("/category")
+    const res = await axiosSetting.get("/category")
     return res
 }
 
 export async function getCategoryWithParents(id) {
-    const res = axiosSetting.get(`/category/${id}`)
+    const res = await axiosSetting.get(`/category/${id}`)
     return res
 }
 

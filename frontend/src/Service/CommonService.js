@@ -39,24 +39,5 @@ export const handleAuth = (isAuthenticated, userTypeUpper) => {
         }
         return true
     }
-
-    // authenticated -> navigate to that user type's page
-    // if (isAuthenticated && window.location.pathname !== "/logout" && (
-    //     noAuth.includes(window.location.pathname) ||
-    //     !window.location.pathname.includes("/"+userType.toLowerCase()+"/")
-    //     )) {
-    //     if(userTypeUpper === CUSTOMER) return "/"
-    //     else if(userTypeUpper === SELLER) return "/seller"
-    //     else if(userTypeUpper === ADMIN) return "/admin"
-    //     else return null
-
-    // not authenticated -> navigate to login
-    // } else if (!isAuthenticated && !noAuth.includes(window.location.pathname)) {
-    //     return "/login"
-
-    // // not navigate
-    // } else {
-    //     return null
-    // }
 }
 

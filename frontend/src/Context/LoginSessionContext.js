@@ -20,21 +20,6 @@ const AuthContextProvider = ({ children }) => {
         loadUser().finally(() => setLoading(false));
     }, [])
 
-    // const checkAuth = () => {
-    //     const authObject = JSON.parse(localStorage.getItem(authenticationStorageKey))
-    //     if(authObject){
-    //         authObject.expired_time = Date.parse(authObject?.expired_time)
-    //     }
-
-    //     if(authObject && authObject.expired_time > new Date()){
-    //         return authObject
-    //     } else if(authObject && authObject.expired_time <= new Date()){
-    //         console.log("login session expired")
-    //         localStorage.removeItem(authenticationStorageKey)
-    //         return noAuthenticatedState
-    //     }
-    //     return noAuthenticatedState
-    // }
 
     const loginFunc = async (userForm) => {
         try {
