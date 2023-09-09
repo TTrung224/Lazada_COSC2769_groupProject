@@ -30,9 +30,12 @@ const AdminCategory = () => {
     async function handleDeleteCategory(id) {
         setIsLoading(true)
         try {
-            const newCategories = categories.filter(c => c._id !== id)
+            // const newCategories = categories.filter(c => c._id !== id)
             await deleteCategory(id)
-            setCategories(newCategories)
+            // setCategories(newCategories)
+            loadCategories().then(c =>
+                setCategories(c)
+            )
         } catch (err) {
             console.log(err)
             alert(err.message)
