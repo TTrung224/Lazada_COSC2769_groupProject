@@ -116,10 +116,11 @@ class CategoryController {
         let childrenCategoryIdList = await Category.find({parentCategoryId: categoryId}, "_id")
         
         while (childrenCategoryIdList.length != 0) {
-            const currentCatId = childrenCategoryIdList.at(0)
+            const currentCatId = childrenCategoryIdList.at(0)._id
             categoryIdList.push(currentCatId)
 
-            childrenCategoryIdList.concat(await Category.find({parentCategoryId: currentCatId}, "_id"))
+            const currentChildrenIdList = await Category.find({parentCategoryId: currentCatId}, "_id")
+            childrenCategoryIdList = childrenCategoryIdList.concat(currentChildrenIdList)
             childrenCategoryIdList.shift()
         }
         return categoryIdList
