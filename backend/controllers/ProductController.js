@@ -33,7 +33,7 @@ class ProductController {
             //Get attribute list base on category and search input
             if (Object.keys(query).length != 0 && req.query.isUpdateAttribute == "true") {
 
-                const tempProducts = await Product.find(query).skip(skip).limit(limit).populate('category')
+                const tempProducts = await Product.find(query)
 
                 //Get and group products' attribute 
                 tempProducts.forEach(item => {
