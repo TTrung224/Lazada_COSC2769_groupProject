@@ -5,10 +5,11 @@ const express = require("express");
 const route = require('./routes/Index');
 const cookies = require('cookie-parser')
 const path = require('path')
+const config = process.env;
 
 const app = express();
 app.use(express.json());
-app.use(cookies());
+app.use(cookies(config.COOKIE_KEY));
 app.use(cors({origin: 'http://localhost:3000', credentials: true}))
 
 // For getting images from server

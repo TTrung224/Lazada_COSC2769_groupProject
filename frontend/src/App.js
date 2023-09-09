@@ -15,6 +15,8 @@ import AdminCategory from './Page/AdminCategory';
 import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/AdminCategoryForm';
 import ProductPage from './Page/ProductPage';
 import ProductForm, { addProduct, editProduct } from './Component/Seller/ProductForm';
+import NotFound from './Component/Shared/NotFound';
+import Navbar from './Component/Shared/Navbar';
 
 function App() {
 
@@ -99,6 +101,10 @@ function App() {
       path: "/seller/product/edit/:productId",
       element: <ProductForm state="edit" />,
       action: editProduct
+    },
+    {
+      path: "*",
+      element: <NotFound/>
     }
   ]);
 

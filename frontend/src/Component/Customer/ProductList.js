@@ -8,10 +8,11 @@ function ProductCard({ product }) {
     return (
         <Link to={`/product/${product._id}`}>
             <div className="card">
-
-                <img src={backendUrl + `/image/${product.imgName}`} className='card-img-top' style={{ width: "100%", height: "16em", objectFit: "cover" }} alt="product " />
+                <div className='image-holder'>
+                    <img src={backendUrl + `/image/${product.imgName}`} className='card-img-top' alt="product " />
+                </div>
                 <div className="card-body">
-                    <h5>{product.name}</h5>
+                    <h5 className="product-name">{product.name}</h5>
                     <p className="card-text price">{numberFormat(product.price)} VND</p>
                     <p className="card-text"><b>{product.category.name}</b></p>
                 </div>

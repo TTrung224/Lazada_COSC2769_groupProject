@@ -53,7 +53,7 @@ class AccountController {
                 data.sellerStatus = user?.sellerStatus;
 
                 // save the token to cookie that send back in response
-                res.cookie('token', token, { httpOnly: true });
+                res.cookie('token', token, { httpOnly: true, signed: true });
 
                 // user
                 return res.status(200).json(data);
