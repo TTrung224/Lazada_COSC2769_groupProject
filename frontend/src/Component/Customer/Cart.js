@@ -35,7 +35,7 @@ export default function Cart() {
         if (!isAuthenticated) {
             return navigate("/login")
         }
-        if (cart.isEmpty) {
+        if (!cart.length) {
             alert("No item in cart")
             return
         }
