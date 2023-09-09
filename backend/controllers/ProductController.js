@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require("fs");
 const Order = require("../model/Order");
 const { default: mongoose } = require("mongoose");
+const {getCategoryIdAndChildrenCategoriesId} = require("./CategoryController")
 
 class ProductController {
 
@@ -19,7 +20,8 @@ class ProductController {
             let attributeList = {}
 
             if (req.query?.category !== "null") {
-                query.category = req.query.category
+                let categoryList = await getCategoryIdAndChildrenCategoriesId(req.query?.category)
+                query.category = { $in: categoryList }
             }
             if (req.query?.search !== "") {
                 query.$or = [
@@ -264,8 +266,6 @@ class ProductController {
         }
     }
 }
-
-
 
 function processImage(file, productId) {
     const oldPath = file.path

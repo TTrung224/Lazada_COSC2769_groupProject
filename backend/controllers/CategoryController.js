@@ -43,12 +43,15 @@ class CategoryController {
             const category = req.body
             name = category.name
             const attributeNameList = await getAllAttributesOfCategory(category)
+            let dupplicateFlag = false;
             category?.attributes.forEach(element => {
-                if(attributeNameList?.contains(element.name)){
-                    return res.sendStatus(400)
+                if(attributeNameList?.includes(element.name)){
+                    dupplicateFlag = true
                 }
             });
-
+            if(dupplicateFlag){
+                return res.sendStatus(400)
+            }
             await Category.create(category)
             res.sendStatus(201)
         } catch (err) {
@@ -67,12 +70,20 @@ class CategoryController {
             const category = req.body
 
             name = category.name
-            const attributeNameList = await getAllAttributesOfCategory(category) ?? []
+            let attributeNameList = await getAllAttributesOfCategory(category) ?? []
+            attributeNameList = Array.from(attributeNameList)
+            let dupplicateFlag = false;
             category?.attributes.forEach(element => {
-                if(attributeNameList?.contains(element.name)){
-                    return res.sendStatus(400)
+                console.log(attributeNameList)
+                console.log(typeof(attributeNameList))
+                if(attributeNameList?.includes(element.name)){
+                    dupplicateFlag = true
                 }
             });
+
+            if(dupplicateFlag){
+                return res.sendStatus(400)
+            }
 
             await Category.findByIdAndUpdate( categoryId, category)
             res.sendStatus(201)
@@ -95,31 +106,46 @@ class CategoryController {
             res.sendStatus(500)
         }
     }
+}
 
+
+    // support functions
+    async function getCategoryIdAndChildrenCategoriesId(categoryId){
+        let categoryIdList = [categoryId]
+
+        let childrenCategoryIdList = await Category.find({parentCategoryId: categoryId}, "_id")
+        
+        while (childrenCategoryIdList.length != 0) {
+            const currentCatId = childrenCategoryIdList.at(0)
+            categoryIdList.push(currentCatId)
+
+            childrenCategoryIdList.concat(await Category.find({parentCategoryId: currentCatId}, "_id"))
+            childrenCategoryIdList.shift()
+        }
+        return categoryIdList
+    }
+
+    async function checkUpdatable(item){
+        const haveParent = await Category.exists({parentCategoryId: item._id})
+        let updatable = !haveParent
+        if(updatable){
+            const haveProduct = await Product.exists({category: item._id})
+            updatable = !haveProduct
+        }
+        item.updatable = updatable;
+        return item;
+    }
     
-}
-
-// support functions
-async function checkUpdatable(item){
-    const haveParent = await Category.exists({parentCategoryId: item._id})
-    let updatable = !haveParent
-    if(updatable){
-        const haveProduct = await Product.exists({category: item._id})
-        updatable = !haveProduct
+    async function getAllAttributesOfCategory(category) {
+        let allAttributesName = []
+        while(category.parentCategoryId){
+            category = await Category.findById(category.parentCategoryId);
+            category.attributes.forEach(element => {
+                allAttributesName.push(element.name)
+            });
+        }
+        return allAttributesName
     }
-    item.updatable = updatable;
-    return item;
-}
-
-async function getAllAttributesOfCategory(category) {
-    let allAttributesName = category.attributes.map(attribute => attribute.name)
-    while(category.parentCategoryId){
-        category = await Category.findById(category.parentCategoryId);
-        category.attributes.array.forEach(element => {
-            allAttributesName.push(element.name)
-        });
-    }
-    return allAttributesName
-}
-
+ 
 module.exports = new CategoryController();
+module.exports.getCategoryIdAndChildrenCategoriesId = getCategoryIdAndChildrenCategoriesId
