@@ -18,8 +18,8 @@ export default function Logout(){
     return(
         <div>
             <Navbar/>
-            <div className='logout message'>
-                <h5>Thank you and see your again</h5>
+            <div className='logout-message'>
+                <h3>Thank you and see you again!</h3>
             </div>
         </div>
     )
