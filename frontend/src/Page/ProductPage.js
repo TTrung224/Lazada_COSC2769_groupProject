@@ -20,7 +20,7 @@ async function handleAddToCart(isAuthenticated, product, quantity) {
 
     // get current cart
     let cart = await loadCartItems(isAuthenticated)
-
+    console.log(cart)
     // if item exist, on change quantity
     cart = cart.map(item => {
         if (item.product._id === product._id) {

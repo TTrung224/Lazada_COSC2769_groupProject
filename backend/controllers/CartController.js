@@ -5,7 +5,8 @@ class CartController {
         try {
             const user = req.user
             const data = await Account.findById(user.userId, "cart").populate('cart.product')
-            res.status(200).send(data.cart)
+            const cart = data.cart.filter(c => c.product !== null)
+            res.status(200).send(cart)
         } catch (error) {
             console.log(error)
             res.sendStatus(200)

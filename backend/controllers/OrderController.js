@@ -37,7 +37,6 @@ class OrderController {
     async getSellerOrder(req, res) {
         try {
             const user = req.user
-            // const data = await Order.find({"order.product.seller": user.userId}).populate("customer", "fullName")
             const selectedSellers = await Order.aggregate([
                 {
                     $unwind: "$order"
@@ -57,7 +56,7 @@ class OrderController {
             ])
 
             const mappedData = selectedSellers.map(o => new Order(o))
-            const data = await Order.populate(mappedData, {path: "customer", select: "fullName"})
+            const data = await Order.populate(mappedData, {path: "customer", select: "fullName address"})
             return res.status(200).send(data)
         } catch (error) {
             console.log(error)

@@ -61,6 +61,7 @@ export default function OrderList() {
                                     <div className="table-responsive" >
                                         <h3>Order {ord._id.slice(-10)}</h3>
                                         <h5>Customer: {ord.customer.fullName}</h5>
+                                        <h6>Address: {ord.customer.address}</h6>
                                         <table className="table text-center">
                                             <thead>
                                                 <tr>
