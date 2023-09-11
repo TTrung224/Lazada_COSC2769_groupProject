@@ -16,7 +16,6 @@ import AdminCategoryForm, { addNewCategory, saveCategory } from './Page/AdminCat
 import ProductPage from './Page/ProductPage';
 import ProductForm, { addProduct, editProduct } from './Component/Seller/ProductForm';
 import NotFound from './Component/Shared/NotFound';
-import Navbar from './Component/Shared/Navbar';
 
 function App() {
 
