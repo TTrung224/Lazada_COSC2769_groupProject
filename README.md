@@ -1,4 +1,4 @@
-# COSC2769_grourpProject
+# COSC2769_groupProject
 
 ## Contributions
 | Name | Score |
